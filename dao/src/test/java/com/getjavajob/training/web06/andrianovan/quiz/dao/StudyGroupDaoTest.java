@@ -23,7 +23,7 @@ public class StudyGroupDaoTest {
     private StudyGroupDao dao = StudyGroupDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -59,7 +59,7 @@ public class StudyGroupDaoTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws DaoException {
         StudyGroup studyGroup = this.dao.get(1);
         this.dao.delete(studyGroup);
         StudyGroup studyGroup2 = this.dao.get(1);

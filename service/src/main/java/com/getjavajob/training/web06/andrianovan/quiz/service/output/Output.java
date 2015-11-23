@@ -1,6 +1,9 @@
-package com.getjavajob.training.web06.andrianovan.quiz.ui;
+package com.getjavajob.training.web06.andrianovan.quiz.service.output;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Created by Nat on 13.11.2015.

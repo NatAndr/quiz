@@ -40,6 +40,11 @@
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.efsavage.twitter.bootstrap</groupId>
+            <artifactId>bootstrap-maven</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
     </dependencies>
 
 

@@ -3,7 +3,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.AnswerDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +25,7 @@ public class AnswerDaoTest {
     private AnswerDao dao = AnswerDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -71,14 +70,14 @@ public class AnswerDaoTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws DaoException {
         Answer answer = this.dao.get(1);
         this.dao.delete(answer);
         Answer newAnswer = this.dao.get(1);
         assertNull(newAnswer);
     }
 
-//    @Test
+    //    @Test
 //    public void testGetAnswersByQuestion() {
 //        List<Answer> actual = dao.getAnswersByQuestion(QuestionDao.getInstance().get(1));
 //        List<Answer> expected = Arrays.asList(dao.get(1), dao.get(2), dao.get(3), dao.get(23), dao.get(24));
@@ -86,7 +85,7 @@ public class AnswerDaoTest {
 //    }
 //
     @Test
-    public void testGetCorrectAnswerByQuestion() {
+    public void testGetCorrectAnswerByQuestion() throws DaoException {
         List<Answer> actual = dao.getCorrectAnswerByQuestion(QuestionDao.getInstance().get(1));
         List<Answer> expected = Arrays.asList(dao.get(1), dao.get(3), dao.get(23));
         assertEquals(expected, actual);

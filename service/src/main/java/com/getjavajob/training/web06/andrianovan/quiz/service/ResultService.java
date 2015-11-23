@@ -1,36 +1,42 @@
-package com.getjavajob.training.web06.andrianovan.quiz;
+package com.getjavajob.training.web06.andrianovan.quiz.service;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.ResultDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory.getDAOFactory;
+import static com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory.getDaoFactory;
 
 /**
  * Created by Nat on 09.11.2015.
  */
 public class ResultService extends AbstractService<Result> {
 
-    protected ResultService() {
-        super(getDAOFactory().getResultDao());
+    public ResultService() {
+        super(getDaoFactory().getResultDao());
     }
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
-                                                                      QuizStart quizStart) {
+                                                                      QuizStart quizStart) throws ServiceException {
 //        return this.dao.getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
-        return ((ResultDao)super.getDao()).getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
+        try {
+            return ((ResultDao) super.getDao()).getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
+        } catch (DaoException e) {
+            throw new ServiceException("Cannot get student's answers " + e.getLocalizedMessage());
+        }
     }
 
-    public int countQuizResult(Student student, QuizStart quizStart) {
+    public int countQuizResult(Student student, QuizStart quizStart) throws ServiceException {
         int quizResult = 0;
-        QuestionService questionService = new QuestionService();
+//        QuestionService questionService = new QuestionService();
         AnswerService answerService = new AnswerService();
         QuizSetService quizHeaderService = new QuizSetService();
 
-//        QuizSet quizHeader = getDAOFactory().getQuizSetDao().get(quizStart.getQuizHeader().getId());
+//        QuizSet quizHeader = getDaoFactory().getQuizSetDao().get(quizStart.getQuizHeader().getId());
         QuizSet quizSet = quizHeaderService.get(quizStart.getQuizHeader().getId());
 //        List<Question> questions = questionService.getQuestionsByQuiz(quizHeader);
 
@@ -50,7 +56,7 @@ public class ResultService extends AbstractService<Result> {
     }
 
     protected int getInputQuestionResult(Student student, QuizStart quizStart,
-                                       AnswerService answerService, Question question) {
+                                         AnswerService answerService, Question question) throws ServiceException {
         String correctAnswer = answerService.getCorrectAnswerByQuestion(question).get(0).getAnswer().toUpperCase();
 
         List<Result> results = getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
@@ -65,7 +71,7 @@ public class ResultService extends AbstractService<Result> {
     }
 
     protected int getSingleOrMultipleQuestionResult(Student student, QuizStart quizStart,
-                                                  AnswerService answerService, Question question) {
+                                                    AnswerService answerService, Question question) throws ServiceException {
         List<String> actualAnswers = new ArrayList<>();
         List<Result> studentResults = this.getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
         if (studentResults.isEmpty()) {

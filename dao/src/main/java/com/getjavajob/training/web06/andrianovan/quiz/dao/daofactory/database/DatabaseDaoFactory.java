@@ -7,6 +7,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory;
  * Created by Nat on 01.11.2015.
  */
 public class DatabaseDaoFactory extends DaoFactory {
+
     @Override
     public StudyGroupDao getStudyGroupDao() {
         return StudyGroupDao.getInstance();

@@ -1,7 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface CrudDao<T extends BaseEntity> {
 
     List<T> getAll();
 
-    void delete(T entity);
+    void delete(T entity) throws DaoException;
 
     void insert(T entity) throws DaoException;
 

@@ -23,7 +23,7 @@ public class StudentDaoTest {
     private StudentDao dao = StudentDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -62,7 +62,7 @@ public class StudentDaoTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws DaoException {
         Student student = this.dao.get(1);
         this.dao.delete(student);
         Student student2 = this.dao.get(1);
@@ -70,7 +70,7 @@ public class StudentDaoTest {
     }
 
     @Test
-    public void testGetStudentsByStudyGroup() {
+    public void testGetStudentsByStudyGroup() throws DaoException {
         List<Student> actual = dao.getStudentsByStudyGroup(StudyGroupDao.getInstance().get(2));
         List<Student> expected = Arrays.asList(dao.get(3), dao.get(4));
         assertEquals(expected, actual);

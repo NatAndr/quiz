@@ -5,7 +5,7 @@ package com.getjavajob.training.web06.andrianovan.quiz.model;
  */
 public class Answer extends BaseEntity {
 
-//    private Question question; //deleted
+    //    private Question question; //deleted
     private String answer;
     private boolean isCorrect;
 

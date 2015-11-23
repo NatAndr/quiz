@@ -5,6 +5,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,7 +57,7 @@ public class AnswerServiceTest {
     }
 
     @Test
-    public void testInsert() throws DaoException {
+    public void testInsert() throws DaoException, ServiceException {
         Answer answer = new Answer();
         this.answerService.insert(answer);
         verify(this.dao).insert(answer);

@@ -5,6 +5,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,9 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Nat on 12.11.2015.
@@ -56,7 +56,7 @@ public class QuizSetServiceTest {
     }
 
     @Test
-    public void testInsert() throws DaoException {
+    public void testInsert() throws DaoException, ServiceException {
         QuizSet quizSet = new QuizSet("Quiz");
         Question question1 = new Question("question1");
         Question question2 = new Question("question2");
@@ -70,7 +70,7 @@ public class QuizSetServiceTest {
     }
 
     @Test
-    public void testUpdate() throws DaoException {
+    public void testUpdate() throws DaoException, ServiceException {
         QuizSet quizSet = new QuizSet("Quiz");
         Question question1 = new Question("question1");
         Question question2 = new Question("question2");
@@ -80,7 +80,7 @@ public class QuizSetServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws ServiceException, DaoException {
         QuizSet quizSet = new QuizSet();
         this.quizHeaderService.delete(quizSet);
         verify(this.dao).delete(quizSet);

@@ -1,13 +1,12 @@
-
 -- Дамп структуры для таблица quiz.answer
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE IF NOT EXISTS `answer` (
-  `id` int(11) AUTO_INCREMENT,
-  `question_id` int(11) DEFAULT NULL,
-  `answer` varchar(300) DEFAULT NULL,
-  `is_correct` int(4) DEFAULT NULL,
+  `id`          INT(11)      AUTO_INCREMENT,
+  `question_id` INT(11)      DEFAULT NULL,
+  `answer`      VARCHAR(300) DEFAULT NULL,
+  `is_correct`  INT(4)       DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.answer: ~49 rows (приблизительно)
 DELETE FROM `answer`;
@@ -65,12 +64,13 @@ INSERT INTO `answer` (`id`, `question_id`, `answer`, `is_correct`) VALUES
 -- Дамп структуры для таблица quiz.question
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE IF NOT EXISTS `question` (
-  `id` int(11) AUTO_INCREMENT,
-  `quiz_id` int(11) DEFAULT NULL,
-  `question` varchar(500) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `weight` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`));
+  `id`       INT(11)      AUTO_INCREMENT,
+  `quiz_id`  INT(11)      DEFAULT NULL,
+  `question` VARCHAR(500) DEFAULT NULL,
+  `type`     INT(11)      DEFAULT NULL,
+  `weight`   INT(11)      DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 -- Дамп данных таблицы quiz.question: ~12 rows (приблизительно)
 DELETE FROM `question`;
@@ -95,10 +95,10 @@ INSERT INTO `question` (`id`, `quiz_id`, `question`, type, `weight`) VALUES
 -- Дамп структуры для таблица quiz.question_type
 DROP TABLE IF EXISTS `question_type`;
 CREATE TABLE IF NOT EXISTS `question_type` (
-  `id` int(11) AUTO_INCREMENT,
-  `type` varchar(45) DEFAULT NULL,
+  `id`   INT(11)     AUTO_INCREMENT,
+  `type` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.question_type: ~3 rows (приблизительно)
 DELETE FROM `question_type`;
@@ -113,10 +113,10 @@ INSERT INTO `question_type` (`id`, `type`) VALUES
 -- Дамп структуры для таблица quiz.quiz_header
 DROP TABLE IF EXISTS `quiz_header`;
 CREATE TABLE IF NOT EXISTS `quiz_header` (
-  `id` int(11) AUTO_INCREMENT,
-  `quiz_name` varchar(100) DEFAULT NULL,
+  `id`        INT(11)      AUTO_INCREMENT,
+  `quiz_name` VARCHAR(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.quiz_header: ~2 rows (приблизительно)
 DELETE FROM `quiz_header`;
@@ -130,11 +130,11 @@ INSERT INTO `quiz_header` (`id`, `quiz_name`) VALUES
 -- Дамп структуры для таблица quiz.quiz_start
 DROP TABLE IF EXISTS `quiz_start`;
 CREATE TABLE IF NOT EXISTS `quiz_start` (
-  `id` int(10) AUTO_INCREMENT,
-  `quiz_id` int(11) DEFAULT NULL,
-  `quiz_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `id`        INT(10)  AUTO_INCREMENT,
+  `quiz_id`   INT(11)  DEFAULT NULL,
+  `quiz_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.quiz_start: ~0 rows (приблизительно)
 DELETE FROM `quiz_start`;
@@ -148,13 +148,13 @@ INSERT INTO `quiz_start` (`id`, `quiz_id`, `quiz_date`) VALUES
 -- Дамп структуры для таблица quiz.result
 DROP TABLE IF EXISTS `result`;
 CREATE TABLE IF NOT EXISTS `result` (
-  `id` int(11) AUTO_INCREMENT,
-  `student_id` int(11) DEFAULT NULL,
-  `answer_id` int(11) DEFAULT NULL,
-  `input_answer` varchar(100) DEFAULT NULL,
-  `quiz_start_id` int(10) DEFAULT NULL,
+  `id`            INT(11)      AUTO_INCREMENT,
+  `student_id`    INT(11)      DEFAULT NULL,
+  `answer_id`     INT(11)      DEFAULT NULL,
+  `input_answer`  VARCHAR(100) DEFAULT NULL,
+  `quiz_start_id` INT(10)      DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.result: ~0 rows (приблизительно)
 DELETE FROM `result`;
@@ -174,11 +174,12 @@ INSERT INTO `result` (`id`, `student_id`, `answer_id`, `input_answer`, `quiz_sta
 -- Дамп структуры для таблица quiz.student
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
-  `id` int(11) AUTO_INCREMENT,
-  `group_id` int(11) DEFAULT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)) ;
+  `id`         INT(11)     AUTO_INCREMENT,
+  `group_id`   INT(11)     DEFAULT NULL,
+  `first_name` VARCHAR(45) DEFAULT NULL,
+  `last_name`  VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 -- Дамп данных таблицы quiz.student: ~5 rows (приблизительно)
 DELETE FROM `student`;
@@ -195,10 +196,10 @@ INSERT INTO `student` (`id`, `group_id`, `first_name`, `last_name`) VALUES
 -- Дамп структуры для таблица quiz.study_group
 DROP TABLE IF EXISTS `study_group`;
 CREATE TABLE IF NOT EXISTS `study_group` (
-  `id` int(11) AUTO_INCREMENT,
-  `group_name` varchar(45) DEFAULT NULL,
+  `id`         INT(11)     AUTO_INCREMENT,
+  `group_name` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 -- Дамп данных таблицы quiz.study_group: ~5 rows (приблизительно)
 DELETE FROM `study_group`;

@@ -24,7 +24,7 @@ public abstract class DaoFactory {
 
     public abstract QuizStartDao getQuizStartDao();
 
-    public static DaoFactory getDAOFactory() {
+    public static DaoFactory getDaoFactory() {
         String factory = null;
         Properties props = new Properties();
         try {

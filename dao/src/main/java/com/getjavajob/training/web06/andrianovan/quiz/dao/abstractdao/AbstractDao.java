@@ -1,10 +1,10 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.ConnectionPool;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.CrudDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.database.DatabaseDaoFactory;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
+import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
 
 import java.lang.reflect.Field;
@@ -22,6 +22,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
     private Map<Class<?>, Integer> typesMap = new HashMap<>();
     protected static final String CANNOT_INSERT = "Cannot insert ";
     protected static final String CANNOT_UPDATE = "Cannot update ";
+    protected static final String CANNOT_SET_INSTANCE = "Cannot set instance for ";
 
     protected AbstractDao() {
         initTypesMap();
@@ -33,11 +34,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
 
     protected abstract String getUpdateByIdStatement();
 
-    protected abstract T createInstanceFromResult(ResultSet resultSet) throws SQLException;
-
-//    public abstract void insert(T entity) throws DaoException;
-//
-//    public abstract void update(T entity) throws DaoException;
+    protected abstract T createInstanceFromResult(ResultSet resultSet) throws DaoException;
 
     protected String getSelectAllStatement() {
         return "SELECT * FROM " + getTableName();
@@ -95,7 +92,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
     }
 
     @Override
-    public void delete(T entity) {
+    public void delete(T entity) throws DaoException {
         int id = entity.getId();
         Connection connection = null;
         try {
@@ -180,7 +177,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         }
     }
 
-    public int getMaxId() {
+    public int getMaxId() throws DaoException {
         String query = "SELECT MAX(id) FROM " + getTableName();
         Connection connection = null;
         try {
@@ -282,14 +279,13 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-
     }
 
     private String capitalizeFirstLetter(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    protected List<T> getEntitiesListByOtherEntity(String query, int[] params) {
+    protected List<T> doExecuteQuery(String query, int[] params) throws DaoException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();

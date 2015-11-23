@@ -1,11 +1,10 @@
 package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
-import com.getjavajob.training.web06.andrianovan.quiz.AnswerService;
-import com.getjavajob.training.web06.andrianovan.quiz.QuestionService;
-import com.getjavajob.training.web06.andrianovan.quiz.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.output.Output;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,15 +20,11 @@ public class QuizesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private QuizSetService quizSetService = new QuizSetService();
-    private QuestionService questionService = new QuestionService();
-    private AnswerService answerService = new AnswerService();
+    private static QuizSetService quizSetService = new QuizSetService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuilder sb = new StringBuilder("<html><body>");
-
-//        sb.append(quizSetService.get(1).getQuizName());
 
         List<QuizSet> quizSets = quizSetService.getAll();
         sb.append("<table>");
@@ -49,6 +44,7 @@ public class QuizesServlet extends HttpServlet {
             }
         }
         sb.append("</table></body></html>");
-        resp.getOutputStream().write(sb.toString().getBytes());
+//        resp.getOutputStream().write(sb.toString().getBytes());
+        new Output().writeToOutputStream(resp.getOutputStream(), sb.toString());
     }
 }

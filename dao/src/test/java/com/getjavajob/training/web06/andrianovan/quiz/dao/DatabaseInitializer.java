@@ -1,6 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.ConnectionPool;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import org.h2.tools.RunScript;
 
 import java.io.InputStream;
@@ -16,7 +17,7 @@ public class DatabaseInitializer {
 
     private static final String CREATE_DB_QUERY = "testDB.sql";
 
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         InputStream inputStream = QuizHeaderDaoTest.class.getClassLoader().getResourceAsStream(CREATE_DB_QUERY);
         Reader reader = new InputStreamReader(inputStream);
         Connection connection = ConnectionPool.getInstance().getConnection();

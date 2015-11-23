@@ -4,6 +4,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.StudentDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Student;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
+import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,9 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Nat on 12.11.2015.
@@ -55,28 +55,28 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testInsert() throws DaoException {
+    public void testInsert() throws DaoException, ServiceException {
         Student quizHeader = new Student();
         this.studentService.insert(quizHeader);
         verify(this.dao).insert(quizHeader);
     }
 
     @Test
-    public void testUpdate() throws DaoException {
+    public void testUpdate() throws DaoException, ServiceException {
         Student quizHeader = new Student();
         this.studentService.update(quizHeader);
         verify(this.dao).update(quizHeader);
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws ServiceException, DaoException {
         Student student = new Student();
         this.studentService.delete(student);
         verify(this.dao).delete(student);
     }
 
     @Test
-    public void testGetStudentsByStudyGroup() {
+    public void testGetStudentsByStudyGroup() throws DaoException, ServiceException {
         StudyGroup studyGroup = new StudyGroup("java-algo02");
         studyGroup.setId(2);
         Student student1 = new Student(studyGroup, "Oleg", "Sokolov");

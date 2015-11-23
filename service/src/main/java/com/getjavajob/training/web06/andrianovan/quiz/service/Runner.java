@@ -1,10 +1,10 @@
-package com.getjavajob.training.web06.andrianovan.quiz;
+package com.getjavajob.training.web06.andrianovan.quiz.service;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.*;
+import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
+import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
+import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

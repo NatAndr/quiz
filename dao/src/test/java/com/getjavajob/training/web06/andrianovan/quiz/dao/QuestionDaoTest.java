@@ -9,7 +9,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +27,7 @@ public class QuestionDaoTest {
     private QuestionDao dao = QuestionDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -66,7 +65,7 @@ public class QuestionDaoTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws DaoException {
         Question question = this.dao.get(1);
         this.dao.delete(question);
         Question question2 = this.dao.get(1);

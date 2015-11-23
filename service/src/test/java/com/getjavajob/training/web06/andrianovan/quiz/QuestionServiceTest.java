@@ -4,7 +4,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.QuestionD
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
-import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,9 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Nat on 12.11.2015.
@@ -55,7 +54,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    public void testInsert() throws DaoException {
+    public void testInsert() throws DaoException, ServiceException {
         Question question = new Question("Question");
         Answer answer1 = new Answer("Answer1");
         Answer answer2 = new Answer("Answer2");
@@ -65,7 +64,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    public void testUpdate() throws DaoException {
+    public void testUpdate() throws DaoException, ServiceException {
         Question question = new Question("Question");
         Answer answer1 = new Answer("Answer1");
         Answer answer2 = new Answer("Answer2");
@@ -75,7 +74,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws ServiceException, DaoException {
         Question question = new Question();
         this.questionService.delete(question);
         verify(this.dao).delete(question);

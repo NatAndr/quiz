@@ -2,7 +2,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 
 import java.sql.ResultSet;
@@ -32,17 +31,21 @@ public class ResultDao extends AbstractDao<Result> {
     }
 
     @Override
-    protected Result createInstanceFromResult(ResultSet resultSet) throws SQLException {
-        Student student = StudentDao.getInstance().get(resultSet.getInt("student_id"));
-        Answer answer = AnswerDao.getInstance().get(resultSet.getInt("answer_id"));
-        QuizStart quizStart = QuizStartDao.getInstance().get(resultSet.getInt("quiz_start_id"));
-
+    protected Result createInstanceFromResult(ResultSet resultSet) throws DaoException {
         Result result = new Result();
-        result.setId(resultSet.getInt("id"));
-        result.setStudent(student);
-        result.setAnswer(answer);
-        result.setInputAnswer(resultSet.getString("input_answer"));
-        result.setQuizStart(quizStart);
+        try {
+            Student student = StudentDao.getInstance().get(resultSet.getInt("student_id"));
+            Answer answer = AnswerDao.getInstance().get(resultSet.getInt("answer_id"));
+            QuizStart quizStart = QuizStartDao.getInstance().get(resultSet.getInt("quiz_start_id"));
+
+            result.setId(resultSet.getInt("id"));
+            result.setStudent(student);
+            result.setAnswer(answer);
+            result.setInputAnswer(resultSet.getString("input_answer"));
+            result.setQuizStart(quizStart);
+        } catch (SQLException e) {
+            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+        }
         return result;
     }
 
@@ -68,9 +71,9 @@ public class ResultDao extends AbstractDao<Result> {
     }
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
-                                                                      QuizStart quizStart) {
+                                                                      QuizStart quizStart) throws DaoException {
         int[] params = new int[]{student.getId(), question.getId(), quizStart.getId()};
-        return super.getEntitiesListByOtherEntity(SELECT_ALL_STUDENTS_ANSWERS, params);
+        return super.doExecuteQuery(SELECT_ALL_STUDENTS_ANSWERS, params);
     }
 
 }

@@ -23,7 +23,7 @@ public class QuizHeaderDaoTest {
     private QuizSetDao dao = QuizSetDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -58,7 +58,7 @@ public class QuizHeaderDaoTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testDelete() throws DaoException {
         QuizSet quizHeader = this.dao.get(1);
         this.dao.delete(quizHeader);
         QuizSet quizHeader2 = this.dao.get(1);

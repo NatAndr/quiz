@@ -4,12 +4,11 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.AnswerDao
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.ResultDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
+import com.getjavajob.training.web06.andrianovan.quiz.service.*;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,9 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Nat on 12.11.2015.
@@ -29,8 +26,6 @@ public class ResultServiceTest {
     private static final int ROWS_NUMBER = 2;
     private ResultService resultService;
     private ResultDao resultDao;
-    private AnswerDao answerDao;
-    private AnswerService answerService;
 
 
     @Before
@@ -39,9 +34,9 @@ public class ResultServiceTest {
         this.resultDao = mock(ResultDao.class);
         this.resultService.setDao(resultDao);
 
-        this.answerService = new AnswerService();
-        this.answerDao = mock(AnswerDao.class);
-        this.answerService.setDao(answerDao);
+        AnswerService answerService = new AnswerService();
+        AnswerDao answerDao = mock(AnswerDao.class);
+        answerService.setDao(answerDao);
     }
 
     @Test
@@ -71,14 +66,14 @@ public class ResultServiceTest {
     }
 
     @Test
-    public void testInsert() throws DaoException {
+    public void testInsert() throws DaoException, ServiceException {
         Result quizHeader = new Result();
         this.resultService.insert(quizHeader);
         verify(this.resultDao).insert(quizHeader);
     }
 
     @Test
-    public void testGetAllAnswersByStudentAndQuestionAndQuizStart() {
+    public void testGetAllAnswersByStudentAndQuestionAndQuizStart() throws DaoException {
         Student student = new Student(new StudyGroup("Group"), "Ivan", "Ivanov");
         QuizSet quizHeader = new QuizSet("Quiz");
         Question question = new Question("New question");
@@ -96,7 +91,7 @@ public class ResultServiceTest {
     }
 
     @Test
-    public void testCountQuizResult() {
+    public void testCountQuizResult() throws DaoException, ServiceException {
         int expected = 0;
         Student student = new StudentService().get(1);
         QuizSet quizHeader = new QuizSetService().get(1);

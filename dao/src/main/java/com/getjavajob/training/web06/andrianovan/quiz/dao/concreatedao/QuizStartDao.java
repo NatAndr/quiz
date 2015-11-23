@@ -1,10 +1,9 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,15 +42,19 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     }
 
     @Override
-    protected QuizStart createInstanceFromResult(ResultSet resultSet) throws SQLException {
-        QuizSet quiz = QuizSetDao.getInstance().get(resultSet.getInt("quiz_id"));
+    protected QuizStart createInstanceFromResult(ResultSet resultSet) throws DaoException {
 
         QuizStart quizStart = new QuizStart();
-        quizStart.setId(resultSet.getInt("id"));
-        quizStart.setQuizHeader(quiz);
-        Timestamp timestamp = resultSet.getTimestamp("quiz_date");
-        Date date = timestamp == null ? null : new Date(timestamp.getTime());
-        quizStart.setQuizDate(date);
+        try {
+            QuizSet quiz = QuizSetDao.getInstance().get(resultSet.getInt("quiz_id"));
+            quizStart.setId(resultSet.getInt("id"));
+            quizStart.setQuizHeader(quiz);
+            Timestamp timestamp = resultSet.getTimestamp("quiz_date");
+            Date date = timestamp == null ? null : new Date(timestamp.getTime());
+            quizStart.setQuizDate(date);
+        } catch (SQLException e) {
+            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+        }
         return quizStart;
     }
 

@@ -4,15 +4,12 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.*;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Result;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by Nat on 03.11.2015.
@@ -23,7 +20,7 @@ public class ResultDaoTest {
     private ResultDao dao = ResultDao.getInstance();
 
     @Before
-    public void initDatabase() {
+    public void initDatabase() throws DaoException {
         new DatabaseInitializer().initDatabase();
     }
 
@@ -68,7 +65,7 @@ public class ResultDaoTest {
 //    }
 
     @Test
-    public void testGetAllAnswersByStudentAndQuestionAndQuizStart() {
+    public void testGetAllAnswersByStudentAndQuestionAndQuizStart() throws DaoException {
         List<Result> actual = dao.getAllAnswersByStudentAndQuestionAndQuizStart(StudentDao.getInstance().get(1),
                 QuestionDao.getInstance().get(4), QuizStartDao.getInstance().get(2));
         List<Result> expected = Collections.singletonList(dao.get(7));

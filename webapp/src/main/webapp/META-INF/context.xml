@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-  <ResourceLink name="jdbc/shop" global="jdbc/global_shop" type="javax.sql.DataSource" />
+    <ResourceLink name="jdbc/shop" global="jdbc/global_shop" type="javax.sql.DataSource"/>
 </Context>
