@@ -31,7 +31,7 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
             studyGroup.setId(resultSet.getInt("id"));
             studyGroup.setGroupName(resultSet.getString("group_name"));
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return studyGroup;
     }

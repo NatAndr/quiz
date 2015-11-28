@@ -18,10 +18,6 @@ public class AnswerService extends AbstractService<Answer> {
         super(DaoFactory.getDaoFactory().getAnswerDao());
     }
 
-//    public List<Answer> getAnswersByQuestion(Question question) {
-//        return ((AnswerDao) super.getDao()).getAnswersByQuestion(question);
-//    }
-
     public List<Answer> getCorrectAnswerByQuestion(Question question) throws ServiceException {
         try {
             return ((AnswerDao) super.getDao()).getCorrectAnswerByQuestion(question);

@@ -28,7 +28,7 @@ public class QuizStartDaoTest {
     @Test
     public void testGetByID() {
         QuizStart quizStart = this.dao.get(2);
-        assertEquals("Java Programming. Language Fundamentals", quizStart.getQuizHeader().getQuizName());
+        assertEquals("Java Programming. Language Fundamentals", quizStart.getQuizSet().getQuizName());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class QuizStartDaoTest {
     @Test
     public void testInsert() throws DaoException {
         QuizStart quizStart = new QuizStart();
-        quizStart.setQuizHeader(QuizSetDao.getInstance().get(1));
+        quizStart.setQuizSet(QuizSetDao.getInstance().get(1));
         this.dao.insert(quizStart);
         List<QuizStart> quizStartList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, quizStartList.size());
@@ -49,10 +49,10 @@ public class QuizStartDaoTest {
     @Test
     public void testUpdate() throws DaoException {
         QuizStart quizStart = dao.get(2);
-        quizStart.setQuizHeader(QuizSetDao.getInstance().get(2));
+        quizStart.setQuizSet(QuizSetDao.getInstance().get(2));
         this.dao.update(quizStart);
         QuizStart updatedQuizStart = this.dao.get(2);
-        assertEquals("Vegetables", updatedQuizStart.getQuizHeader().getQuizName());
+        assertEquals("Vegetables", updatedQuizStart.getQuizSet().getQuizName());
     }
 
     @Test

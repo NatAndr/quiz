@@ -1,57 +1,46 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.QuizSetDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
+import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
-
-import java.util.List;
+import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 
 /**
  * Created by Nat on 14.11.2015.
  */
 public class Runner {
 
-    public static void main(String[] args) throws DaoException {
+    public static void main(String[] args) throws DaoException, ServiceException {
 
-//        Student student = new StudentService().get(1);
-//        QuizStart quizStart = new QuizStartService().get(3);
+//        Answer answer1 = new Answer("Calling the SetPriority() method on a Thread object.");
+//        Answer answer2 = new Answer("Calling the wait() method on an object.");
+//        Answer answer3 = new Answer("Calling notify() method on an object.");
+//        Answer answer4 = new Answer("Calling read() method on an InputStream object.");
+//        Answer answer5 = new Answer("interrupt();");
+//        Answer answer6 = new Answer("wait(long msecs);");
+//        Answer answer7 = new Answer("sleep(long msecs);");
+//        Answer answer8 = new Answer("yield();");
+
+        Question question = new Question("Which cannot directly cause a thread to stop executing?",
+                QuestionType.SINGLE, 1);
+
+        QuizSet quizSet = QuizSetDao.getInstance().get(1); /////!!!!!
+
+//        question.setAnswers(Arrays.asList(answer1, answer2, answer3, answer4, answer5, answer6, answer7, answer8));
+//        question.setAnswers(Arrays.asList(answer1, answer2, answer3, answer4));
+//        quizSet.setQuestions(Collections.singletonList(question));
 //
-//        int actual = new ResultService().countQuizResult(student, quizStart);
-//        System.out.println(actual);
-//        System.out.println(student);
-
-//        QuizSet quizSet = new QuizSet("Quiz");
-//        Question question1 = new Question("question1");
-//        Question question2 = new Question("question2");
-//        Answer answer1 = new Answer("Answer1");
-//        Answer answer2 = new Answer("Answer2");
-//        question1.setAnswers(Collections.singletonList(answer1));
-//        question2.setAnswers(Collections.singletonList(answer2));
-//        quizSet.setQuestions(Arrays.asList(question1, question2));
 //        QuizSetService quizSetService = new QuizSetService();
-//        quizSetService.insert(quizSet);
-//        System.out.println(quizSet);
+//        quizSetService.insertQuestionToExistingQuizSet(quizSet);
 
-        StringBuilder sb = new StringBuilder("<html><body>");
 
-//        sb.append(quizSetService.get(1).getQuizName());
 
-        QuizSetService quizSetService = new QuizSetService();
-        List<QuizSet> quizSets = quizSetService.getAll();
-
-        for (QuizSet quizSet : quizSets) {
-            sb.append(quizSet.getQuizName());
-            for (Question question : quizSet.getQuestions()) {
-                sb.append(question.getQuestion());
-                for (Answer answer : question.getAnswers()) {
-                    sb.append(answer.getAnswer());
-                }
-            }
-        }
-        sb.append("</body></html>");
-        System.out.println(sb.toString());
+//        QuizStart quizStart = new QuizStart(quizSet);
+//        new QuizStartService().insert(quizStart);
+        GeneratedQuestionsService generatedQuestionsService = new GeneratedQuestionsService();
+//        generatedQuestionsService.generateQuestions(quizStart);
+        System.out.println(generatedQuestionsService.getAll());
     }
-
-
 }

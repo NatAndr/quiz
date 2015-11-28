@@ -1,5 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.AnswerDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
@@ -11,7 +12,16 @@ import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceE
  */
 public class QuestionService extends AbstractService<Question> {
 
-    private static AnswerService answerService = new AnswerService();
+    private AnswerService answerService = new AnswerService();
+    private static AnswerDao answerDao = DaoFactory.getDaoFactory().getAnswerDao();
+
+    public void setAnswerService(AnswerService answerService) {
+        this.answerService = answerService;
+    }
+
+    public static void setAnswerDao(AnswerDao answerDao) {
+        QuestionService.answerDao = answerDao;
+    }
 
     public QuestionService() {
         super(DaoFactory.getDaoFactory().getQuestionDao());
@@ -19,10 +29,16 @@ public class QuestionService extends AbstractService<Question> {
 
     @Override
     public void insert(Question entity) throws ServiceException {
-            super.insert(entity);
-            for (Answer answer : entity.getAnswers()) {
-                answerService.insert(answer);
+        super.insert(entity);
+        for (Answer answer : entity.getAnswers()) {
+//            answerService.insert(answer);
+            try {
+                answerDao.insert(answer);
+            } catch (DaoException e) {
+                throw new ServiceException(CANNOT_INSERT + entity + e.getLocalizedMessage());
             }
+        }
+        this.update(entity);
     }
 
     @Override
@@ -30,15 +46,14 @@ public class QuestionService extends AbstractService<Question> {
         super.update(entity);
         for (Answer answer : entity.getAnswers()) {
             try {
-                DaoFactory.getDaoFactory().getAnswerDao().updateQuestionId(answer, entity);
+                answerDao.updateQuestionId(answer, entity);
             } catch (DaoException e) {
                 throw new ServiceException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
             }
         }
     }
 
-//    public List<Question> getQuestionsByQuiz(QuizSet quizHeader) {
-//        return ((QuestionDao)super.getDao()).getQuestionsByQuizSet(quizHeader);
-//    }
-
+    public void insertAnswerToExistingQuestion(Question question) {
+        //todo
+    }
 }

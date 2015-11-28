@@ -22,7 +22,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
     private Map<Class<?>, Integer> typesMap = new HashMap<>();
     protected static final String CANNOT_INSERT = "Cannot insert ";
     protected static final String CANNOT_UPDATE = "Cannot update ";
-    protected static final String CANNOT_SET_INSTANCE = "Cannot set instance for ";
+    protected static final String CANNOT_CREATE_INSTANCE = "Cannot create instance for ";
 
     protected AbstractDao() {
         initTypesMap();
@@ -285,13 +285,14 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    protected List<T> doExecuteQuery(String query, int[] params) throws DaoException {
+    protected List<T> doExecuteQuery(String query, Object[] params) throws DaoException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             try (PreparedStatement prepareStatement = connection.prepareStatement(query)) {
                 for (int i = 0; i < params.length; i++) {
-                    prepareStatement.setInt(i + 1, params[i]);
+//                    prepareStatement.setInt(i + 1, params[i]);
+                    prepareStatement.setObject(i + 1, params[i]);
                 }
                 try (ResultSet resultSet = prepareStatement.executeQuery()) {
                     List<T> resultList = new ArrayList<>();

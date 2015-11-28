@@ -40,35 +40,10 @@ public class AnswerDao extends AbstractDao<Answer> {
             answer.setAnswer(resultSet.getString("answer"));
             answer.setIsCorrect(resultSet.getInt("is_correct") == 1);
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return answer;
     }
-
-    /*@Override
-    public void insert(Answer entity) throws DaoException {
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            try (PreparedStatement prepareStatement = connection.prepareStatement(INSERT)) {
-                prepareStatement.setString(1, entity.getAnswer());
-                prepareStatement.setInt(2, entity.getIsCorrect() ? 1 : 0);
-                prepareStatement.executeUpdate();
-                connection.commit();
-                entity.setId(prepareStatement.getGeneratedKeys().getInt("id"));
-            } catch (SQLException e) {
-                throw new DaoException(CANNOT_INSERT + entity + e.getLocalizedMessage());
-            } finally {
-                try {
-                    connection.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
-        }
-    }*/
 
     @Override
     public void update(Answer entity) throws DaoException {
@@ -134,13 +109,11 @@ public class AnswerDao extends AbstractDao<Answer> {
     }
 
     public List<Answer> getAnswersByQuestion(Question question) throws DaoException {
-        int questionID = question.getId();
-        int[] params = new int[]{questionID};
-        return super.doExecuteQuery(SELECT_FROM_ANSWER_BY_QUESTION_ID, params);
+        return super.doExecuteQuery(SELECT_FROM_ANSWER_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 
     public List<Answer> getCorrectAnswerByQuestion(Question question) throws DaoException {
-        return super.doExecuteQuery(SELECT_CORRECT_ANSWERS_BY_QUESTION_ID, new int[]{question.getId()});
+        return super.doExecuteQuery(SELECT_CORRECT_ANSWERS_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 
 }

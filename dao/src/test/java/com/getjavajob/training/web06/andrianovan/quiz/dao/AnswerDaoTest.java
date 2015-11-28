@@ -77,13 +77,6 @@ public class AnswerDaoTest {
         assertNull(newAnswer);
     }
 
-    //    @Test
-//    public void testGetAnswersByQuestion() {
-//        List<Answer> actual = dao.getAnswersByQuestion(QuestionDao.getInstance().get(1));
-//        List<Answer> expected = Arrays.asList(dao.get(1), dao.get(2), dao.get(3), dao.get(23), dao.get(24));
-//        assertEquals(expected, actual);
-//    }
-//
     @Test
     public void testGetCorrectAnswerByQuestion() throws DaoException {
         List<Answer> actual = dao.getCorrectAnswerByQuestion(QuestionDao.getInstance().get(1));

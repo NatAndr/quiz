@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Nat on 13.11.2015.
  */
-public class QuizesServlet extends HttpServlet {
+public class AllQuizesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,21 +25,20 @@ public class QuizesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuilder sb = new StringBuilder("<html><body>");
-
         List<QuizSet> quizSets = quizSetService.getAll();
-        sb.append("<table>");
+        sb.append("<table>").append("\r\n");
         for (QuizSet quizSet : quizSets) {
             sb.append("<tr><td>");
             sb.append(quizSet.getQuizName());
-            sb.append("</td></tr>");
+            sb.append("</td></tr>").append("\r\n");
             for (Question question : quizSet.getQuestions()) {
                 sb.append("<tr><td>");
                 sb.append(question.getQuestion());
-                sb.append("</td></tr>");
+                sb.append("</td></tr>").append("\r\n");
                 for (Answer answer : question.getAnswers()) {
                     sb.append("<tr><td>");
                     sb.append(answer.getAnswer());
-                    sb.append("</td></tr>");
+                    sb.append("</td></tr>").append("\r\n");
                 }
             }
         }

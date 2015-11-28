@@ -7,27 +7,27 @@ import java.util.Date;
  */
 public class QuizStart extends BaseEntity {
 
-    private QuizSet quizHeader;
+    private QuizSet quizSet;
     private Date quizDate;
 
     public QuizStart() {
     }
 
-    public QuizStart(QuizSet quizHeader) {
-        this.quizHeader = quizHeader;
+    public QuizStart(QuizSet quizSet) {
+        this.quizSet = quizSet;
     }
 
-    public QuizStart(QuizSet quizHeader, Date quizDate) {
-        this.quizHeader = quizHeader;
+    public QuizStart(QuizSet quizSet, Date quizDate) {
+        this.quizSet = quizSet;
         this.quizDate = quizDate;
     }
 
-    public QuizSet getQuizHeader() {
-        return quizHeader;
+    public QuizSet getQuizSet() {
+        return quizSet;
     }
 
-    public void setQuizHeader(QuizSet quizHeader) {
-        this.quizHeader = quizHeader;
+    public void setQuizSet(QuizSet quizHeader) {
+        this.quizSet = quizHeader;
     }
 
     public Date getQuizDate() {
@@ -41,7 +41,7 @@ public class QuizStart extends BaseEntity {
     @Override
     public String toString() {
         return "QuizStart{" +
-                "quizHeader=" + quizHeader +
+                "quizSet=" + quizSet +
                 ", quizDate=" + quizDate +
                 '}';
     }
@@ -53,14 +53,14 @@ public class QuizStart extends BaseEntity {
 
         QuizStart quizStart = (QuizStart) o;
 
-        if (quizHeader != null ? !quizHeader.equals(quizStart.quizHeader) : quizStart.quizHeader != null) return false;
+        if (quizSet != null ? !quizSet.equals(quizStart.quizSet) : quizStart.quizSet != null) return false;
         return !(quizDate != null ? !quizDate.equals(quizStart.quizDate) : quizStart.quizDate != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = quizHeader != null ? quizHeader.hashCode() : 0;
+        int result = quizSet != null ? quizSet.hashCode() : 0;
         result = 31 * result + (quizDate != null ? quizDate.hashCode() : 0);
         return result;
     }

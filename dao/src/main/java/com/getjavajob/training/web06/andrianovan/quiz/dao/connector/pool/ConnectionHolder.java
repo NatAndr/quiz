@@ -24,10 +24,10 @@ public class ConnectionHolder {
     }
 
     public void incrementCounter() {
-        counter++;
+        this.counter++;
     }
 
     public void decrementCounter() {
-        counter--;
+        this.counter--;
     }
 }

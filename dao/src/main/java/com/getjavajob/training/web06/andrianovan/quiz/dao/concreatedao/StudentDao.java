@@ -37,7 +37,7 @@ public class StudentDao extends AbstractDao<Student> {
             student.setFirstName(resultSet.getString("first_name"));
             student.setLastName(resultSet.getString("last_name"));
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return student;
     }
@@ -58,6 +58,6 @@ public class StudentDao extends AbstractDao<Student> {
     }
 
     public List<Student> getStudentsByStudyGroup(StudyGroup studyGroup) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_STUDENT_BY_GROUP_ID, new int[]{studyGroup.getId()});
+        return super.doExecuteQuery(SELECT_FROM_STUDENT_BY_GROUP_ID, new Integer[]{studyGroup.getId()});
     }
 }

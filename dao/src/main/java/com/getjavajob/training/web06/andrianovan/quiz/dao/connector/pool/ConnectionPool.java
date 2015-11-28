@@ -68,10 +68,11 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws DaoException {
+        ConnectionHolder ch;
         if (connectionHolder.get() == null) {
             try {
                 Connection connection = pool.take();
-                ConnectionHolder ch = new ConnectionHolder(connection);
+                ch = new ConnectionHolder(connection);
                 connectionHolder.set(ch);
             } catch (InterruptedException e) {
                 throw new DaoException(CANNOT_CREATE_CONNECTION + e.getLocalizedMessage());
@@ -81,8 +82,10 @@ public class ConnectionPool {
         return connectionHolder.get().getConnection();
     }
 
-    //    public void releaseConnection() { //todo без параметров
+
     public void releaseConnection(Connection connection) {
+        //    public void releaseConnection() { //todo без параметров
+
         if (connection == null) {
             return;
         }
@@ -90,6 +93,7 @@ public class ConnectionPool {
         if (connectionHolder.get().getCounter() == 0) {
             try {
                 pool.put(connection);
+//                pool.put(this.connectionHolder.get().getConnection());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

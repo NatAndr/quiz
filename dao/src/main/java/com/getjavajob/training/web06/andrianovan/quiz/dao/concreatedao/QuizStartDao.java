@@ -48,12 +48,12 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
         try {
             QuizSet quiz = QuizSetDao.getInstance().get(resultSet.getInt("quiz_id"));
             quizStart.setId(resultSet.getInt("id"));
-            quizStart.setQuizHeader(quiz);
+            quizStart.setQuizSet(quiz);
             Timestamp timestamp = resultSet.getTimestamp("quiz_date");
             Date date = timestamp == null ? null : new Date(timestamp.getTime());
             quizStart.setQuizDate(date);
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return quizStart;
     }

@@ -44,7 +44,7 @@ public class ResultDao extends AbstractDao<Result> {
             result.setInputAnswer(resultSet.getString("input_answer"));
             result.setQuizStart(quizStart);
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return result;
     }
@@ -72,7 +72,7 @@ public class ResultDao extends AbstractDao<Result> {
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
                                                                       QuizStart quizStart) throws DaoException {
-        int[] params = new int[]{student.getId(), question.getId(), quizStart.getId()};
+        Integer[] params = new Integer[]{student.getId(), question.getId(), quizStart.getId()};
         return super.doExecuteQuery(SELECT_ALL_STUDENTS_ANSWERS, params);
     }
 

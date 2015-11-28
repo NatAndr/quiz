@@ -6,6 +6,7 @@
     <display-name>quiz</display-name>
 
     <welcome-file-list>
+        <welcome-file>search.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
         <welcome-file>index.jsp</welcome-file>
@@ -14,15 +15,43 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.CharacterEncodingFilter</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>CharacterEncoding</filter-name>
+        <filter-class>com.getjavajob.training.web06.andrianovan.quiz.ui.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharacterEncoding</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
     <servlet>
-        <servlet-name>Quizes</servlet-name>
-        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizesServlet</servlet-class>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizesSearch</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>AllQuizes</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.AllQuizesServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
-        <servlet-name>Quizes</servlet-name>
-        <url-pattern>/quizes</url-pattern>
+        <servlet-name>AllQuizes</servlet-name>
+        <url-pattern>/AllQuizes</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/quizesSearch</url-pattern>
     </servlet-mapping>
 
     <session-config>

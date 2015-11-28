@@ -36,8 +36,8 @@ public class ResultService extends AbstractService<Result> {
         AnswerService answerService = new AnswerService();
         QuizSetService quizHeaderService = new QuizSetService();
 
-//        QuizSet quizHeader = getDaoFactory().getQuizSetDao().get(quizStart.getQuizHeader().getId());
-        QuizSet quizSet = quizHeaderService.get(quizStart.getQuizHeader().getId());
+//        QuizSet quizHeader = getDaoFactory().getQuizSetDao().get(quizStart.getQuizSet().getId());
+        QuizSet quizSet = quizHeaderService.get(quizStart.getQuizSet().getId());
 //        List<Question> questions = questionService.getQuestionsByQuiz(quizHeader);
 
 //        for (Question question : questions) {

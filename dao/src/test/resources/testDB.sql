@@ -212,3 +212,21 @@ INSERT INTO `study_group` (`id`, `group_name`) VALUES
   (5, 'Группа 3'),
   (8, 'New group2');
 
+-- Дамп структуры для таблица quiz.quiz_generated_questions
+DROP TABLE IF EXISTS `quiz_generated_questions`;
+CREATE TABLE IF NOT EXISTS`quiz_generated_questions` (
+  `quiz_start_id` INT(11) NULL DEFAULT NULL,
+  `question_id` INT(11) NULL DEFAULT NULL);
+
+-- Дамп данных таблицы quiz.quiz_generated_questions: ~6 rows (приблизительно)
+DELETE FROM `quiz_generated_questions`;
+/*!40000 ALTER TABLE `quiz_generated_questions` DISABLE KEYS */;
+INSERT INTO `quiz_generated_questions` (`quiz_start_id`, `question_id`) VALUES
+  (2, 1),
+  (2, 4),
+  (2, 6),
+  (5, 1),
+  (5, 4),
+  (5, 8);
+
+

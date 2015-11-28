@@ -42,4 +42,9 @@ public class DatabaseDaoFactory extends DaoFactory {
     public QuizStartDao getQuizStartDao() {
         return QuizStartDao.getInstance();
     }
+
+    @Override
+    public GeneratedQuestionsDao getQuizGeneratedQuestionsDao() {
+        return GeneratedQuestionsDao.getInstance();
+    }
 }

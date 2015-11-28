@@ -15,7 +15,7 @@ public class Output {
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new OutputStreamWriter(os));
-            for (String s : str.split("\n")) {
+            for (String s : str.split("\r\n")) {
                 bw.write(s);
                 bw.newLine();
             }

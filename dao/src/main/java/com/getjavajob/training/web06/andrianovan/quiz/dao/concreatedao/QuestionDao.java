@@ -3,10 +3,7 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.ConnectionPool;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
-import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
-import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
-import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +21,8 @@ public class QuestionDao extends AbstractDao<Question> {
     private static final String INSERT = "INSERT INTO Question (question, type, weight)  VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE Question SET question=?, type=?, weight=? WHERE id=?";
     private static final String UPDATE_QUIZ_ID = "UPDATE Question SET quiz_id=? WHERE id=?";
+    private static final String SELECT_FROM_QUIZ_GENERATED_QUESTIONS_BY_QUIZ_START_ID = "SELECT * FROM " +
+            "quiz_generated_questions WHERE quiz_start_id = ?";
     private AnswerDao answerDao = AnswerDao.getInstance();
 
     private QuestionDao() {
@@ -46,7 +45,7 @@ public class QuestionDao extends AbstractDao<Question> {
             List<Answer> answers = answerDao.getAnswersByQuestion(question);
             question.setAnswers(answers);
         } catch (SQLException e) {
-            throw new DaoException(CANNOT_SET_INSTANCE + this.getClass().getSimpleName());
+            throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return question;
     }
@@ -67,7 +66,7 @@ public class QuestionDao extends AbstractDao<Question> {
     }
 
     public List<Question> getQuestionsByQuizSet(QuizSet quizHeader) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_QUESTION_BY_QUIZ_ID, new int[]{quizHeader.getId()});
+        return super.doExecuteQuery(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizHeader.getId()});
     }
 
     public void updateQuestionsQuizId(Question entity, QuizSet quiz) throws DaoException {
@@ -91,5 +90,9 @@ public class QuestionDao extends AbstractDao<Question> {
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
+    }
+
+    public List<Question> getQuestionsFromQuizGeneratedQuestionsByQuizStart(QuizStart quizStart) throws DaoException {
+        return super.doExecuteQuery(SELECT_FROM_QUIZ_GENERATED_QUESTIONS_BY_QUIZ_START_ID, new Integer[]{quizStart.getId()});
     }
 }
