@@ -16,21 +16,22 @@ import java.util.List;
  */
 public class QuizesSearch extends HttpServlet {
 
-    private QuizSetService quizSetService = new QuizSetService();
+//    private QuizSetService quizSetService = new QuizSetService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html");
-        String searchParams = req.getParameter("searchParams");
-        if (searchParams != null) {
+        String searchParams = "e";//req.getParameter("searchParams");
+//        if (searchParams != null) {
             try {
+                QuizSetService quizSetService = new QuizSetService();
                 List<QuizSet> quizes = quizSetService.searchQuizSetBySubstring(searchParams);
-                req.setAttribute("quizes", quizes);
+                req.setAttribute("foundQuiz", quizes);
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
-            req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
-        }
+//        }
+        req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
     }
 }

@@ -58,6 +58,6 @@ public class StudentDao extends AbstractDao<Student> {
     }
 
     public List<Student> getStudentsByStudyGroup(StudyGroup studyGroup) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_STUDENT_BY_GROUP_ID, new Integer[]{studyGroup.getId()});
+        return super.doExecuteQueryWithParams(SELECT_FROM_STUDENT_BY_GROUP_ID, new Integer[]{studyGroup.getId()});
     }
 }

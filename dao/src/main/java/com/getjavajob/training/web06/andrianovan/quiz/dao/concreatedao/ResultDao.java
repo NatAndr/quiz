@@ -73,7 +73,7 @@ public class ResultDao extends AbstractDao<Result> {
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
                                                                       QuizStart quizStart) throws DaoException {
         Integer[] params = new Integer[]{student.getId(), question.getId(), quizStart.getId()};
-        return super.doExecuteQuery(SELECT_ALL_STUDENTS_ANSWERS, params);
+        return super.doExecuteQueryWithParams(SELECT_ALL_STUDENTS_ANSWERS, params);
     }
 
 }

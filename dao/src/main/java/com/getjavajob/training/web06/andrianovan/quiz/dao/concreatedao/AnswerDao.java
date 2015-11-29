@@ -109,11 +109,11 @@ public class AnswerDao extends AbstractDao<Answer> {
     }
 
     public List<Answer> getAnswersByQuestion(Question question) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_ANSWER_BY_QUESTION_ID, new Integer[]{question.getId()});
+        return super.doExecuteQueryWithParams(SELECT_FROM_ANSWER_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 
     public List<Answer> getCorrectAnswerByQuestion(Question question) throws DaoException {
-        return super.doExecuteQuery(SELECT_CORRECT_ANSWERS_BY_QUESTION_ID, new Integer[]{question.getId()});
+        return super.doExecuteQueryWithParams(SELECT_CORRECT_ANSWERS_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 
 }

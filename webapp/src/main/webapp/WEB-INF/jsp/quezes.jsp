@@ -12,13 +12,21 @@
     <title>Quizes</title>
 </head>
 <body>
-  <div>
-      <p>result:</p>
-    <c:forEach var="quiz" items="${quizes}">
-      <p><c:out value="${quiz.quizName}"/></p>
-    </c:forEach>
+<div>
+    <table>
+        <%--@elvariable id="foundQuiz" type="java.util.List"--%>
+        <c:if test="${foundQuiz!=null}">
+            <c:forEach var="quiz" items="${foundQuiz}">
+                <tr>
+                    <td>
+                            ${quiz.quizName}
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+    </table>
 
-  </div>
+</div>
 
 </body>
 </html>

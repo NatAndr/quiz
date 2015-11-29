@@ -285,7 +285,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    protected List<T> doExecuteQuery(String query, Object[] params) throws DaoException {
+    protected List<T> doExecuteQueryWithParams(String query, Object[] params) throws DaoException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -303,6 +303,26 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+    }
+
+    protected List<T> doSelect(String query) throws DaoException {
+        Connection connection = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            try (ResultSet resultSet = connection.createStatement().executeQuery(query)) {
+                List<T> resultList = new ArrayList<>();
+                while (resultSet.next()) {
+                    resultList.add(createInstanceFromResult(resultSet));
+                }
+                return resultList;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {

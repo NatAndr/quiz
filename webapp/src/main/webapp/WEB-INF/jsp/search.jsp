@@ -11,18 +11,14 @@
     <title>Quizes search</title>
 </head>
 <body>
-  <div align="left">
-    <form action="${pageContext.request.contextPath}/quizesSearch" method="get">
-      <h2>Quizes search:</h2>
-      <label>
+<form action="${pageContext.request.contextPath}/quizesSearch" method="get">
+    <h2>Quizes search:</h2>
+    <label>
         <input type="text" name="searchParams" maxlength="40" size="30">
         <input type="submit" value="search">
-      </label>
-    </form>
-    <p>
-      <%@include file="quezes.jsp"%>
-    </p>
-  </div>
+    </label>
+</form>
+<%@include file="quezes.jsp" %>
 
 </body>
 </html>

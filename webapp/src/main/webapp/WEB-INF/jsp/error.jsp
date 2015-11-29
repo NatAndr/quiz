@@ -15,8 +15,8 @@
     <h1>Opps...</h1>
     <p>Sorry, an error occurred.</p>
     <p>Here is the exception stack trace: </p>
-    <pre>
+    <p>
     <% exception.printStackTrace(response.getWriter()); %>
-    </pre>
+    </p>
   </body>
 </html>
