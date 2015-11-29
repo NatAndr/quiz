@@ -66,7 +66,7 @@ public class QuestionDao extends AbstractDao<Question> {
     }
 
     public List<Question> getQuestionsByQuizSet(QuizSet quizHeader) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizHeader.getId()});
+        return super.doExecuteQueryWithParams(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizHeader.getId()});
     }
 
     public void updateQuestionsQuizId(Question entity, QuizSet quiz) throws DaoException {
@@ -93,6 +93,6 @@ public class QuestionDao extends AbstractDao<Question> {
     }
 
     public List<Question> getQuestionsFromQuizGeneratedQuestionsByQuizStart(QuizStart quizStart) throws DaoException {
-        return super.doExecuteQuery(SELECT_FROM_QUIZ_GENERATED_QUESTIONS_BY_QUIZ_START_ID, new Integer[]{quizStart.getId()});
+        return super.doExecuteQueryWithParams(SELECT_FROM_QUIZ_GENERATED_QUESTIONS_BY_QUIZ_START_ID, new Integer[]{quizStart.getId()});
     }
 }

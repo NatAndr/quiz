@@ -2,11 +2,9 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-
     <display-name>quiz</display-name>
 
     <welcome-file-list>
-        <welcome-file>search.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
         <welcome-file>index.jsp</welcome-file>
@@ -39,6 +37,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>AllQuizes</servlet-name>
         <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.AllQuizesServlet</servlet-class>
@@ -46,12 +49,57 @@
 
     <servlet-mapping>
         <servlet-name>AllQuizes</servlet-name>
-        <url-pattern>/AllQuizes</url-pattern>
+        <url-pattern>/allQuizes</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StartQuiz</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StartQuizServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
-        <servlet-name>Search</servlet-name>
-        <url-pattern>/quizesSearch</url-pattern>
+        <servlet-name>StartQuiz</servlet-name>
+        <url-pattern>/startQuiz</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudyGroupInfo</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupInfoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudyGroupInfo</servlet-name>
+        <url-pattern>/studyGroupInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudyGroupEdit</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudyGroupEdit</servlet-name>
+        <url-pattern>/studyGroupEdit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudyGroupAddOrUpdate</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupAddOrUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudyGroupAddOrUpdate</servlet-name>
+        <url-pattern>/studyGroupAddOrUpdate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudyGroups</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudyGroups</servlet-name>
+        <url-pattern>/studyGroups</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -59,5 +107,10 @@
             <name>MY_JSESSIONID</name>
         </cookie-config>
     </session-config>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/jsp/error.jsp</location>
+    </error-page>
 
 </web-app>

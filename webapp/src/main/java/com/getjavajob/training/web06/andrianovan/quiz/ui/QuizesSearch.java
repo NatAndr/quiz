@@ -20,17 +20,19 @@ public class QuizesSearch extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html");
+//        resp.setCharacterEncoding("UTF-8");  //todo filter
+//        resp.setContentType("text/html");   //todo filter
         String searchParams = req.getParameter("searchParams");
         if (searchParams != null) {
+            List<QuizSet> quizes;
             try {
-                List<QuizSet> quizes = quizSetService.searchQuizSetBySubstring(searchParams);
-                req.setAttribute("quizes", quizes);
+                quizes = quizSetService.searchQuizSetBySubstring(searchParams);
             } catch (ServiceException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e);
             }
-            req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
+            req.setAttribute("foundQuiz", quizes);
         }
+        req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
     }
 }

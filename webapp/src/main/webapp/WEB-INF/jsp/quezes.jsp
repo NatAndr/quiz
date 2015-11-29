@@ -12,13 +12,18 @@
     <title>Quizes</title>
 </head>
 <body>
-  <div>
-      <p>result:</p>
-    <c:forEach var="quiz" items="${quizes}">
-      <p><c:out value="${quiz.quizName}"/></p>
-    </c:forEach>
-
-  </div>
-
+<div>
+    <table>
+        <c:if test="${foundQuiz!=null}">
+            <c:forEach var="quiz" items="${foundQuiz}">
+                <tr>
+                    <td>
+                        <a href='<c:url value="startQuiz?id=${quiz.id}"/>'>${quiz.quizName}</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+    </table>
+</div>
 </body>
 </html>
