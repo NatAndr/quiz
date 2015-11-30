@@ -29,4 +29,3 @@ public class StudyGroupEditServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/studyGroupAddOrUpdate.jsp").forward(req, resp);
     }
 }
-

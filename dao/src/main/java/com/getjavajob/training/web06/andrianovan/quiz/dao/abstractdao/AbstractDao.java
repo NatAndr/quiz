@@ -329,5 +329,4 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
-
 }

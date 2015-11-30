@@ -39,4 +39,3 @@ public class StudyGroupAddOrUpdateServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/studyGroups");
     }
 }
-

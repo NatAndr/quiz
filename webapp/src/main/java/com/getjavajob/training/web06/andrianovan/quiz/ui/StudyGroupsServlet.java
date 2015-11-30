@@ -25,4 +25,3 @@ public class StudyGroupsServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/studyGroups.jsp").forward(req, resp);
     }
 }
-

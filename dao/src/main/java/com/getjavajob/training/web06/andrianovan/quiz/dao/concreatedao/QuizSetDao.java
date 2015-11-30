@@ -62,5 +62,4 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
         String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
         return super.doExecuteQueryWithoutParams(query);
     }
-
 }
