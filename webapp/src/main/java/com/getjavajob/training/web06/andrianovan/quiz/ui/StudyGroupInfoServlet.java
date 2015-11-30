@@ -23,3 +23,4 @@ public class StudyGroupInfoServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/studyGroupInfo.jsp").forward(req, resp);;
     }
 }
+

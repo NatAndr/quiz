@@ -36,3 +36,4 @@ public class QuizesSearch extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
     }
 }
+

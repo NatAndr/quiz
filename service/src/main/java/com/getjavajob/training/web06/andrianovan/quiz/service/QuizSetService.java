@@ -63,5 +63,4 @@ public class QuizSetService extends AbstractService<QuizSet> {
             throw new ServiceException("Cannot get quizes by substring " + str + e.getLocalizedMessage());
         }
     }
-
 }

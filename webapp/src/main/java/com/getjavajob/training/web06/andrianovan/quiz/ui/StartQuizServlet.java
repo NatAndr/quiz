@@ -23,3 +23,4 @@ public class StartQuizServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/startQuiz.jsp").forward(req, resp);
     }
 }
+
