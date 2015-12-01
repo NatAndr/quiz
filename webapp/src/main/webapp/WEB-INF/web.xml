@@ -53,13 +53,23 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>StartQuiz</servlet-name>
-        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StartQuizServlet</servlet-class>
+        <servlet-name>QuizInfo</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizInfoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>StartQuiz</servlet-name>
-        <url-pattern>/startQuiz</url-pattern>
+        <servlet-name>QuizInfo</servlet-name>
+        <url-pattern>/quizInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>QuizStart</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizStartServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>QuizStart</servlet-name>
+        <url-pattern>/quizStart</url-pattern>
     </servlet-mapping>
 
     <servlet>

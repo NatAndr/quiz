@@ -13,12 +13,12 @@
 </head>
 <body>
 <div>
-    <table>
+    <table class="table">
         <c:if test="${foundQuiz!=null}">
             <c:forEach var="quiz" items="${foundQuiz}">
                 <tr>
                     <td>
-                        <a href='<c:url value="startQuiz?id=${quiz.id}"/>'>${quiz.quizName}</a>
+                        <a href='<c:url value="quizInfo?id=${quiz.id}"/>'>${quiz.quizName}</a>
                     </td>
                 </tr>
             </c:forEach>

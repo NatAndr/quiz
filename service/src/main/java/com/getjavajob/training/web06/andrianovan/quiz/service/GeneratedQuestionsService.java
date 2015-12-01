@@ -38,7 +38,7 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
 //        }
     }
 
-    public void generateQuestions(QuizStart quizStart) throws ServiceException {
+    public GeneratedQuestions generateQuestions(QuizStart quizStart) throws ServiceException {
         int questionsNumber = getQuestionsNumberProperty();
         List<Question> generatedQuestions = new ArrayList<>(questionsNumber);
         List<Question> quizSetQuestions;
@@ -61,6 +61,7 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
         quizGeneratedQuestions.setQuizStart(quizStart);
         quizGeneratedQuestions.setQuestions(generatedQuestions);
         this.insert(quizGeneratedQuestions);
+        return quizGeneratedQuestions;
     }
 
     private int getQuestionsNumberProperty() {
@@ -79,10 +80,9 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
         return r.nextInt(max - min) + min;
     }
 
-    public QuizStart startQuiz(QuizSet quizSet) throws ServiceException {
+    public GeneratedQuestions startQuiz(QuizSet quizSet) throws ServiceException {
         QuizStart quizStart = new QuizStart(quizSet);
         quizStartService.insert(quizStart);
-        generateQuestions(quizStart);
-        return quizStart;
+        return generateQuestions(quizStart);
     }
 }

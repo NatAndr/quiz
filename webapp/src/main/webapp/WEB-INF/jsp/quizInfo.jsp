@@ -11,11 +11,12 @@
     <title>Quiz</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/startQuiz" method="get">
+<form action="${pageContext.request.contextPath}/quizStart" method="post">
     <h2>Quiz</h2>
     <label>
         ${quiz.quizName}
         <br/><br/>
+        <input type="hidden" name="id" value="${quiz.id}">
         <input type="submit" value="Start">
     </label>
 </form>

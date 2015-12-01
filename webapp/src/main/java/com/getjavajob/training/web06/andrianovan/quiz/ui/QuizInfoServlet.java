@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by user on 30.11.2015.
  */
-public class StartQuizServlet extends HttpServlet {
+public class QuizInfoServlet extends HttpServlet {
 
     private QuizSetService quizSetService = new QuizSetService();
 
@@ -20,6 +20,6 @@ public class StartQuizServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         QuizSet quizSet = quizSetService.get(Integer.parseInt(req.getParameter("id")));
         req.setAttribute("quiz", quizSet);
-        req.getRequestDispatcher("/WEB-INF/jsp/startQuiz.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/quizInfo.jsp").forward(req, resp);
     }
 }

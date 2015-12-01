@@ -31,6 +31,7 @@
         <jstl.version>1.2</jstl.version>
         <javax.servlet.jsp.jstl-api.version>1.2.1</javax.servlet.jsp.jstl-api.version>
         <commons-dbcp2.version>2.0.1</commons-dbcp2.version>
+        <jquery.version>2.1.4</jquery.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

@@ -20,8 +20,6 @@ public class QuizesSearch extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setCharacterEncoding("UTF-8");  //todo filter
-//        resp.setContentType("text/html");   //todo filter
         String searchParams = req.getParameter("searchParams");
         if (searchParams != null) {
             List<QuizSet> quizes;
@@ -33,7 +31,7 @@ public class QuizesSearch extends HttpServlet {
             }
             req.setAttribute("foundQuiz", quizes);
         }
-        req.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/quizesSearch.jsp").forward(req, resp);
     }
 }
 

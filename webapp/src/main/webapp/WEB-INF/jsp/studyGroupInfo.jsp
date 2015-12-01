@@ -19,7 +19,7 @@
         <br/><br/>
         <input type="hidden" name="id" value="${studyGroup.id}">
         <input type="submit" name="Edit" value="Edit">
-        <input type="submit" name="Add" value="Add">
+        <!-- input type="submit" name="Add" value="Add" -->
     </label>
 </form>
 </body>

@@ -23,5 +23,15 @@
       </c:forEach>
   </table>
 </div>
+<div>
+    <form action="${pageContext.request.contextPath}/studyGroupEdit" method="post">
+        <label>
+            ${studyGroup.groupName}
+            <br/><br/>
+            <input type="hidden" name="id" value="${studyGroup.id}">
+            <input type="submit" name="Add" value="Add">
+        </label>
+    </form>
+</div>
 </body>
 </html>
