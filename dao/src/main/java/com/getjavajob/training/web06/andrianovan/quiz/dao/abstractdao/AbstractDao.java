@@ -124,7 +124,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             Field[] fields = clazz.getDeclaredFields();
             try (PreparedStatement prepareStatement = connection.prepareStatement(getInsertStatement(), Statement.RETURN_GENERATED_KEYS)) {
                 for (int i = 0; i < fields.length; i++) {
-                    if (fields[i].getType() == List.class) {
+                    if (fields[i].getType() == List.class || fields[i].getName().contains("quizDate")) {
                         continue;
                     }
                     Method getMethod = null;
@@ -143,11 +143,11 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                    if (newValue == null) {
-                        prepareStatement.setNull(i + 1, typesMap.get(fields[i].getType()));
-                    } else {
+//                    if (newValue == null) {
+//                        prepareStatement.setNull(i + 1, typesMap.get(fields[i].getType()));
+//                    } else {
                         prepareStatement.setObject(i + 1, newValue);
-                    }
+//                    }
                 }
                 prepareStatement.executeUpdate();
                 connection.commit();
@@ -232,6 +232,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         typesMap.put(String.class, Types.VARCHAR);
         typesMap.put(Integer.class, Types.INTEGER);
         typesMap.put(QuestionType.class, Types.INTEGER);
+        typesMap.put(java.util.Date.class, Types.DATE);
     }
 
     private Object getValue(Field field, Object fieldValue) {

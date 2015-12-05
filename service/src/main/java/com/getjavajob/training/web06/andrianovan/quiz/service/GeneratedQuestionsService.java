@@ -81,7 +81,7 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
     }
 
     public GeneratedQuestions startQuiz(QuizSet quizSet) throws ServiceException {
-        QuizStart quizStart = new QuizStart(quizSet);
+        QuizStart quizStart = new QuizStart(quizSet, null);
         quizStartService.insert(quizStart);
         return generateQuestions(quizStart);
     }

@@ -15,7 +15,8 @@ import java.util.Date;
  */
 public class QuizStartDao extends AbstractDao<QuizStart> {
     private static final String TABLE_NAME = "quiz_start";
-    private static final String INSERT = "INSERT INTO quiz_start (quiz_id, quiz_date) VALUES (?,?)";
+//    private static final String INSERT = "INSERT INTO quiz_start (quiz_id, quiz_date) VALUES (?,?)";
+    private static final String INSERT = "INSERT INTO quiz_start (quiz_id) VALUES (?)";
     private static final String UPDATE = "UPDATE quiz_start SET quiz_id=?, quiz_date=? WHERE id=?";
     private static final QuizStartDao instance = new QuizStartDao();
 

@@ -9,18 +9,17 @@
 <%@ page errorPage="error.jsp" %>
 <html>
 <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <title>Quizes search</title>
+    <%--link href="<c:url value='/bootstrap/css/bootstrap.min.css'/>" rel="stylesheet">
+    <link href="<c:url value='/bootstrap/css/login.css'/>" rel="stylesheet" --%>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<%@include file="loginRef.jsp" %>
+<div class="container" align="center">
 
     <div class="page-header">
-        <h1>Quizes search</h1>
-        <!-- p class="lead">Basic grid layouts to get you familiar with building within the Bootstrap grid system.</p -->
+        <h2>Quizes search</h2>
     </div>
 
     <%-- form action="${pageContext.request.contextPath}/quizesSearch" method="get">
@@ -32,13 +31,20 @@
 
     <form class="form-search" action="${pageContext.request.contextPath}/quizesSearch" method="get">
         <div class="input-append">
-            <input type="text" name="searchParams" class="span2 search-query">
-            <button type="submit" class="btn">Search</button>
+            <label>
+                <input type="text" name="searchParams" class="span2 search-query">
+            </label>
+            <button type="submit" class="btn btn-default btn-sm">Search</button>
         </div>
     </form>
 
-
     <%@include file="quezes.jsp" %>
 </div>
+<%--script src="<c:url value = "/bootstrap/js/jquery-1.11.3.min.js"/>"></script>
+<script src="<c:url value = "/bootstrap/js/bootstrap.min.js"/>"></script--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
 </body>
 </html>

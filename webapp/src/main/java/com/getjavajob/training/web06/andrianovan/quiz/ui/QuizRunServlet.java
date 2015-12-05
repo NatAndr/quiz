@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by user on 01.12.2015.
  */
-public class QuizStartServlet extends HttpServlet {
+public class QuizRunServlet extends HttpServlet {
 
     private QuizSetService quizSetService = new QuizSetService();
     private GeneratedQuestionsService genQuestionsService = new GeneratedQuestionsService();
@@ -29,9 +29,20 @@ public class QuizStartServlet extends HttpServlet {
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
-        req.setAttribute("quizStart", generatedQuestions.getQuizStart());
-        req.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
+        int counter = 0;
+//        req.setAttribute("counter", counter);
+//        req.setAttribute("quizSet", quizSet);
+        req.setAttribute("question", generatedQuestions.getQuestions().get(0));
+//        req.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
+//        req.setAttribute("quizStart", generatedQuestions.getQuizStart());
+//        req.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
+
+        req.getSession().setAttribute("counter", counter);
+        req.getSession().setAttribute("quizStart", generatedQuestions.getQuizStart());
+        req.getSession().setAttribute("generatedQuestions", generatedQuestions.getQuestions());
+        req.getSession().setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
+        req.getSession().setAttribute("quizSet", quizSet);
+        counter++;
         req.getRequestDispatcher("/WEB-INF/jsp/quizRun.jsp").forward(req, resp);
     }
 }

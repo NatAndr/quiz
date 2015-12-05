@@ -10,22 +10,27 @@
 <html>
 <head>
     <title>Study group</title>
+    <link href="<c:url value="/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+
 <form action="${pageContext.request.contextPath}/studyGroupAddOrUpdate" method="post">
     <c:if test="${studyGroup!=null}">
-        Edit group:
-        <br>
+        <div class="page-header">
+            <p class="lead">Edit group:</p>
+        </div>
         <input type="hidden" name="id" value="${studyGroup.id}"/>
-        <input type="text" name="name" value="${studyGroup.groupName}"/>
+        <input class="form-control" type="text" name="name" value="${studyGroup.groupName}"/>
     </c:if>
     <c:if test="${studyGroup==null}">
-        Add new group:
-        <br>
-        <input type="text" name="name" maxlength="100" size="60" />
+        <div class="page-header">
+            <p class="lead">Add new group:</p>
+        </div>
+        <input class="form-control" placeholder="Enter group name" type="text" name="name" maxlength="100" size="60" />
     </c:if>
-    <input type="submit" name="Save" value="Save"/>
+    <input class="btn btn-default btn-sm" type="submit" name="Save" value="Save"/>
 </form>
-
+</div>
 </body>
 </html>

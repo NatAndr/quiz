@@ -11,14 +11,19 @@
     <title>Quiz</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/quizStart" method="post">
-    <h2>Quiz</h2>
-    <label>
-        ${quiz.quizName}
-        <br/><br/>
-        <input type="hidden" name="id" value="${quiz.id}">
-        <input type="submit" value="Start">
-    </label>
-</form>
+<div class="container" align="center">
+
+    <div class="page-header">
+        <h1>Quiz</h1>
+
+        <p class="lead">${quiz.quizName}</p>
+    </div>
+    <form action="${pageContext.request.contextPath}/quizRun" method="post">
+        <label>
+            <input type="hidden" name="id" value="${quiz.id}">
+            <input class="btn btn-default btn-sm" type="submit" value="Start">
+        </label>
+    </form>
+</div>
 </body>
 </html>
