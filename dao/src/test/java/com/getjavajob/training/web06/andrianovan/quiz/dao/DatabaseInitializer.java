@@ -32,7 +32,7 @@ public class DatabaseInitializer {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } finally {
-                ConnectionPool.getInstance().releaseConnection(connection);
+                ConnectionPool.getInstance().releaseConnection();
             }
         }
     }

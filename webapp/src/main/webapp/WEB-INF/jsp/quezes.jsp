@@ -12,13 +12,18 @@
     <title>Quizes</title>
 </head>
 <body>
-<div class="container" align="center">
+<div class="container">
 
     <table class="table table-striped">
         <c:if test="${foundQuiz!=null}">
-            <div class="page-header">
+            <!--div class="page-header">
                 <p class="lead">Quizes</p>
-            </div>
+            </div-->
+            <thead>
+            <tr>
+                <td>Quiz</td>
+            </tr>
+            </thead>
             <c:forEach var="quiz" items="${foundQuiz}">
                 <tr>
                     <td>

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -30,19 +31,14 @@ public class QuizRunServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         int counter = 0;
-//        req.setAttribute("counter", counter);
-//        req.setAttribute("quizSet", quizSet);
         req.setAttribute("question", generatedQuestions.getQuestions().get(0));
-//        req.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
-//        req.setAttribute("quizStart", generatedQuestions.getQuizStart());
-//        req.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
-
-        req.getSession().setAttribute("counter", counter);
-        req.getSession().setAttribute("quizStart", generatedQuestions.getQuizStart());
-        req.getSession().setAttribute("generatedQuestions", generatedQuestions.getQuestions());
-        req.getSession().setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
-        req.getSession().setAttribute("quizSet", quizSet);
-        counter++;
+        HttpSession session = req.getSession();
+        session.setAttribute("counter", counter);
+        session.setAttribute("quizStart", generatedQuestions.getQuizStart());
+        session.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
+        session.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
+        session.setAttribute("quizSet", quizSet);
+//        counter++;
         req.getRequestDispatcher("/WEB-INF/jsp/quizRun.jsp").forward(req, resp);
     }
 }

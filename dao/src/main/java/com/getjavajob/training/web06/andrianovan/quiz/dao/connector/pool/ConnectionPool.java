@@ -19,14 +19,15 @@ public class ConnectionPool {
     private static final String PROPERTIES_FILE_NAME = "quiz.properties";
     private static final String CANNOT_CREATE_CONNECTION = "Cannot create connection ";
     private static final String CANNOT_GET_CONNECTION = "Cannot get connection ";
+    private static final String CANNOT_SHUTDOWN_CONNECTION_POOL = "Cannot shutdown connection pool ";
     private static final String CANNOT_LOAD_PROPERTIES = "Cannot load properties";
+    private static final int DEFAULT_POOL_SIZE = 10;
     private static ConnectionPool instance = new ConnectionPool();
     private BlockingQueue<Connection> pool;
     private int poolSize;
     private String url;
     private String user;
     private String password;
-    private static final int DEFAULT_POOL_SIZE = 10;
     private ThreadLocal<ConnectionHolder> connectionHolder = new ThreadLocal<>();
 
     private ConnectionPool() {
@@ -83,17 +84,12 @@ public class ConnectionPool {
     }
 
 
-    public void releaseConnection(Connection connection) {
-        //    public void releaseConnection() { //todo без параметров
-
-        if (connection == null) {
-            return;
-        }
+    public void releaseConnection() {
+        Connection connection = connectionHolder.get().getConnection();
         connectionHolder.get().decrementCounter();
         if (connectionHolder.get().getCounter() == 0) {
             try {
                 pool.put(connection);
-//                pool.put(this.connectionHolder.get().getConnection());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -107,11 +103,12 @@ public class ConnectionPool {
         }
     }
 
-    private synchronized Connection createConnection() throws DaoException {
+    private Connection createConnection() throws DaoException {
         Connection connection;
         try {
             connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         } catch (SQLException e) {
             throw new DaoException(CANNOT_GET_CONNECTION + e.getLocalizedMessage());
         }
@@ -119,7 +116,7 @@ public class ConnectionPool {
     }
 
     //todo ждать пока все коннекшны освободятся
-    public void shutdown() {
+    public void shutdown() throws DaoException {
         while (!pool.isEmpty()) {
             try {
                 pool.take().close();
@@ -127,6 +124,14 @@ public class ConnectionPool {
                 e.printStackTrace();
             }
         }
+//        for (int i = 0; i < poolSize; i++) {
+//            try {
+//                this.connectionHolder.get().getConnection().close();
+//                this.connectionHolder.get().
+//            } catch (SQLException e) {
+//                throw new DaoException(CANNOT_SHUTDOWN_CONNECTION_POOL + e.getLocalizedMessage());
+//            }
+//        }
     }
 
     public int getSize() {

@@ -76,7 +76,7 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 

@@ -43,7 +43,6 @@ public class AllQuizesServlet extends HttpServlet {
             }
         }
         sb.append("</table></body></html>");
-//        resp.getOutputStream().write(sb.toString().getBytes());
         new Output().writeToOutputStream(resp.getOutputStream(), sb.toString());
     }
 }

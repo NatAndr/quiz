@@ -66,7 +66,7 @@ public class AnswerDao extends AbstractDao<Answer> {
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
@@ -104,7 +104,7 @@ public class AnswerDao extends AbstractDao<Answer> {
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 

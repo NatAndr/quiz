@@ -28,32 +28,39 @@ public class QuizSetService extends AbstractService<QuizSet> {
 
     @Override
     public void insert(QuizSet entity) throws ServiceException {
+        //todo транзакции
         super.insert(entity);
         for (Question question : entity.getQuestions()) {
             questionService.insert(question);
+            linkQuestionToQuizSet(entity, question);
         }
-        this.update(entity);
+//        this.update(entity);
     }
 
     @Override
     public void update(QuizSet entity) throws ServiceException {
-        QuestionDao questionDao = DaoFactory.getDaoFactory().getQuestionDao();
+
         super.update(entity);
         for (Question question : entity.getQuestions()) {
-            try {
-                questionDao.updateQuestionsQuizId(question, entity);
-            } catch (DaoException e) {
-                throw new ServiceException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
-            }
+            linkQuestionToQuizSet(entity, question);
+        }
+    }
+
+    private void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
+        QuestionDao questionDao = DaoFactory.getDaoFactory().getQuestionDao();
+        try {
+            questionDao.updateQuestionsQuizId(question, quizSet);
+        } catch (DaoException e) {
+            throw new ServiceException(CANNOT_UPDATE + quizSet + e.getLocalizedMessage());
         }
     }
 
     public void insertQuestionToExistingQuizSet(QuizSet entity) throws ServiceException {
-//        super.insert(entity);
         for (Question question : entity.getQuestions()) {
             questionService.insert(question);
+            linkQuestionToQuizSet(entity, question);
         }
-        this.update(entity);
+//        this.update(entity);
     }
 
     public List<QuizSet> searchQuizSetBySubstring(String str) throws ServiceException {

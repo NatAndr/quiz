@@ -65,7 +65,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             e.printStackTrace();
             return null;
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
         return null;
     }
@@ -87,7 +87,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             e.printStackTrace();
             return null;
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
@@ -111,13 +111,13 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
     @Override
     public void insert(T entity) throws DaoException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             Class<?> clazz = entity.getClass();
@@ -162,7 +162,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
@@ -175,25 +175,6 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         if (generatedID > 0) {
             entity.setId(generatedID);
         }
-    }
-
-    public int getMaxId() throws DaoException {
-        String query = "SELECT MAX(id) FROM " + getTableName();
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            try (ResultSet resultSet = connection.createStatement().executeQuery(query)) {
-                if (resultSet.next()) {
-                    return resultSet.getInt(1);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-        } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
-        }
-        return 0;
     }
 
     @Override
@@ -278,7 +259,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
@@ -307,12 +288,12 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             e.printStackTrace();
             return null;
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 
     protected List<T> doExecuteQueryWithoutParams(String query) throws DaoException {
-        Connection connection = null;
+        Connection connection;
         try {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -327,7 +308,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
             e.printStackTrace();
             return null;
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 }

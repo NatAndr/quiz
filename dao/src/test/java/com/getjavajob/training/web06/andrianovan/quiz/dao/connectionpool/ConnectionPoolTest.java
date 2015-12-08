@@ -21,13 +21,13 @@ public class ConnectionPoolTest {
     public void testGetConnection() throws DaoException {
         Connection connection = connectionPool.getConnection();
         assertNotNull(connection);
-        connectionPool.releaseConnection(connection);
+        connectionPool.releaseConnection();
     }
 
     @Test
     public void testReleaseConnection() throws DaoException, SQLException {
         Connection connection = connectionPool.getConnection();
-        connectionPool.releaseConnection(connection);
+        connectionPool.releaseConnection();
         assertFalse(connection.isClosed());
     }
 
@@ -38,7 +38,7 @@ public class ConnectionPoolTest {
     }
 
     @AfterClass
-    public static void testShutdown() {
+    public static void testShutdown() throws DaoException {
         connectionPool.shutdown();
         assertTrue(connectionPool.getSize() == 0);
     }

@@ -17,6 +17,10 @@
         <listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.CharacterEncodingFilter</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</listener-class>
+    </listener>
+
     <filter>
         <filter-name>CharacterEncoding</filter-name>
         <filter-class>com.getjavajob.training.web06.andrianovan.quiz.ui.CharacterEncodingFilter</filter-class>
@@ -28,6 +32,16 @@
 
     <filter-mapping>
         <filter-name>CharacterEncoding</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Login</filter-name>
+        <filter-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Login</filter-name>
         <url-pattern>/</url-pattern>
     </filter-mapping>
 
@@ -133,6 +147,7 @@
     </servlet-mapping>
 
     <servlet>
+        <display-name>Login</display-name>
         <servlet-name>LoginCheck</servlet-name>
         <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginCheckServlet</servlet-class>
     </servlet>
@@ -142,7 +157,18 @@
         <url-pattern>/loginCheck</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
     <session-config>
+        <session-timeout>60</session-timeout>
         <cookie-config>
             <name>MY_JSESSIONID</name>
         </cookie-config>
@@ -152,5 +178,12 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
+
+    <resource-ref>
+        <description>DB</description>
+        <res-ref-name>jdbc/quiz</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 
 </web-app>

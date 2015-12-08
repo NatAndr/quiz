@@ -88,7 +88,7 @@ public class QuestionDao extends AbstractDao<Question> {
                 }
             }
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            ConnectionPool.getInstance().releaseConnection();
         }
     }
 

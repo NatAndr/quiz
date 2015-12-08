@@ -30,30 +30,34 @@ public class QuestionService extends AbstractService<Question> {
     @Override
     public void insert(Question entity) throws ServiceException {
         super.insert(entity);
-        for (Answer answer : entity.getAnswers()) {
-//            answerService.insert(answer);
-            try {
-                answerDao.insert(answer);
-            } catch (DaoException e) {
-                throw new ServiceException(CANNOT_INSERT + entity + e.getLocalizedMessage());
-            }
-        }
-        this.update(entity);
+        insertAnswerToExistingQuestion(entity);
+//        this.update(entity);
     }
 
     @Override
     public void update(Question entity) throws ServiceException {
         super.update(entity);
         for (Answer answer : entity.getAnswers()) {
-            try {
-                answerDao.updateQuestionId(answer, entity);
-            } catch (DaoException e) {
-                throw new ServiceException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
-            }
+            linkAnswerToQuestion(entity, answer);
         }
     }
 
-    public void insertAnswerToExistingQuestion(Question question) {
-        //todo
+    private void linkAnswerToQuestion(Question question, Answer answer) throws ServiceException {
+        try {
+            answerDao.updateQuestionId(answer, question);
+        } catch (DaoException e) {
+            throw new ServiceException(CANNOT_UPDATE + question + e.getLocalizedMessage());
+        }
+    }
+
+    public void insertAnswerToExistingQuestion(Question question) throws ServiceException {
+        for (Answer answer : question.getAnswers()) {
+            try {
+                answerDao.insert(answer);
+            } catch (DaoException e) {
+                throw new ServiceException(CANNOT_INSERT + question + e.getLocalizedMessage());
+            }
+            linkAnswerToQuestion(question, answer);
+        }
     }
 }
