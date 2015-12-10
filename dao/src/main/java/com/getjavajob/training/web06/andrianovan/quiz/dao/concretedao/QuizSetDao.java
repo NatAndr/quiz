@@ -1,12 +1,11 @@
-package com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao;
+package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -61,5 +60,15 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     public List<QuizSet> searchQuizSetBySubstring(String str) throws DaoException {
         String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
         return super.doExecuteQueryWithoutParams(query);
+    }
+
+    public void insert(QuizSet entity, Connection connection) throws DaoException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatement.setString(1, entity.getQuizName());
+            prepareStatement.executeUpdate();
+            setGeneratedId(entity, prepareStatement);
+        } catch (SQLException e) {
+            throw new DaoException(CANNOT_INSERT + entity + e.getLocalizedMessage());
+        }
     }
 }

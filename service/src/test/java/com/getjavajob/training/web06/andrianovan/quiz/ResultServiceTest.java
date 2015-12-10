@@ -1,7 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.AnswerDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.ResultDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.ResultDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import com.getjavajob.training.web06.andrianovan.quiz.service.*;
@@ -99,7 +99,7 @@ public class ResultServiceTest {
 
         when(this.resultDao.getAllAnswersByStudentAndQuestionAndQuizStart(any(Student.class), any(Question.class),
                 any(QuizStart.class))).thenReturn(Collections.EMPTY_LIST);
-        int actual = this.resultService.countQuizResult(student, quizStart);
+        int actual = this.resultService.calculateQuizResult(student, quizStart);
         assertEquals(expected, actual);
     }
 

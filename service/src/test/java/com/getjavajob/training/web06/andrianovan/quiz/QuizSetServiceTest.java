@@ -1,6 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.QuizSetDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuizSetDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
@@ -24,14 +24,14 @@ import static org.mockito.Mockito.*;
 public class QuizSetServiceTest {
 
     private static final int ROWS_NUMBER = 2;
-    private QuizSetService quizHeaderService;
+    private QuizSetService quizSetService;
     private QuizSetDao dao;
 
     @Before
     public void onBefore() {
-        this.quizHeaderService = new QuizSetService();
+        this.quizSetService = new QuizSetService();
         this.dao = mock(QuizSetDao.class);
-        this.quizHeaderService.setDao(dao);
+        this.quizSetService.setDao(dao);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class QuizSetServiceTest {
         QuizSet expected = new QuizSet("New quiz");
         when(this.dao.get(1)).thenReturn(expected);
 
-        QuizSet actual = this.quizHeaderService.get(1);
+        QuizSet actual = this.quizSetService.get(1);
         assertEquals(expected, actual);
     }
 
@@ -51,7 +51,7 @@ public class QuizSetServiceTest {
         }
         when(this.dao.getAll()).thenReturn(expected);
 
-        List<QuizSet> actual = this.quizHeaderService.getAll();
+        List<QuizSet> actual = this.quizSetService.getAll();
         assertEquals(expected.size(), actual.size());
     }
 
@@ -65,7 +65,7 @@ public class QuizSetServiceTest {
         question1.setAnswers(Collections.singletonList(answer1));
         question2.setAnswers(Collections.singletonList(answer2));
         quizSet.setQuestions(Arrays.asList(question1, question2));
-        this.quizHeaderService.insert(quizSet);
+        this.quizSetService.insert(quizSet);
         verify(this.dao).insert(quizSet);
     }
 
@@ -75,14 +75,14 @@ public class QuizSetServiceTest {
         Question question1 = new Question("question1");
         Question question2 = new Question("question2");
         quizSet.setQuestions(Arrays.asList(question1, question2));
-        this.quizHeaderService.update(quizSet);
+        this.quizSetService.update(quizSet);
         verify(this.dao).update(quizSet);
     }
 
     @Test
     public void testDelete() throws ServiceException, DaoException {
         QuizSet quizSet = new QuizSet();
-        this.quizHeaderService.delete(quizSet);
+        this.quizSetService.delete(quizSet);
         verify(this.dao).delete(quizSet);
     }
 }

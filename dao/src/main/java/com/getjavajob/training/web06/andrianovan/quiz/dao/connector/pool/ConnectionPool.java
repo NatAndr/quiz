@@ -18,7 +18,7 @@ public class ConnectionPool {
 
     private static final String PROPERTIES_FILE_NAME = "quiz.properties";
     private static final String CANNOT_CREATE_CONNECTION = "Cannot create connection ";
-    private static final String CANNOT_GET_CONNECTION = "Cannot get connection ";
+    public static final String CANNOT_GET_CONNECTION = "Cannot get connection ";
     private static final String CANNOT_SHUTDOWN_CONNECTION_POOL = "Cannot shutdown connection pool ";
     private static final String CANNOT_LOAD_PROPERTIES = "Cannot load properties";
     private static final int DEFAULT_POOL_SIZE = 10;

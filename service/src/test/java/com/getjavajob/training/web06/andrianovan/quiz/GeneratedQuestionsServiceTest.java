@@ -1,6 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.GeneratedQuestionsDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.GeneratedQuestionsDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;

@@ -24,6 +24,6 @@ public class LogoutServlet extends HttpServlet {
 //        session.setAttribute("password", null);
 //        resp.sendRedirect(".");
 //        resp.sendRedirect(req.getRequestURI());
-        req.getRequestDispatcher("/WEB-INF/jsp/quizesSearch.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Nat on 25.11.2015.
  */
-public class QuizesSearch extends HttpServlet {
+public class QuizzesSearch extends HttpServlet {
 
     private QuizSetService quizSetService = new QuizSetService();
 
@@ -31,7 +31,7 @@ public class QuizesSearch extends HttpServlet {
             }
             req.setAttribute("foundQuiz", quizes);
         }
-        req.getRequestDispatcher("/WEB-INF/jsp/quizesSearch.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
     }
 }
 

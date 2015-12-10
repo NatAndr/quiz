@@ -166,7 +166,7 @@ public abstract class AbstractDao<T extends BaseEntity> extends DatabaseDaoFacto
         }
     }
 
-    private void setGeneratedId(T entity, PreparedStatement prepareStatement) throws SQLException {
+    protected void setGeneratedId(T entity, PreparedStatement prepareStatement) throws SQLException {
         ResultSet rs = prepareStatement.getGeneratedKeys();
         int generatedID = -1;
         if (rs.next()) {

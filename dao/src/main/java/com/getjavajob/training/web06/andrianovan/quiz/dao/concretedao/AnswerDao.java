@@ -1,4 +1,4 @@
-package com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao;
+package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.ConnectionPool;

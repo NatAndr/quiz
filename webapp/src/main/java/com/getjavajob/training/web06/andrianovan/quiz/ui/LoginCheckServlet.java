@@ -37,7 +37,7 @@ public class LoginCheckServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("userName", userName);
             session.setAttribute("password", userPass);
-            req.getRequestDispatcher("/WEB-INF/jsp/quizesSearch.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
         } else {
             req.setAttribute("errorLoginMsg", "Wrong username or password");
             req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);

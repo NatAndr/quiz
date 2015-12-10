@@ -9,16 +9,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Quizes</title>
+    <title>Quizzes</title>
 </head>
 <body>
 <div class="container">
 
     <table class="table table-striped">
         <c:if test="${foundQuiz!=null}">
-            <!--div class="page-header">
-                <p class="lead">Quizes</p>
-            </div-->
             <thead>
             <tr>
                 <td>Quiz</td>

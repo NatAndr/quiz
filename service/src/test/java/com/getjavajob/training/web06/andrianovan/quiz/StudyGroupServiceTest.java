@@ -1,6 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.StudyGroupDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.StudyGroupDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;

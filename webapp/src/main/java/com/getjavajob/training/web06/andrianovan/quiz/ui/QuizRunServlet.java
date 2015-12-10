@@ -2,8 +2,10 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import com.getjavajob.training.web06.andrianovan.quiz.service.GeneratedQuestionsService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.QuizStartService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
@@ -19,14 +21,19 @@ import java.io.IOException;
 public class QuizRunServlet extends HttpServlet {
 
     private QuizSetService quizSetService = new QuizSetService();
+    private QuizStartService quizStartService = new QuizStartService();
     private GeneratedQuestionsService genQuestionsService = new GeneratedQuestionsService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         QuizSet quizSet = quizSetService.get(Integer.parseInt(req.getParameter("id")));
         GeneratedQuestions generatedQuestions;
+        QuizStart quizStart;
         try {
-            generatedQuestions = genQuestionsService.startQuiz(quizSet);
+            quizStart = new QuizStart(quizSet, null);
+            quizStartService.insert(quizStart);
+//            generatedQuestions = genQuestionsService.startQuiz(quizSet);
+            generatedQuestions = genQuestionsService.generateQuestions(quizStart);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
@@ -34,7 +41,7 @@ public class QuizRunServlet extends HttpServlet {
         req.setAttribute("question", generatedQuestions.getQuestions().get(0));
         HttpSession session = req.getSession();
         session.setAttribute("counter", counter);
-        session.setAttribute("quizStart", generatedQuestions.getQuizStart());
+        session.setAttribute("quizStart", quizStart);
         session.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
         session.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
         session.setAttribute("quizSet", quizSet);

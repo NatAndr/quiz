@@ -19,6 +19,7 @@
         <h1>Quiz</h1>
 
         <p class="lead">${quiz.quizName}</p>
+        <p>${questionsNumber} Questions</p>
     </div>
     <form action="${pageContext.request.contextPath}/quizRun" method="post">
         <label>

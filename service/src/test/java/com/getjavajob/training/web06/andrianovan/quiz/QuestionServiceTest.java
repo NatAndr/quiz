@@ -1,7 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.AnswerDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.QuestionDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;

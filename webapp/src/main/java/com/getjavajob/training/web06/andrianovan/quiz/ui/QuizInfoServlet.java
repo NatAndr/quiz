@@ -20,6 +20,7 @@ public class QuizInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         QuizSet quizSet = quizSetService.get(Integer.parseInt(req.getParameter("id")));
         req.setAttribute("quiz", quizSet);
+        req.setAttribute("questionsNumber", quizSet.getQuestions().size());
         req.getRequestDispatcher("/WEB-INF/jsp/quizInfo.jsp").forward(req, resp);
     }
 }

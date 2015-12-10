@@ -1,6 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.ResultDao;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.ResultDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
@@ -22,7 +22,6 @@ public class ResultService extends AbstractService<Result> {
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
                                                                       QuizStart quizStart) throws ServiceException {
-//        return this.dao.getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
         try {
             return ((ResultDao) super.getDao()).getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
         } catch (DaoException e) {
@@ -30,29 +29,25 @@ public class ResultService extends AbstractService<Result> {
         }
     }
 
-    public int countQuizResult(Student student, QuizStart quizStart) throws ServiceException {
-        int quizResult = 0;
-//        QuestionService questionService = new QuestionService();
+    public int calculateQuizResult(Student student, QuizStart quizStart) throws ServiceException {
+        int result = 0;
         AnswerService answerService = new AnswerService();
         QuizSetService quizHeaderService = new QuizSetService();
 
-//        QuizSet quizHeader = getDaoFactory().getQuizSetDao().get(quizStart.getQuizSet().getId());
         QuizSet quizSet = quizHeaderService.get(quizStart.getQuizSet().getId());
-//        List<Question> questions = questionService.getQuestionsByQuiz(quizHeader);
 
-//        for (Question question : questions) {
         for (Question question : quizSet.getQuestions()) {
             switch (question.getQuestionType()) {
                 case SINGLE:
                 case MULTIPLE:
-                    quizResult += getSingleOrMultipleQuestionResult(student, quizStart, answerService, question);
+                    result += getSingleOrMultipleQuestionResult(student, quizStart, answerService, question);
                     break;
                 case INPUT:
-                    quizResult += getInputQuestionResult(student, quizStart, answerService, question);
+                    result += getInputQuestionResult(student, quizStart, answerService, question);
                     break;
             }
         }
-        return quizResult;
+        return result;
     }
 
     protected int getInputQuestionResult(Student student, QuizStart quizStart,

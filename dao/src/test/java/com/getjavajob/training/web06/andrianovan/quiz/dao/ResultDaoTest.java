@@ -1,6 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao;
 
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concreatedao.*;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.*;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Result;
 import org.junit.Before;
