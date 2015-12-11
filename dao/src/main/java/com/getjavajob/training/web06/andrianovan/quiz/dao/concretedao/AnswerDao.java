@@ -5,7 +5,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.Connect
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +27,15 @@ public class AnswerDao extends AbstractDao<Answer> {
     private static final String UPDATE_QUESTION_ID = "UPDATE Answer SET question_id=? WHERE id=?";
     private static final String SELECT_FROM_ANSWER_BY_QUESTION_ID = "SELECT * FROM Answer WHERE question_id = ?";
     private static final String SELECT_CORRECT_ANSWERS_BY_QUESTION_ID = "SELECT * FROM Answer WHERE is_correct = 1 AND question_id = ?";
+
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public AnswerDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private AnswerDao() {
     }

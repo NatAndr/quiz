@@ -39,17 +39,6 @@ public class GeneratedQuestionsServiceTest {
         assertEquals(expected, actual);
     }
 
-//    @Test
-//    public void testGetAll() throws Exception {
-//        List<GeneratedQuestions> expected = new ArrayList<>(6);
-//        for (int i = 0; i < 6; i++) {
-//            expected.add(new GeneratedQuestions());
-//        }
-//        when(this.dao.getAll()).thenReturn(expected);
-//        List<GeneratedQuestions> actual = this.generatedQuestionsService.getAll();
-//        assertEquals(expected.size(), actual.size());
-//    }
-
     @Test
     public void testInsert() throws ServiceException, DaoException {
         QuizSet quizSet = new QuizSet("QuizSet");

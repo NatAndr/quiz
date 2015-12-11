@@ -4,7 +4,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
@@ -19,6 +22,15 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     private static final String UPDATE = "UPDATE Quiz_header SET quiz_name=? WHERE id=?";
     private static final String SEARCH_QUIZ_SET = "SELECT * FROM Quiz_header WHERE UPPER(quiz_name) LIKE ";
     private QuestionDao questionDao = QuestionDao.getInstance();
+
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public QuizSetDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private QuizSetDao() {
     }

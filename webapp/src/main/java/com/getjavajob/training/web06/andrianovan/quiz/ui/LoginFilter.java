@@ -4,6 +4,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
 
@@ -11,38 +14,47 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
  * Created by user on 07.12.2015.
  */
 public class LoginFilter implements Filter {
+    private String loginPage;
+    private List<String> excludedURLs;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        this.loginPage = filterConfig.getInitParameter("loginPage");
+        excludedURLs = new ArrayList<>(Arrays.asList(filterConfig.getInitParameter("excludedURLs").split(";")));
+        System.out.println("excludedURLs = " + excludedURLs);
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         Object userNameSession = request.getSession().getAttribute("userName");
-//        String passwordSession = request.getSession().getAttribute("password").toString();
+        Object passwordSession = request.getSession().getAttribute("password");
         String userNameCookie;
         String passwordCookie;
+        String path = String.valueOf(request.getRequestURL());
+        System.out.println("path = " + path);
+        if (excludedURL(path)) {
+            System.out.println("excludedURLs.contains(path)");
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            if (userNameSession == null) {
+                userNameCookie = getCookieValue(request, COOKIE_USERNAME);
+                passwordCookie = getCookieValue(request, COOKIE_PASSWORD);
 
-        String path = request.getRequestURI();
-
-        if (userNameSession == null) {
-            userNameCookie = getCookieValue(request, COOKIE_USERNAME);
-            passwordCookie = getCookieValue(request, COOKIE_PASSWORD);
-
-            if (userNameCookie != null && passwordCookie != null) {
-                request.login(userNameCookie, passwordCookie);
-                request.getSession().setAttribute("userName", userNameCookie);
-                request.getSession().setAttribute("password", passwordCookie);
-                addCookie(response, COOKIE_USERNAME, userNameCookie, COOKIE_AGE);
-                addCookie(response, COOKIE_PASSWORD, passwordCookie, COOKIE_AGE);
-                filterChain.doFilter(servletRequest, servletResponse);
+                if (userNameCookie != null && passwordCookie != null) {
+                    System.out.println("userNameCookie =" + userNameCookie);
+                    System.out.println("passwordCookie =" + passwordCookie);
+                    request.getSession().setAttribute("userName", userNameCookie);
+                    request.getSession().setAttribute("password", passwordCookie);
+                    filterChain.doFilter(servletRequest, servletResponse);
+                } else {
+                    System.out.println("userNameCookie == null or passwordCookie == null");
+                    System.out.println("redirect to login");
+                    response.sendRedirect("login");
+                }
             } else {
-                response.sendRedirect("login");
-//                removeCookie(response, COOKIE_USERNAME);
-//                removeCookie(response, COOKIE_PASSWORD);
+                filterChain.doFilter(servletRequest, servletResponse);
             }
         }
     }
@@ -50,5 +62,14 @@ public class LoginFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean excludedURL(String url) {
+        for (String excludedURL : excludedURLs) {
+            if (url.contains(excludedURL)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -33,6 +33,7 @@
         <commons-dbcp2.version>2.0.1</commons-dbcp2.version>
         <jquery.version>2.1.4</jquery.version>
         <bootstrap.version>3.3.5</bootstrap.version>
+        <spring.version>4.2.3.RELEASE</spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

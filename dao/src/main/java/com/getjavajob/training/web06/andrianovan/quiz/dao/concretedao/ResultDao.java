@@ -3,7 +3,10 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +25,15 @@ public class ResultDao extends AbstractDao<Result> {
             "FROM Result r\n" +
             "INNER JOIN Answer a ON r.answer_id = a.id\n" +
             "WHERE r.student_id = ? AND a.question_id = ? AND r.quiz_start_id = ?";
+
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public ResultDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private ResultDao() {
     }

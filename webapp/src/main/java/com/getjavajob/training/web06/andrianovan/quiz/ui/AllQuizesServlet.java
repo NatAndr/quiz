@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+
+
 /**
  * Created by Nat on 13.11.2015.
  */
@@ -21,6 +23,11 @@ public class AllQuizesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private static QuizSetService quizSetService = new QuizSetService();
+
+    @Override
+    public void init() throws ServletException {
+//        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

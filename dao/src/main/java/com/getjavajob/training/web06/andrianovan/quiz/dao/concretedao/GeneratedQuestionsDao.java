@@ -6,7 +6,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +28,15 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
 
     private QuizStartDao quizStartDao = QuizStartDao.getInstance();
     private QuestionDao questionDao = QuestionDao.getInstance();
+
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public GeneratedQuestionsDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private GeneratedQuestionsDao() {
     }

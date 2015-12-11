@@ -20,10 +20,6 @@ public class LogoutServlet extends HttpServlet {
         removeCookie(resp, COOKIE_PASSWORD);
         HttpSession session = req.getSession();
         session.invalidate();
-//        session.setAttribute("userName", null);
-//        session.setAttribute("password", null);
-//        resp.sendRedirect(".");
-//        resp.sendRedirect(req.getRequestURI());
         req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
     }
 }

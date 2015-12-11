@@ -29,6 +29,7 @@ public class ConnectionPool {
     private String user;
     private String password;
     private ThreadLocal<ConnectionHolder> connectionHolder = new ThreadLocal<>();
+    private volatile boolean stop;
 
     private ConnectionPool() {
         getProperties();
@@ -69,6 +70,9 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws DaoException {
+        if (stop) {
+            return null;
+        }
         ConnectionHolder ch;
         if (connectionHolder.get() == null) {
             try {
@@ -117,21 +121,28 @@ public class ConnectionPool {
 
     //todo ждать пока все коннекшны освободятся
     public void shutdown() throws DaoException {
+//        while (!pool.isEmpty()) {
+//            try {
+//                pool.take().close();
+//            } catch (SQLException | InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        stop = true;
+        while (this.poolSize != this.pool.size()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         while (!pool.isEmpty()) {
             try {
-                pool.take().close();
+                this.pool.take().close();
             } catch (SQLException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
-//        for (int i = 0; i < poolSize; i++) {
-//            try {
-//                this.connectionHolder.get().getConnection().close();
-//                this.connectionHolder.get().
-//            } catch (SQLException e) {
-//                throw new DaoException(CANNOT_SHUTDOWN_CONNECTION_POOL + e.getLocalizedMessage());
-//            }
-//        }
     }
 
     public int getSize() {

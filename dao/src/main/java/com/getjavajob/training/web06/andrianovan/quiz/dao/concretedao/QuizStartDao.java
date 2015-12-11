@@ -4,7 +4,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -19,6 +22,15 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     private static final String INSERT = "INSERT INTO quiz_start (quiz_id) VALUES (?)";
     private static final String UPDATE = "UPDATE quiz_start SET quiz_id=?, quiz_date=? WHERE id=?";
     private static final QuizStartDao instance = new QuizStartDao();
+
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public QuizStartDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private QuizStartDao() {
     }
