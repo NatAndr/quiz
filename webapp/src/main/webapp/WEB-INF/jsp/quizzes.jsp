@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Quizzes</title>
+    <%@include file="header.jsp" %>
 </head>
 <body>
 <div class="container">

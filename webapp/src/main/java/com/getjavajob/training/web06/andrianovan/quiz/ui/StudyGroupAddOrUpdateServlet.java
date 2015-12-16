@@ -3,6 +3,8 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,13 @@ import java.io.IOException;
  */
 public class StudyGroupAddOrUpdateServlet extends HttpServlet {
 
-    private StudyGroupService studyGroupService = new StudyGroupService();
+    private StudyGroupService studyGroupService;
+
+    @Override
+    public void init() throws ServletException {
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        this.studyGroupService = applicationContext.getBean(StudyGroupService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

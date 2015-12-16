@@ -9,20 +9,15 @@
 <%@ page errorPage="error.jsp" %>
 <html>
 <head>
-    <title>Quizes search</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <%--link href="<c:url value="css/bootstrap.min.css" />" rel="stylesheet">
-    <script src="<c:url value="css/js/jquery-1.11.3.min.js" />"></script>
-    <script src="<c:url value="css/js/bootstrap.min.js" />"></script--%>
-    <link rel="icon" href="images/favicon.ico" >
-
+    <title>Quizzes search</title>
+    <%@include file="header.jsp" %>
 </head>
 <body>
 <div class="container">
     <%@include file="link.jsp" %>
 
     <div class="page-header">
-        <h2>Quizes search</h2>
+        <h2>Quizzes search</h2>
     </div>
     <form class="form-search" action="${pageContext.request.contextPath}/quizesSearch" method="get">
         <div class="input-append">
@@ -35,13 +30,7 @@
         </div>
     </form>
 
-    <%@include file="quezes.jsp" %>
+    <%@include file="quizzes.jsp" %>
 </div>
-<%--script src="<c:url value = "/bootstrap/js/jquery-1.11.3.min.js"/>"></script>
-<script src="<c:url value = "/bootstrap/js/bootstrap.min.js"/>"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script--%>
 </body>
 </html>

@@ -21,6 +21,9 @@ public class AbstractService<T extends BaseEntity> {
         this.dao = dao;
     }
 
+    public AbstractService() {
+    }
+
     public AbstractDao<T> getDao() {
         return dao;
     }

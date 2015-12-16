@@ -16,15 +16,24 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
 public class LoginCheckServlet extends HttpServlet {
 
     private static final String LOGIN_PROPERTIES = "login.properties";
+    private String name;
+    private String pass;
+
+    @Override
+    public void init() throws ServletException {
+        Properties props = new Properties();
+        try {
+            props.load(LoginCheckServlet.class.getClassLoader().getResourceAsStream(LOGIN_PROPERTIES));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        name = props.getProperty("user.name");
+        pass = props.getProperty("user.password");
+    }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("email");
-        String userPass = req.getParameter("password");
-
-        Properties props = new Properties();
-        props.load(LoginCheckServlet.class.getClassLoader().getResourceAsStream(LOGIN_PROPERTIES));
-        String name = props.getProperty("user.name");
-        String pass = props.getProperty("user.password");
+        String userPass = req.getParameter("password"); //todo delete
 
         if (name.equals(userName) && pass.equals(userPass)) {
             if (req.getParameter("rememberMe") != null) {

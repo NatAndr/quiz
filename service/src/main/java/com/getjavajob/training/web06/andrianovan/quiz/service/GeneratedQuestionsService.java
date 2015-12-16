@@ -1,13 +1,15 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.GeneratedQuestionsDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,23 +20,29 @@ import java.util.Random;
 /**
  * Created by Nat on 24.11.2015.
  */
+@Service
 public class GeneratedQuestionsService extends AbstractService<GeneratedQuestions> {
-
     private static final int DEFAULT_QUESTIONS_NUMBER = 3;
     private static final String CANNOT_GENERATE_QUESTIONS = "Cannot generate questions for ";
     private static final String QUIZ_PROPERTIES = "quiz.properties";
     private static final String QUIZ_PROPERTIES_QUESTIONS_NUMBER = "quiz.questionsNumber";
-    private QuestionDao questionDao = QuestionDao.getInstance();
-    private QuizStartService quizStartService = new QuizStartService();
+    @Autowired
+    private QuestionDao questionDao;
+    @Autowired
+    private QuizStartService quizStartService;
+
+    @Autowired
+    public GeneratedQuestionsService(GeneratedQuestionsDao dao) {
+        super(dao);
+    }
 
     public GeneratedQuestionsService() {
-        super(DaoFactory.getDaoFactory().getQuizGeneratedQuestionsDao());
     }
 
     @Override
     public void insert(GeneratedQuestions entity) throws ServiceException {
 //        for (Question question : entity.getQuestions()) {
-            super.insert(entity);
+        super.insert(entity);
 //        }
     }
 

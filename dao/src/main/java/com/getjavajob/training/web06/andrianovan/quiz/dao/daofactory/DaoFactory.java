@@ -1,7 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.*;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.database.DatabaseDaoFactory;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -39,7 +38,7 @@ public abstract class DaoFactory {
             switch (factory) {
                 case "MYSQL":
                 case "H2":
-                    return new DatabaseDaoFactory();
+//                    return new DatabaseDaoFactory();
             }
         }
         return null;

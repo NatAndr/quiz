@@ -23,7 +23,7 @@ public class GeneratedQuestionsServiceTest {
 
     @Before
     public void onBefore() {
-        this.generatedQuestionsService = new GeneratedQuestionsService();
+//        this.generatedQuestionsService = new GeneratedQuestionsService();
         this.dao = mock(GeneratedQuestionsDao.class);
         this.generatedQuestionsService.setDao(dao);
     }

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class GeneratedQuestionsDaoTest {
 
-    private GeneratedQuestionsDao dao = GeneratedQuestionsDao.getInstance();
+    private GeneratedQuestionsDao dao;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

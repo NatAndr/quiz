@@ -20,7 +20,7 @@ public class StudyGroupDaoTest {
     private static final String VALUE_FOR_ID_1 = "java-algo01";
     private static final String INSERTED_VALUE = "Group 4";
     private static final String UPDATED_NEW_VALUE = "Gr 1";
-    private StudyGroupDao dao = StudyGroupDao.getInstance();
+    private StudyGroupDao dao;
 
     @Before
     public void initDatabase() throws DaoException {

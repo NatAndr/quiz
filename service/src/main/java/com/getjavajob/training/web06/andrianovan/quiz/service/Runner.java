@@ -1,10 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-
-import java.util.List;
 
 /**
  * Created by Nat on 14.11.2015.
@@ -42,9 +39,5 @@ public class Runner {
 //        generatedQuestionsService.generateQuestions(quizStart);
 //        System.out.println(generatedQuestionsService.getAll());
 
-        QuizSetService quizSetService = new QuizSetService();
-        String searchParams = "e";
-        List<QuizSet> quizes = quizSetService.searchQuizSetBySubstring(searchParams);
-        System.out.println(quizes);
     }
 }

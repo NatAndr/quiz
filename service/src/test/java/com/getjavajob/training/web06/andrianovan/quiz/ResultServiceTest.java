@@ -26,17 +26,20 @@ public class ResultServiceTest {
     private static final int ROWS_NUMBER = 2;
     private ResultService resultService;
     private ResultDao resultDao;
+    private StudentService studentService;
+    private QuizSetService quizSetService;
+    private QuizStartService quizStartService;
 
 
     @Before
     public void onBefore() {
-        this.resultService = new ResultService();
+//        this.resultService = new ResultService();
         this.resultDao = mock(ResultDao.class);
         this.resultService.setDao(resultDao);
 
-        AnswerService answerService = new AnswerService();
+        AnswerService answerService;
         AnswerDao answerDao = mock(AnswerDao.class);
-        answerService.setDao(answerDao);
+//        answerService.setDao(answerDao);
     }
 
     @Test
@@ -93,9 +96,9 @@ public class ResultServiceTest {
     @Test
     public void testCountQuizResult() throws DaoException, ServiceException {
         int expected = 0;
-        Student student = new StudentService().get(1);
-        QuizSet quizHeader = new QuizSetService().get(1);
-        QuizStart quizStart = new QuizStartService().get(3);
+        Student student = this.studentService.get(1);
+        QuizSet quizHeader = this.quizSetService.get(1);
+        QuizStart quizStart = this.quizStartService.get(3);
 
         when(this.resultDao.getAllAnswersByStudentAndQuestionAndQuizStart(any(Student.class), any(Question.class),
                 any(QuizStart.class))).thenReturn(Collections.EMPTY_LIST);

@@ -26,7 +26,7 @@ public class QuizStartServiceTest {
 
     @Before
     public void onBefore() {
-        this.quizStartService = new QuizStartService();
+//        this.quizStartService = new QuizStartService();
         this.dao = mock(QuizStartDao.class);
         this.quizStartService.setDao(dao);
     }

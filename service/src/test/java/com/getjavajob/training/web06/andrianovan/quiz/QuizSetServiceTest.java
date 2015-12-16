@@ -29,7 +29,7 @@ public class QuizSetServiceTest {
 
     @Before
     public void onBefore() {
-        this.quizSetService = new QuizSetService();
+//        this.quizSetService = new QuizSetService();
         this.dao = mock(QuizSetDao.class);
         this.quizSetService.setDao(dao);
     }

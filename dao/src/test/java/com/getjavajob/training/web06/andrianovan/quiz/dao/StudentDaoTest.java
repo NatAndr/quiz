@@ -20,7 +20,8 @@ public class StudentDaoTest {
 
     private static final int ROWS_NUMBER = 5;
     private static final String UPDATED_NEW_VALUE = "Сидоров";
-    private StudentDao dao = StudentDao.getInstance();
+    private StudentDao dao;
+    private StudyGroupDao studyGroupDao;
 
     @Before
     public void initDatabase() throws DaoException {
@@ -46,7 +47,7 @@ public class StudentDaoTest {
         Student student = new Student();
         student.setLastName("Артемов");
         student.setFirstName("Артем");
-        student.setStudyGroup(StudyGroupDao.getInstance().get(1));
+        student.setStudyGroup(this.studyGroupDao.get(1));
         this.dao.insert(student);
         List<Student> studentList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, studentList.size());
@@ -71,7 +72,7 @@ public class StudentDaoTest {
 
     @Test
     public void testGetStudentsByStudyGroup() throws DaoException {
-        List<Student> actual = dao.getStudentsByStudyGroup(StudyGroupDao.getInstance().get(2));
+        List<Student> actual = dao.getStudentsByStudyGroup(this.studyGroupDao.get(2));
         List<Student> expected = Arrays.asList(dao.get(3), dao.get(4));
         assertEquals(expected, actual);
     }

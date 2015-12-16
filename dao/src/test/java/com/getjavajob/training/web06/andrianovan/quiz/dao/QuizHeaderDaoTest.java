@@ -20,7 +20,7 @@ public class QuizHeaderDaoTest {
     private static final String VALUE_FOR_ID_1 = "Java Programming. Language Fundamentals";
     private static final String INSERTED_VALUE = "Ботаника";
     private static final String UPDATED_NEW_VALUE = "Математика";
-    private QuizSetDao dao = QuizSetDao.getInstance();
+    private QuizSetDao dao;
 
     @Before
     public void initDatabase() throws DaoException {

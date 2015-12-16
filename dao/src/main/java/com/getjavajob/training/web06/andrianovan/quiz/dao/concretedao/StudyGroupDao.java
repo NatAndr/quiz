@@ -5,6 +5,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -13,27 +14,19 @@ import java.sql.SQLException;
 /**
  * Created by Nat on 30.10.2015.
  */
+@Repository
 public class StudyGroupDao extends AbstractDao<StudyGroup> {
 
     private static final String TABLE_NAME = "Study_group";
-    private static final StudyGroupDao instance = new StudyGroupDao();
     public static final String INSERT = "INSERT INTO Study_group (group_name) VALUES (?)";
     public static final String UPDATE = "UPDATE Study_group SET group_name=? WHERE id=?";
 
-    private DataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
+    public StudyGroupDao() {
+    }
 
     @Autowired
     public StudyGroupDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    private StudyGroupDao() {
-    }
-
-    public static StudyGroupDao getInstance() {
-        return instance;
+        super(dataSource, jdbcTemplate);
     }
 
     @Override

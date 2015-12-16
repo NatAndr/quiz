@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>StudyGroups</title>
+    <%@include file="header.jsp" %>
 </head>
 <body>
 <div>

@@ -25,7 +25,7 @@ public class StudyGroupServiceTest {
 
     @Before
     public void onBefore() {
-        this.studyGroupService = new StudyGroupService();
+//        this.studyGroupService = new StudyGroupService();
         this.dao = mock(StudyGroupDao.class);
         this.studyGroupService.setDao(dao);
     }

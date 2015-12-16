@@ -6,37 +6,34 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
 
 /**
  * Created by Nat on 09.11.2015.
  */
+@Repository
 public class QuizStartDao extends AbstractDao<QuizStart> {
     private static final String TABLE_NAME = "quiz_start";
 //    private static final String INSERT = "INSERT INTO quiz_start (quiz_id, quiz_date) VALUES (?,?)";
     private static final String INSERT = "INSERT INTO quiz_start (quiz_id) VALUES (?)";
     private static final String UPDATE = "UPDATE quiz_start SET quiz_id=?, quiz_date=? WHERE id=?";
-    private static final QuizStartDao instance = new QuizStartDao();
-
-    private DataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private QuizSetDao quizSetDao;
 
     @Autowired
     public QuizStartDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = jdbcTemplate;
+        super(dataSource, jdbcTemplate);
     }
 
-    private QuizStartDao() {
-    }
-
-    public static QuizStartDao getInstance() {
-        return instance;
+    public QuizStartDao() {
     }
 
     @Override
@@ -59,7 +56,7 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
 
         QuizStart quizStart = new QuizStart();
         try {
-            QuizSet quiz = QuizSetDao.getInstance().get(resultSet.getInt("quiz_id"));
+            QuizSet quiz = this.quizSetDao.get(resultSet.getInt("quiz_id"));
             quizStart.setId(resultSet.getInt("id"));
             quizStart.setQuizSet(quiz);
             Timestamp timestamp = resultSet.getTimestamp("quiz_date");
@@ -71,4 +68,19 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
         return quizStart;
     }
 
+    @Override
+    @Transactional
+    public void insert(final QuizStart entity) throws DaoException {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        super.jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection)
+                    throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, entity.getQuizSet().getId());
+                return ps;
+            }
+        }, keyHolder);
+        entity.setId(keyHolder.getKey().intValue());
+    }
 }

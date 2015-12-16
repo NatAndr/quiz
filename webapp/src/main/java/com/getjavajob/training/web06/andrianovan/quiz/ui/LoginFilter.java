@@ -43,14 +43,10 @@ public class LoginFilter implements Filter {
                 passwordCookie = getCookieValue(request, COOKIE_PASSWORD);
 
                 if (userNameCookie != null && passwordCookie != null) {
-                    System.out.println("userNameCookie =" + userNameCookie);
-                    System.out.println("passwordCookie =" + passwordCookie);
                     request.getSession().setAttribute("userName", userNameCookie);
                     request.getSession().setAttribute("password", passwordCookie);
                     filterChain.doFilter(servletRequest, servletResponse);
                 } else {
-                    System.out.println("userNameCookie == null or passwordCookie == null");
-                    System.out.println("redirect to login");
                     response.sendRedirect("login");
                 }
             } else {

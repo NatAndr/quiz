@@ -24,7 +24,8 @@ public class QuestionDaoTest {
             " for array elements of the types indicated?";
     private static final String INSERTED_VALUE = "Сколько полос у арбуза?";
     private static final String UPDATED_NEW_VALUE = "Зачем?";
-    private QuestionDao dao = QuestionDao.getInstance();
+    private QuestionDao dao;
+    private QuizSetDao quizSetDao;
 
     @Before
     public void initDatabase() throws DaoException {
@@ -48,7 +49,7 @@ public class QuestionDaoTest {
         Question question = new Question();
         question.setQuestion(INSERTED_VALUE);
         question.setQuestionType(QuestionType.MULTIPLE);
-        QuizSet quizHeader = QuizSetDao.getInstance().get(1);
+        QuizSet quizHeader = this.quizSetDao.get(1);
 //        question.setQuiz(quizHeader);
         this.dao.insert(question);
         List<Question> questionList = this.dao.getAll();

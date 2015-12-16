@@ -33,8 +33,8 @@ public class QuestionServiceTest {
 
     @Before
     public void onBefore() {
-        this.questionService = new QuestionService();
-        this.answerService = new AnswerService();
+//        this.questionService = new QuestionService();
+//        this.answerService = new AnswerService();
 
 
         this.dao = mock(QuestionDao.class);

@@ -1,4 +1,4 @@
-package com.getjavajob.training.web06.andrianovan.quiz.ui;
+package com.getjavajob.training.web06.andrianovan.quiz.dao;
 
 import javax.sql.DataSource;
 

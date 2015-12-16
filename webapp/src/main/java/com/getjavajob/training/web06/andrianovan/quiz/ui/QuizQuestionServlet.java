@@ -5,6 +5,9 @@ import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.ResultService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +24,20 @@ public class QuizQuestionServlet extends HttpServlet {
 
     private static final int STUDENT_ID = 1;
     private static final String CANNOT_SAVE_RESULT = "Cannot save result ";
-    private StudentService studentService = new StudentService();
-    private AnswerService answerService = new AnswerService();
-    private ResultService resultService = new ResultService();
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private AnswerService answerService;
+    @Autowired
+    private ResultService resultService;
+
+    @Override
+    public void init() throws ServletException {
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        this.studentService = applicationContext.getBean(StudentService.class);
+        this.answerService = applicationContext.getBean(AnswerService.class);
+        this.resultService = applicationContext.getBean(ResultService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

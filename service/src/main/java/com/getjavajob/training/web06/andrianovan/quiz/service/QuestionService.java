@@ -1,37 +1,45 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory;
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Nat on 08.11.2015.
  */
+@Service
 public class QuestionService extends AbstractService<Question> {
 
-    private AnswerService answerService = new AnswerService();
-    private static AnswerDao answerDao = DaoFactory.getDaoFactory().getAnswerDao();
+    @Autowired
+    private AnswerService answerService;
+    @Autowired
+    private AnswerDao answerDao;
+
+    @Autowired
+    public QuestionService(QuestionDao dao) {
+        super(dao);
+    }
+
+    public QuestionService() {
+    }
 
     public void setAnswerService(AnswerService answerService) {
         this.answerService = answerService;
     }
 
-    public static void setAnswerDao(AnswerDao answerDao) {
-        QuestionService.answerDao = answerDao;
-    }
-
-    public QuestionService() {
-        super(DaoFactory.getDaoFactory().getQuestionDao());
+    public void setAnswerDao(AnswerDao answerDao) {
+        this.answerDao = answerDao;
     }
 
     @Override
     public void insert(Question entity) throws ServiceException {
         super.insert(entity);
         insertAnswerToExistingQuestion(entity);
-//        this.update(entity);
     }
 
     @Override

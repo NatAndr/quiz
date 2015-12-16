@@ -2,6 +2,9 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +15,16 @@ import java.io.IOException;
 /**
  * Created by user on 30.11.2015.
  */
+@Controller
 public class StudyGroupInfoServlet extends HttpServlet {
 
-    private StudyGroupService studyGroupService = new StudyGroupService();
+    private StudyGroupService studyGroupService;
+
+    @Override
+    public void init() throws ServletException {
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        this.studyGroupService = applicationContext.getBean(StudyGroupService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

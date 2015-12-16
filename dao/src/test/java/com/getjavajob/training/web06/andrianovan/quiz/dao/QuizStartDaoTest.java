@@ -18,7 +18,8 @@ import static org.junit.Assert.assertNull;
 public class QuizStartDaoTest {
 
     private static final int ROWS_NUMBER = 2;
-    private QuizStartDao dao = QuizStartDao.getInstance();
+    private QuizStartDao dao;
+    private QuizSetDao quizSetDao;
 
     @Before
     public void initDatabase() throws DaoException {
@@ -40,7 +41,7 @@ public class QuizStartDaoTest {
     @Test
     public void testInsert() throws DaoException {
         QuizStart quizStart = new QuizStart();
-        quizStart.setQuizSet(QuizSetDao.getInstance().get(1));
+        quizStart.setQuizSet(this.quizSetDao.get(1));
         this.dao.insert(quizStart);
         List<QuizStart> quizStartList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, quizStartList.size());
@@ -49,7 +50,7 @@ public class QuizStartDaoTest {
     @Test
     public void testUpdate() throws DaoException {
         QuizStart quizStart = dao.get(2);
-        quizStart.setQuizSet(QuizSetDao.getInstance().get(2));
+        quizStart.setQuizSet(this.quizSetDao.get(2));
         this.dao.update(quizStart);
         QuizStart updatedQuizStart = this.dao.get(2);
         assertEquals("Vegetables", updatedQuizStart.getQuizSet().getQuizName());

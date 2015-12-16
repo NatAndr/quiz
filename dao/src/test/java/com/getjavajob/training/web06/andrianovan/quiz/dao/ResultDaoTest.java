@@ -17,7 +17,11 @@ import static org.junit.Assert.assertEquals;
 public class ResultDaoTest {
 
     private static final int ROWS_NUMBER = 8;
-    private ResultDao dao = ResultDao.getInstance();
+    private ResultDao dao;
+    private AnswerDao answerDao;
+    private StudentDao studentDao;
+    private QuizStartDao quizStartDao;
+    private QuestionDao questionDao;
 
     @Before
     public void initDatabase() throws DaoException {
@@ -39,9 +43,9 @@ public class ResultDaoTest {
     @Test
     public void testInsert() throws DaoException {
         Result result = new Result();
-        result.setAnswer(AnswerDao.getInstance().get(1));
-        result.setStudent(StudentDao.getInstance().get(1));
-        result.setQuizStart(QuizStartDao.getInstance().get(3));
+        result.setAnswer(this.answerDao.get(1));
+        result.setStudent(this.studentDao.get(1));
+        result.setQuizStart(this.quizStartDao.get(3));
         this.dao.insert(result);
         List<Result> resultList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, resultList.size());
@@ -66,8 +70,8 @@ public class ResultDaoTest {
 
     @Test
     public void testGetAllAnswersByStudentAndQuestionAndQuizStart() throws DaoException {
-        List<Result> actual = dao.getAllAnswersByStudentAndQuestionAndQuizStart(StudentDao.getInstance().get(1),
-                QuestionDao.getInstance().get(4), QuizStartDao.getInstance().get(2));
+        List<Result> actual = dao.getAllAnswersByStudentAndQuestionAndQuizStart(this.studentDao.get(1),
+                this.questionDao.get(4), this.quizStartDao.get(2));
         List<Result> expected = Collections.singletonList(dao.get(7));
         assertEquals(expected, actual);
     }

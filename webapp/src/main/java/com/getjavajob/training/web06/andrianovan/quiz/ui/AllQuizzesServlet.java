@@ -5,6 +5,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.output.Output;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,15 +20,16 @@ import java.util.List;
 /**
  * Created by Nat on 13.11.2015.
  */
-public class AllQuizesServlet extends HttpServlet {
+public class AllQuizzesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private static QuizSetService quizSetService = new QuizSetService();
+    private QuizSetService quizSetService;
 
     @Override
     public void init() throws ServletException {
-//        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        this.quizSetService = applicationContext.getBean(QuizSetService.class);
     }
 
     @Override

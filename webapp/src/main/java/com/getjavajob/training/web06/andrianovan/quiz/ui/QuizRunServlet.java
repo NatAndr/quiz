@@ -7,6 +7,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.service.GeneratedQuestions
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizStartService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +22,17 @@ import java.io.IOException;
  */
 public class QuizRunServlet extends HttpServlet {
 
-    private QuizSetService quizSetService = new QuizSetService();
-    private QuizStartService quizStartService = new QuizStartService();
-    private GeneratedQuestionsService genQuestionsService = new GeneratedQuestionsService();
+    private QuizSetService quizSetService;
+    private QuizStartService quizStartService;
+    private GeneratedQuestionsService genQuestionsService;
+
+    @Override
+    public void init() throws ServletException {
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        this.quizSetService = applicationContext.getBean(QuizSetService.class);
+        this.quizStartService = applicationContext.getBean(QuizStartService.class);
+        this.genQuestionsService = applicationContext.getBean(GeneratedQuestionsService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

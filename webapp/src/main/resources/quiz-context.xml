@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+    	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz"  expected-type="javax.sql.DataSource" />
 
@@ -11,29 +13,8 @@
         <constructor-arg ref="dataSource" />
     </bean>
 
-    <bean id="quizSetDao" class="com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuizSetDao">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz"/>
 
-    <bean id="questionDao" class="com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
-
-    <bean id="answerDao" class="com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
-
-    <bean id="studyGroupDao" class="com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.StudyGroupDao">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
-
-    <bean id="stuentDao" class="com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.StudentDao">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
 
 </beans>

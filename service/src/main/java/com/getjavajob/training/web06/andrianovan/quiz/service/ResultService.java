@@ -5,19 +5,28 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory.getDaoFactory;
-
 /**
  * Created by Nat on 09.11.2015.
  */
+@Service
 public class ResultService extends AbstractService<Result> {
 
+    @Autowired
+    private AnswerService answerService;
+    @Autowired
+    private QuizSetService quizSetService;
+    @Autowired
+    public ResultService(ResultDao dao) {
+        super(dao);
+    }
+
     public ResultService() {
-        super(getDaoFactory().getResultDao());
     }
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,
@@ -31,10 +40,10 @@ public class ResultService extends AbstractService<Result> {
 
     public int calculateQuizResult(Student student, QuizStart quizStart) throws ServiceException {
         int result = 0;
-        AnswerService answerService = new AnswerService();
-        QuizSetService quizHeaderService = new QuizSetService();
+//        AnswerService answerService = new AnswerService();
+//        QuizSetService quizSetService = new QuizSetService();
 
-        QuizSet quizSet = quizHeaderService.get(quizStart.getQuizSet().getId());
+        QuizSet quizSet = quizSetService.get(quizStart.getQuizSet().getId());
 
         for (Question question : quizSet.getQuestions()) {
             switch (question.getQuestionType()) {

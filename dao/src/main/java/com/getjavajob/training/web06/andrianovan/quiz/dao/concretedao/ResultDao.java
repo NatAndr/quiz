@@ -5,6 +5,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -14,10 +15,10 @@ import java.util.List;
 /**
  * Created by Nat on 01.11.2015.
  */
+@Repository
 public class ResultDao extends AbstractDao<Result> {
 
     private static final String TABLE_NAME = "Result";
-    private static final ResultDao instance = new ResultDao();
     private static final String INSERT = "INSERT INTO Result (student_id, answer_id, input_answer, quiz_start_id)  " +
             "VALUES (?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE Result SET student_id=?, answer_id=?, input_answer=?, quiz_start_id=? WHERE id=?";
@@ -26,29 +27,28 @@ public class ResultDao extends AbstractDao<Result> {
             "INNER JOIN Answer a ON r.answer_id = a.id\n" +
             "WHERE r.student_id = ? AND a.question_id = ? AND r.quiz_start_id = ?";
 
-    private DataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private StudentDao studentDao;
+    @Autowired
+    private AnswerDao answerDao;
+    @Autowired
+    private QuizStartDao quizStartDao;
 
     @Autowired
     public ResultDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = jdbcTemplate;
+        super(dataSource, jdbcTemplate);
     }
 
-    private ResultDao() {
-    }
-
-    public static ResultDao getInstance() {
-        return instance;
+    public ResultDao() {
     }
 
     @Override
     protected Result createInstanceFromResult(ResultSet resultSet) throws DaoException {
         Result result = new Result();
         try {
-            Student student = StudentDao.getInstance().get(resultSet.getInt("student_id"));
-            Answer answer = AnswerDao.getInstance().get(resultSet.getInt("answer_id"));
-            QuizStart quizStart = QuizStartDao.getInstance().get(resultSet.getInt("quiz_start_id"));
+            Student student = this.studentDao.get(resultSet.getInt("student_id"));
+            Answer answer = this.answerDao.get(resultSet.getInt("answer_id"));
+            QuizStart quizStart = this.quizStartDao.get(resultSet.getInt("quiz_start_id"));
 
             result.setId(resultSet.getInt("id"));
             result.setStudent(student);
