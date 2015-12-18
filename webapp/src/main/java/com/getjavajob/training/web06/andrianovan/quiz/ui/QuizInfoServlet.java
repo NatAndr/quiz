@@ -2,7 +2,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -16,7 +15,7 @@ import java.io.IOException;
  * Created by user on 30.11.2015.
  */
 public class QuizInfoServlet extends HttpServlet {
-    @Autowired
+    //@Autowired
     private QuizSetService quizSetService;
 
     @Override

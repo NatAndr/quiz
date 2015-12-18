@@ -50,6 +50,11 @@ public class StudentDao extends AbstractDao<Student> {
     }
 
     @Override
+    protected Object[] getEntityFields(Student entity) {
+        return new Object[]{entity.getStudyGroup().getId(), entity.getFirstName(), entity.getLastName()};
+    }
+
+    @Override
     protected String getTableName() {
         return TABLE_NAME;
     }

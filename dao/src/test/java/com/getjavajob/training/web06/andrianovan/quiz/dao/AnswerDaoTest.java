@@ -6,7 +6,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,9 +27,9 @@ public class AnswerDaoTest {
     private static final String VALUE_FOR_ID_1 = "1. int -> 0";
     private static final String INSERTED_VALUE = "red";
     private static final String UPDATED_NEW_VALUE = "grey";
-    @Autowired
+    //@Autowired
     private AnswerDao answerDao;
-    @Autowired
+    //@Autowired
     private QuestionDao questionDao;
 
 //    @Before

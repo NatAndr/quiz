@@ -31,11 +31,6 @@ public class QuizSetService extends AbstractService<QuizSet> {
     }
 
     @Override
-    public QuizSet get(int id) {
-        return super.get(id);
-    }
-
-    @Override
     public void insert(QuizSet entity) throws ServiceException {
         super.insert(entity);
         for (Question question : entity.getQuestions()) {

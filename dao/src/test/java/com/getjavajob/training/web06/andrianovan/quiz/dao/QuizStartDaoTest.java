@@ -6,7 +6,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,9 +23,9 @@ import static org.junit.Assert.assertNull;
 public class QuizStartDaoTest {
 
     private static final int ROWS_NUMBER = 2;
-    @Autowired
+    //@Autowired
     private QuizStartDao dao;
-    @Autowired
+    //@Autowired
     private QuizSetDao quizSetDao;
 
 //    @Before

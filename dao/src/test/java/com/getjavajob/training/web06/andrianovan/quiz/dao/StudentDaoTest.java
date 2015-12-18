@@ -6,7 +6,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,9 +25,9 @@ public class StudentDaoTest {
 
     private static final int ROWS_NUMBER = 5;
     private static final String UPDATED_NEW_VALUE = "Сидоров";
-    @Autowired
+    //@Autowired
     private StudentDao dao;
-    @Autowired
+    //@Autowired
     private StudyGroupDao studyGroupDao;
 
 //    @Before

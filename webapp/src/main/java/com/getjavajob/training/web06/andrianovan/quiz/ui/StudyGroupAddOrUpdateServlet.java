@@ -3,6 +3,7 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 /**
  * Created by user on 30.11.2015.
  */
+@Controller
 public class StudyGroupAddOrUpdateServlet extends HttpServlet {
 
     private StudyGroupService studyGroupService;

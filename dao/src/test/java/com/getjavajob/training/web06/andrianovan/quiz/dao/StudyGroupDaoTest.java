@@ -6,8 +6,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:quiz-context-dao-overrides.xml"})
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class StudyGroupDaoTest {
 
     private static final int ROWS_NUMBER = 6;
@@ -29,7 +30,7 @@ public class StudyGroupDaoTest {
     private static final String UPDATED_NEW_VALUE = "Gr 1";
     private EmbeddedDatabase db;
     private DatabaseInitializer databaseInitializer = new DatabaseInitializer();
-    @Autowired
+//    //@Autowired
     private StudyGroupDao dao;
 
 //    @Before

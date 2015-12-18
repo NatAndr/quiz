@@ -49,6 +49,11 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     }
 
     @Override
+    protected Object[] getEntityFields(QuizSet entity) {
+        return new Object[]{entity.getQuizName()};
+    }
+
+    @Override
     protected String getTableName() {
         return TABLE_NAME;
     }

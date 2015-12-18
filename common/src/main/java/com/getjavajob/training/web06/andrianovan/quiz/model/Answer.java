@@ -4,8 +4,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.model;
  * Created by Nat on 30.10.2015.
  */
 public class Answer extends BaseEntity {
-
-    //    private Question question; //deleted
     private String answer;
     private boolean isCorrect;
 
@@ -39,7 +37,7 @@ public class Answer extends BaseEntity {
         this.answer = answer;
     }
 
-    public boolean getIsCorrect() {
+    public boolean isCorrect() {
         return isCorrect;
     }
 
@@ -50,7 +48,7 @@ public class Answer extends BaseEntity {
     @Override
     public String toString() {
         return answer + '\'' +
-                ", getIsCorrect=" + isCorrect;
+                ", isCorrect=" + isCorrect;
     }
 
     @Override

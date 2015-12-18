@@ -8,6 +8,8 @@ public class Student extends BaseEntity {
     private StudyGroup studyGroup;
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
 
     public Student() {
     }
@@ -20,6 +22,12 @@ public class Student extends BaseEntity {
     public Student(StudyGroup studyGroup, String firstName, String lastName) {
         this(firstName, lastName);
         this.studyGroup = studyGroup;
+    }
+
+    public Student(StudyGroup studyGroup, String firstName, String lastName, String login, String password) {
+        this(studyGroup, firstName, lastName);
+        this.login = login;
+        this.password = password;
     }
 
     public StudyGroup getStudyGroup() {
@@ -44,6 +52,22 @@ public class Student extends BaseEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

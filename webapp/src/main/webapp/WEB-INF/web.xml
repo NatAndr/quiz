@@ -15,7 +15,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:quiz-context-webapp.xml</param-value>
+        <param-value>classpath:quiz-context.xml</param-value>
     </context-param>
 
     <listener>
@@ -51,7 +51,7 @@
         </init-param>
         <init-param>
             <param-name>excludedURLs</param-name>
-            <param-value>/resources/;/login</param-value>
+            <param-value>/resources/;/pages/;/login</param-value>
         </init-param>
     </filter>
 

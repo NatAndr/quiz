@@ -6,14 +6,12 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -68,19 +66,8 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     }
 
     @Override
-    @Transactional
-    public void insert(final QuizStart entity) throws DaoException {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        super.jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection)
-                    throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), new String[]{"id"});
-                ps.setInt(1, entity.getQuizSet().getId());
-                return ps;
-            }
-        }, keyHolder);
-        entity.setId(keyHolder.getKey().intValue());
+    protected Object[] getEntityFields(QuizStart entity) {
+        return new Object[]{entity.getQuizSet().getId()};
     }
 
     @Override

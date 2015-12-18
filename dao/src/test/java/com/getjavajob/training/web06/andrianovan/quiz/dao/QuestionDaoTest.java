@@ -8,7 +8,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -30,9 +29,9 @@ public class QuestionDaoTest {
             " for array elements of the types indicated?";
     private static final String INSERTED_VALUE = "Сколько полос у арбуза?";
     private static final String UPDATED_NEW_VALUE = "Зачем?";
-    @Autowired
+    //@Autowired
     private QuestionDao dao;
-    @Autowired
+    //@Autowired
     private QuizSetDao quizSetDao;
 
 //    @Before

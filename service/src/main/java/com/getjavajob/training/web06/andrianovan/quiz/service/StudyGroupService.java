@@ -17,5 +17,6 @@ public class StudyGroupService extends AbstractService<StudyGroup> {
     @Autowired
     public StudyGroupService(StudyGroupDao dao) {
         super(dao);
+        System.out.println("StudyGroupService");
     }
 }

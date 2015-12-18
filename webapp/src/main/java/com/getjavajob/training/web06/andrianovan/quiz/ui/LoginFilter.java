@@ -21,7 +21,6 @@ public class LoginFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         this.loginPage = filterConfig.getInitParameter("loginPage");
         excludedURLs = new ArrayList<>(Arrays.asList(filterConfig.getInitParameter("excludedURLs").split(";")));
-        System.out.println("excludedURLs = " + excludedURLs);
     }
 
     @Override
@@ -33,7 +32,6 @@ public class LoginFilter implements Filter {
         String userNameCookie;
         String passwordCookie;
         String path = String.valueOf(request.getRequestURL());
-        System.out.println("path = " + path);
         if (excludedURL(path)) {
             System.out.println("excludedURLs.contains(path)");
             filterChain.doFilter(servletRequest, servletResponse);

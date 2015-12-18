@@ -8,6 +8,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -54,10 +55,14 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
     protected String getUpdateByIdStatement() {
         return null;
     }
-//
-//    @Override
-//    public void insert(GeneratedQuestions entity) throws DaoException {
-//        QuizStart quizStart = entity.getQuizStart();
+
+    @Override
+    @Transactional
+    public void insert(GeneratedQuestions entity) throws DaoException {
+        QuizStart quizStart = entity.getQuizStart();
+        for (Question question : entity.getQuestions()) {
+            jdbcTemplate.update(INSERT, quizStart.getId(), question.getId());
+        }
 //        Connection connection = null;
 //        try {
 //            connection = ConnectionPool.getInstance().getConnection();
@@ -80,8 +85,8 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
 //        } finally {
 //            ConnectionPool.getInstance().releaseConnection();
 //        }
-//    }
-//
+    }
+
     @Override
     protected GeneratedQuestions createInstanceFromResult(ResultSet resultSet) throws DaoException {
         GeneratedQuestions quizGeneratedQuestions = new GeneratedQuestions();
@@ -99,6 +104,11 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
             throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return quizGeneratedQuestions;
+    }
+
+    @Override
+    protected Object[] getEntityFields(GeneratedQuestions entity) {
+        return new Object[]{entity.getQuizStart(), entity.getQuestions()};
     }
 //
 //    @Override

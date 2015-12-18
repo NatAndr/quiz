@@ -55,7 +55,6 @@ public class QuizRunServlet extends HttpServlet {
         session.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
         session.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
         session.setAttribute("quizSet", quizSet);
-//        counter++;
         req.getRequestDispatcher("/WEB-INF/jsp/quizRun.jsp").forward(req, resp);
     }
 }

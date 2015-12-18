@@ -5,7 +5,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.ResultService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -24,11 +23,11 @@ public class QuizQuestionServlet extends HttpServlet {
 
     private static final int STUDENT_ID = 1;
     private static final String CANNOT_SAVE_RESULT = "Cannot save result ";
-    @Autowired
+    //@Autowired
     private StudentService studentService;
-    @Autowired
+    //@Autowired
     private AnswerService answerService;
-    @Autowired
+    //@Autowired
     private ResultService resultService;
 
     @Override

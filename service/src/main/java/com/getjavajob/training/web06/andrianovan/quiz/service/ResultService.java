@@ -40,9 +40,6 @@ public class ResultService extends AbstractService<Result> {
 
     public int calculateQuizResult(Student student, QuizStart quizStart) throws ServiceException {
         int result = 0;
-//        AnswerService answerService = new AnswerService();
-//        QuizSetService quizSetService = new QuizSetService();
-
         QuizSet quizSet = quizSetService.get(quizStart.getQuizSet().getId());
 
         for (Question question : quizSet.getQuestions()) {

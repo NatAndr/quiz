@@ -1,16 +1,14 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.connector.pool.ConnectionPool;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -40,7 +38,6 @@ public class QuestionDao extends AbstractDao<Question> {
 
     @Override
     protected Question createInstanceFromResult(ResultSet resultSet) throws DaoException {
-
         Question question = new Question();
         try {
             QuestionType questionType = QuestionType.values()[resultSet.getInt("type") - 1];
@@ -54,6 +51,11 @@ public class QuestionDao extends AbstractDao<Question> {
             throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
         return question;
+    }
+
+    @Override
+    protected Object[] getEntityFields(Question entity) {
+        return new Object[]{entity.getQuestion(), entity.getQuestionType(), entity.getWeight()};
     }
 
     @Override
@@ -75,28 +77,29 @@ public class QuestionDao extends AbstractDao<Question> {
         return super.doExecuteQueryWithParams(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizHeader.getId()});
     }
 
-    //todo
+    @Transactional
     public void updateQuestionsQuizId(Question entity, QuizSet quiz) throws DaoException {
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            try (PreparedStatement prepareStatement = connection.prepareStatement(UPDATE_QUIZ_ID)) {
-                prepareStatement.setInt(1, quiz.getId());
-                prepareStatement.setInt(2, entity.getId());
-                prepareStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                throw new DaoException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
-            } finally {
-                try {
-                    connection.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        } finally {
-            ConnectionPool.getInstance().releaseConnection();
-        }
+        jdbcTemplate.update(UPDATE_QUIZ_ID, quiz.getId(), entity.getId());
+//        Connection connection = null;
+//        try {
+//            connection = ConnectionPool.getInstance().getConnection();
+//            try (PreparedStatement prepareStatement = connection.prepareStatement(UPDATE_QUIZ_ID)) {
+//                prepareStatement.setInt(1, quiz.getId());
+//                prepareStatement.setInt(2, entity.getId());
+//                prepareStatement.executeUpdate();
+//                connection.commit();
+//            } catch (SQLException e) {
+//                throw new DaoException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
+//            } finally {
+//                try {
+//                    connection.rollback();
+//                } catch (SQLException e1) {
+//                    e1.printStackTrace();
+//                }
+//            }
+//        } finally {
+//            ConnectionPool.getInstance().releaseConnection();
+//        }
     }
 
     public List<Question> getQuestionsFromQuizGeneratedQuestionsByQuizStart(QuizStart quizStart) throws DaoException {

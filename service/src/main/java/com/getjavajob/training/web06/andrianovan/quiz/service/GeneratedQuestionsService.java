@@ -41,9 +41,7 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
 
     @Override
     public void insert(GeneratedQuestions entity) throws ServiceException {
-//        for (Question question : entity.getQuestions()) {
         super.insert(entity);
-//        }
     }
 
     public GeneratedQuestions generateQuestions(QuizStart quizStart) throws ServiceException {

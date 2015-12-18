@@ -5,7 +5,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,7 +25,7 @@ public class QuizHeaderDaoTest {
     private static final String VALUE_FOR_ID_1 = "Java Programming. Language Fundamentals";
     private static final String INSERTED_VALUE = "Ботаника";
     private static final String UPDATED_NEW_VALUE = "Математика";
-    @Autowired
+    //@Autowired
     private QuizSetDao dao;
 
 //    @Before
