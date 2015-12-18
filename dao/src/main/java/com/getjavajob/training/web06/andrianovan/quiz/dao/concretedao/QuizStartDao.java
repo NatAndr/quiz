@@ -22,7 +22,6 @@ import java.util.Date;
 @Repository
 public class QuizStartDao extends AbstractDao<QuizStart> {
     private static final String TABLE_NAME = "quiz_start";
-//    private static final String INSERT = "INSERT INTO quiz_start (quiz_id, quiz_date) VALUES (?,?)";
     private static final String INSERT = "INSERT INTO quiz_start (quiz_id) VALUES (?)";
     private static final String UPDATE = "UPDATE quiz_start SET quiz_id=?, quiz_date=? WHERE id=?";
     @Autowired
@@ -76,11 +75,16 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection)
                     throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), new String[]{"id"});
                 ps.setInt(1, entity.getQuizSet().getId());
                 return ps;
             }
         }, keyHolder);
         entity.setId(keyHolder.getKey().intValue());
+    }
+
+    @Override
+    public void update(QuizStart entity) throws DaoException {
+        throw new DaoException("Update is not allowed for " + entity);
     }
 }

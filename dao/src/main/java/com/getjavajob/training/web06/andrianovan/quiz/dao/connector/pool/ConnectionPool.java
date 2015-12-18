@@ -119,23 +119,30 @@ public class ConnectionPool {
         return connection;
     }
 
-    //todo ждать пока все коннекшны освободятся take
     public void shutdown() throws DaoException {
-        stop = true;
-        while (this.poolSize != this.pool.size()) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        while (!pool.isEmpty()) {
+        for (int i = 0; i < poolSize; i++) {
             try {
                 this.pool.take().close();
             } catch (SQLException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+//        stop = true;
+//        while (this.poolSize != this.pool.size()) {
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        while (!pool.isEmpty()) {
+//            try {
+//                this.pool.take().close();
+//            } catch (SQLException | InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public int getSize() {

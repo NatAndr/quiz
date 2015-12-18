@@ -4,8 +4,11 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.StudentDao
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.StudyGroupDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Student;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,17 +19,22 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by Nat on 03.11.2015.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
+        "classpath:quiz-context-dao-overrides.xml"})
 public class StudentDaoTest {
 
     private static final int ROWS_NUMBER = 5;
     private static final String UPDATED_NEW_VALUE = "Сидоров";
+    @Autowired
     private StudentDao dao;
+    @Autowired
     private StudyGroupDao studyGroupDao;
 
-    @Before
-    public void initDatabase() throws DaoException {
-        new DatabaseInitializer().initDatabase();
-    }
+//    @Before
+//    public void initDatabase() throws DaoException {
+//        new DatabaseInitializer().initDatabase();
+//    }
 
     @Test
     public void testGetByID() {

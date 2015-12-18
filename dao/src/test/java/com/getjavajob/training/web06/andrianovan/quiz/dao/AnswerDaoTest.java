@@ -4,8 +4,11 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +19,24 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by Nat on 03.11.2015.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
+        "classpath:quiz-context-dao-overrides.xml"})
 public class AnswerDaoTest {
 
     private static final int ROWS_NUMBER = 46;
     private static final String VALUE_FOR_ID_1 = "1. int -> 0";
     private static final String INSERTED_VALUE = "red";
     private static final String UPDATED_NEW_VALUE = "grey";
-    private AnswerDao answerDao; // = AnswerDao.getInstance();
+    @Autowired
+    private AnswerDao answerDao;
+    @Autowired
     private QuestionDao questionDao;
 
-    @Before
-    public void initDatabase() throws DaoException {
-        new DatabaseInitializer().initDatabase();
-    }
+//    @Before
+//    public void initDatabase() throws DaoException {
+//        new DatabaseInitializer().initDatabase();
+//    }
 
     @Test
     public void testGetByID() {

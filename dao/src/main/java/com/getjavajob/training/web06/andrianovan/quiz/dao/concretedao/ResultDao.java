@@ -5,9 +5,15 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,6 +32,7 @@ public class ResultDao extends AbstractDao<Result> {
             "FROM Result r\n" +
             "INNER JOIN Answer a ON r.answer_id = a.id\n" +
             "WHERE r.student_id = ? AND a.question_id = ? AND r.quiz_start_id = ?";
+    private static final String NOT_ALLOWED_TO_UPDATE_RESULT = "It is not allowed to update result";
 
     @Autowired
     private StudentDao studentDao;
@@ -73,13 +80,36 @@ public class ResultDao extends AbstractDao<Result> {
 
     @Override
     protected String getUpdateByIdStatement() {
-//        return UPDATE;
-        throw new UnsupportedOperationException("It is not allowed to update result");
+        return UPDATE;
+    }
+
+    @Override
+    @Transactional
+    public void insert(final Result entity) throws DaoException {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        super.jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection)
+                    throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), new String[]{"id"});
+                ps.setInt(1, entity.getStudent().getId());
+                ps.setInt(2, entity.getAnswer().getId());
+                ps.setString(3, entity.getInputAnswer());
+                ps.setInt(4, entity.getQuizStart().getId());
+                return ps;
+            }
+        }, keyHolder);
+        entity.setId(keyHolder.getKey().intValue());
+    }
+
+    @Override
+    public void update(Result entity) throws DaoException {
+        throw new UnsupportedOperationException(NOT_ALLOWED_TO_UPDATE_RESULT);
     }
 
     @Override
     public void delete(Result entity) {
-        throw new UnsupportedOperationException("It is not allowed to delete result");
+        throw new UnsupportedOperationException(NOT_ALLOWED_TO_UPDATE_RESULT);
     }
 
     public List<Result> getAllAnswersByStudentAndQuestionAndQuizStart(Student student, Question question,

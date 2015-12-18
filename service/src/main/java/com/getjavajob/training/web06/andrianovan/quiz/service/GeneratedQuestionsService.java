@@ -68,7 +68,7 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
         GeneratedQuestions quizGeneratedQuestions = new GeneratedQuestions();
         quizGeneratedQuestions.setQuizStart(quizStart);
         quizGeneratedQuestions.setQuestions(generatedQuestions);
-        this.insert(quizGeneratedQuestions);
+//        this.insert(quizGeneratedQuestions);
         return quizGeneratedQuestions;
     }
 

@@ -3,8 +3,11 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.*;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Result;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,19 +17,27 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Nat on 03.11.2015.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
+        "classpath:quiz-context-dao-overrides.xml"})
 public class ResultDaoTest {
 
     private static final int ROWS_NUMBER = 8;
+    @Autowired
     private ResultDao dao;
+    @Autowired
     private AnswerDao answerDao;
+    @Autowired
     private StudentDao studentDao;
+    @Autowired
     private QuizStartDao quizStartDao;
+    @Autowired
     private QuestionDao questionDao;
 
-    @Before
-    public void initDatabase() throws DaoException {
-        new DatabaseInitializer().initDatabase();
-    }
+//    @Before
+//    public void initDatabase() throws DaoException {
+//        new DatabaseInitializer().initDatabase();
+//    }
 
     @Test
     public void testGetByID() {
