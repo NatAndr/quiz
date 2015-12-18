@@ -21,6 +21,6 @@
         <property name="password" value="${database.password}"/>
     </bean>
 
-    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz"/>
+    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz.dao"/>
 
 </beans>
