@@ -33,7 +33,6 @@ public class LoginFilter implements Filter {
         String passwordCookie;
         String path = String.valueOf(request.getRequestURL());
         if (excludedURL(path)) {
-            System.out.println("excludedURLs.contains(path)");
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             if (userNameSession == null) {

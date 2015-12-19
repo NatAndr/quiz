@@ -12,20 +12,17 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
-    <%--link href="<c:url value="/bootstrap/css/login.css"/>" rel="stylesheet"--%>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <%--link href="<c:url value="/resources/bootstrap.min.css" />" rel="stylesheet">
-    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script--%>
+    <%@include file="header.jsp" %>
 </head>
 <body>
 <div class="container">
-    <p>
-        <%@include file="loginError.jsp" %>
-    </p>
+
 
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <p>
+                <%@include file="loginError.jsp" %>
+            </p>
             <h2 class="form-signin-heading">Please sign in</h2>
 
             <div class="account-wall">

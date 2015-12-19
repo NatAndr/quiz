@@ -16,7 +16,8 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
 public class LoginCheckServlet extends HttpServlet {
 
     private static final String LOGIN_PROPERTIES = "login.properties";
-    private String name;
+    private String nameAdmin;
+    private String nameUser;
     private String pass;
 
     @Override
@@ -27,29 +28,38 @@ public class LoginCheckServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        name = props.getProperty("user.name");
-        pass = props.getProperty("user.password");
+        nameUser = props.getProperty("login.user");
+        nameAdmin = props.getProperty("login.admin");
+        pass = props.getProperty("login.password");
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("email");
-        String userPass = req.getParameter("password"); //todo delete
+        String actualName = req.getParameter("email");
+        String actualPass = req.getParameter("password");
 
-        if (name.equals(userName) && pass.equals(userPass)) {
+        if ((nameUser.equals(actualName) || nameAdmin.equals(actualName)) && pass.equals(actualPass)) {
             if (req.getParameter("rememberMe") != null) {
-                addCookie(resp, COOKIE_USERNAME, userName, COOKIE_AGE);
-                addCookie(resp, COOKIE_PASSWORD, userPass, COOKIE_AGE);
+                addCookie(resp, COOKIE_USERNAME, actualName, COOKIE_AGE);
+                addCookie(resp, COOKIE_PASSWORD, actualPass, COOKIE_AGE);
             } else {
                 removeCookie(resp, COOKIE_USERNAME);
                 removeCookie(resp, COOKIE_PASSWORD);
             }
             HttpSession session = req.getSession();
-            session.setAttribute("userName", userName);
-            session.setAttribute("password", userPass);
-            req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
+            session.setAttribute("userName", actualName);
+//            session.setAttribute("password", actualPass);
+            if (isAdmin(actualName)) {
+                req.getRequestDispatcher("/WEB-INF/jsp/management.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("/WEB-INF/jsp/quizzesSearch.jsp").forward(req, resp);
+            }
         } else {
             req.setAttribute("errorLoginMsg", "Wrong username or password");
             req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
         }
+    }
+
+    private boolean isAdmin(String loginName) {
+        return nameAdmin.equals(loginName);
     }
 }

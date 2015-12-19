@@ -64,7 +64,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
     }
 
     @Override
-    @Transactional
     public T get(int id) {
         return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
             @Override
@@ -80,7 +79,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
     }
 
     @Override
-    @Transactional
     public List<T> getAll() {
         return this.jdbcTemplate.query(getSelectAllStatement(), new RowMapper<T>() {
             public T mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -266,7 +264,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 //        return str.substring(0, 1).toUpperCase() + str.substring(1);
 //    }
 
-    @Transactional
     protected List<T> doExecuteQueryWithParams(String query, Object[] params) throws DaoException {
         return this.jdbcTemplate.query(query, params, new RowMapper<T>() {
             @Override
@@ -281,7 +278,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
         });
     }
 
-    @Transactional
     protected List<T> doExecuteQueryWithoutParams(String query) throws DaoException {
         return this.jdbcTemplate.query(query, new RowMapper<T>() {
             public T mapRow(ResultSet rs, int rowNum) throws SQLException {

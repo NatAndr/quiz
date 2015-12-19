@@ -5,9 +5,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="classpath:quiz-context-service.xml"/>
+    <import resource="classpath:quiz-context-dao.xml"/>
+    <!--jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz"  expected-type="javax.sql.DataSource" />
 
-    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz.ui"/>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean-->
 
+    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz.service"/>
 
 </beans>
