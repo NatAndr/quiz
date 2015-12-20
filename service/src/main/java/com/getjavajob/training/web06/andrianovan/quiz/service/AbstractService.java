@@ -4,6 +4,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class AbstractService<T extends BaseEntity> {
         return this.dao.getAll();
     }
 
+    @Transactional
     public void delete(T entity) throws ServiceException {
         try {
             this.dao.delete(entity);
@@ -48,6 +50,7 @@ public class AbstractService<T extends BaseEntity> {
         }
     }
 
+    @Transactional
     public void insert(T entity) throws ServiceException {
         try {
             this.dao.insert(entity);
@@ -56,6 +59,7 @@ public class AbstractService<T extends BaseEntity> {
         }
     }
 
+    @Transactional
     public void update(T entity) throws ServiceException {
         try {
             this.dao.update(entity);

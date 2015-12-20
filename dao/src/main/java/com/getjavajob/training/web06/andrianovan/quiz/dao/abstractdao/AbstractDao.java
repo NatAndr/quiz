@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -65,6 +64,23 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 
     @Override
     public T get(int id) {
+//        List<T> list = this.jdbcTemplate.query(getSelectByIdStatement(), new RowMapper<T>() {
+//
+//            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                return (T) rs.getObject(1);
+//            }
+//
+//        });
+//
+//        if (list.isEmpty()) {
+//            return null;
+//        } else if (list.size() == 1) { // list contains exactly 1 element
+//            return list.get(0);
+//        } else {
+//            System.out.println("Exception");
+//        }
+//        return null;
+
         return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
             @Override
             public T mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -72,8 +88,8 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
                     return createInstanceFromResult(rs);
                 } catch (DaoException e) {
                     e.printStackTrace();
+                    return null;
                 }
-                return null;
             }
         });
     }
@@ -86,20 +102,18 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
                     return createInstanceFromResult(rs);
                 } catch (DaoException e) {
                     e.printStackTrace();
+                    return null;
                 }
-                return null;
             }
         });
     }
 
     @Override
-    @Transactional
     public void delete(T entity) throws DaoException {
-        this.jdbcTemplate.update(getDeleteByIdStatement(), entity.getId());
+        this.jdbcTemplate.update(getDeleteByIdStatement(), Long.valueOf(entity.getId()));
     }
 
     @Override
-    @Transactional
     public void insert(final T entity) throws DaoException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         final Object[] entityFields = getEntityFields(entity);
@@ -118,9 +132,8 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
     }
 
     @Override
-    @Transactional
     public void update(T entity) throws DaoException {
-        this.jdbcTemplate.update(getUpdateByIdStatement(), getEntityFields(entity), entity.getId());
+        this.jdbcTemplate.update(getUpdateByIdStatement(), getEntityFields(entity), Long.valueOf(entity.getId()));
     }
 //    public void insert(T entity) throws DaoException {
 //        try (Connection connection = getDataSource().getConnection()) {

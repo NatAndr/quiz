@@ -9,6 +9,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class QuizSetService extends AbstractService<QuizSet> {
     }
 
     @Override
+    @Transactional
     public void insert(QuizSet entity) throws ServiceException {
         super.insert(entity);
         for (Question question : entity.getQuestions()) {
@@ -44,6 +46,7 @@ public class QuizSetService extends AbstractService<QuizSet> {
     }
 
     @Override
+    @Transactional
     public void update(QuizSet entity) throws ServiceException {
         super.update(entity);
         for (Question question : entity.getQuestions()) {
@@ -51,6 +54,7 @@ public class QuizSetService extends AbstractService<QuizSet> {
         }
     }
 
+    @Transactional
     private void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
         QuestionDao questionDao = DaoFactory.getDaoFactory().getQuestionDao();
         try {
@@ -60,6 +64,7 @@ public class QuizSetService extends AbstractService<QuizSet> {
         }
     }
 
+    @Transactional
     public void insertQuestionToExistingQuizSet(QuizSet entity) throws ServiceException {
         for (Question question : entity.getQuestions()) {
             questionService.insert(question);
