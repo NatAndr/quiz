@@ -5,26 +5,26 @@ package com.getjavajob.training.web06.andrianovan.quiz.model;
  */
 public class StudyGroup extends BaseEntity {
 
-    private String groupName;
+    private String name;
 
     public StudyGroup() {
     }
 
-    public StudyGroup(String groupName) {
-        this.groupName = groupName;
+    public StudyGroup(String name) {
+        this.name = name;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getName() {
+        return name;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return groupName;
+        return name;
     }
 
     @Override
@@ -35,14 +35,14 @@ public class StudyGroup extends BaseEntity {
         StudyGroup that = (StudyGroup) o;
 
         if (getId() != that.getId()) return false;
-        return !(groupName != null ? !groupName.equals(that.groupName) : that.groupName != null);
+        return !(name != null ? !name.equals(that.name) : that.name != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = getId();
-        result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

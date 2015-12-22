@@ -33,7 +33,7 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
         StudyGroup studyGroup = new StudyGroup();
         try {
             studyGroup.setId(resultSet.getInt("id"));
-            studyGroup.setGroupName(resultSet.getString("group_name"));
+            studyGroup.setName(resultSet.getString("group_name"));
         } catch (SQLException e) {
             throw new DaoException(CANNOT_CREATE_INSTANCE + this.getClass().getSimpleName());
         }
@@ -42,7 +42,7 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
 
     @Override
     protected Object[] getEntityFields(StudyGroup entity) {
-        return new Object[]{entity.getGroupName()};
+        return new Object[]{entity.getName()};
     }
 
     @Override

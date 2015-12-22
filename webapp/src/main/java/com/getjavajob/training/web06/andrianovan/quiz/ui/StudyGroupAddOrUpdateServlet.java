@@ -31,7 +31,7 @@ public class StudyGroupAddOrUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StudyGroup studyGroup = new StudyGroup();
 
-        studyGroup.setGroupName(req.getParameter("name"));
+        studyGroup.setName(req.getParameter("name"));
         if (req.getParameter("id") != null) {
             studyGroup.setId(Integer.parseInt(req.getParameter("id")));
             try {

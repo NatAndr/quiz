@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>${quizSet.quizName}</h2>
+    <h2>${quizSet.name}</h2>
     <div class="page-header">
         <p class="lead">Question ${counter+1}/${questionsNumber}</p>
     </div>

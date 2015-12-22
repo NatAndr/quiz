@@ -13,20 +13,20 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:quiz-context.xml</param-value>
-    </context-param>
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>classpath:quiz-context.xml</param-value>-->
+    <!--</context-param>-->
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
     <listener>
         <listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.CharacterEncodingFilter</listener-class>
     </listener>
-    <listener>
-        <listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</listener-class>-->
+    <!--</listener>-->
 
     <filter>
         <filter-name>CharacterEncoding</filter-name>
@@ -42,23 +42,23 @@
         <url-pattern>/</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</filter-class>
-        <init-param>
-            <param-name>loginPage</param-name>
-            <param-value>/login.jsp</param-value>
-        </init-param>
-        <init-param>
-            <param-name>excludedURLs</param-name>
-            <param-value>/resources/;/pages/;/login</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>LoginFilter</filter-name>-->
+        <!--<filter-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>loginPage</param-name>-->
+            <!--<param-value>/login.jsp</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>excludedURLs</param-name>-->
+            <!--<param-value>/resources/;/pages/;/login</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>LoginFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <servlet>
         <servlet-name>quiz</servlet-name>

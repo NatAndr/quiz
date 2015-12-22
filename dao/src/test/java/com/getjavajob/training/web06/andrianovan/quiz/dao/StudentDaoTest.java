@@ -40,7 +40,7 @@ public class StudentDaoTest {
         Student student = this.dao.get(1);
         assertEquals("Ivan", student.getFirstName());
         assertEquals("Ivanov", student.getLastName());
-        assertEquals("java-algo01", student.getStudyGroup().getGroupName());
+        assertEquals("java-algo01", student.getStudyGroup().getName());
     }
 
     @Test

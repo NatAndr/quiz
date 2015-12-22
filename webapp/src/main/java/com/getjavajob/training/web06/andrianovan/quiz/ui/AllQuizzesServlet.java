@@ -39,7 +39,7 @@ public class AllQuizzesServlet extends HttpServlet {
         sb.append("<table>").append("\r\n");
         for (QuizSet quizSet : quizSets) {
             sb.append("<tr><td>");
-            sb.append(quizSet.getQuizName());
+            sb.append(quizSet.getName());
             sb.append("</td></tr>").append("\r\n");
             for (Question question : quizSet.getQuestions()) {
                 sb.append("<tr><td>");

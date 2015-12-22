@@ -38,7 +38,7 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
         QuizSet quiz = new QuizSet();
         try {
             quiz.setId(resultSet.getInt("id"));
-            quiz.setQuizName(resultSet.getString("quiz_name"));
+            quiz.setName(resultSet.getString("quiz_name"));
 
             List<Question> questions = questionDao.getQuestionsByQuizSet(quiz);
             quiz.setQuestions(questions);
@@ -50,7 +50,7 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
 
     @Override
     protected Object[] getEntityFields(QuizSet entity) {
-        return new Object[]{entity.getQuizName()};
+        return new Object[]{entity.getName()};
     }
 
     @Override

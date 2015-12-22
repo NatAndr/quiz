@@ -19,13 +19,13 @@
     <div class="page-header">
         <h1>Quiz</h1>
 
-        <p class="lead">${quiz.quizName}</p>
+        <p class="lead">${quiz.name}</p>
         <p>${questionsNumber} Questions</p>
     </div>
     <form action="${pageContext.request.contextPath}/quizRun" method="post">
         <label>
             <input type="hidden" name="id" value="${quiz.id}">
-            <input class="btn btn-default btn-sm" type="submit" value="Start">
+            <button type="submit" class="btn btn-primary">Start</button>
         </label>
     </form>
 </div>

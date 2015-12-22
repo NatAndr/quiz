@@ -20,7 +20,7 @@
     <div class="page-header">
         <h2>Quizzes search</h2>
     </div>
-    <form class="form-search" action="${pageContext.request.contextPath}/quizesSearch" method="get">
+    <form class="form-search" action="${pageContext.request.contextPath}/quizzesSearch" method="get">
         <div class="input-append">
             <label>
                 <input type="text" name="searchParams" class="span2 search-query">

@@ -7,22 +7,22 @@ import java.util.List;
  */
 public class QuizSet extends BaseEntity {
 
-    private String quizName;
+    private String name;
     private List<Question> questions;
 
     public QuizSet() {
     }
 
-    public QuizSet(String quizName) {
-        this.quizName = quizName;
+    public QuizSet(String name) {
+        this.name = name;
     }
 
-    public String getQuizName() {
-        return quizName;
+    public String getName() {
+        return name;
     }
 
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Question> getQuestions() {
@@ -35,7 +35,7 @@ public class QuizSet extends BaseEntity {
 
     @Override
     public String toString() {
-        return quizName;
+        return name;
     }
 
     @Override
@@ -45,12 +45,12 @@ public class QuizSet extends BaseEntity {
 
         QuizSet that = (QuizSet) o;
 
-        return !(quizName != null ? !quizName.equals(that.quizName) : that.quizName != null);
+        return !(name != null ? !name.equals(that.name) : that.name != null);
 
     }
 
     @Override
     public int hashCode() {
-        return quizName != null ? quizName.hashCode() : 0;
+        return name != null ? name.hashCode() : 0;
     }
 }

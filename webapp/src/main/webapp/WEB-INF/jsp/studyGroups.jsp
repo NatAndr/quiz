@@ -15,22 +15,31 @@
 <body--%>
 <div class="container">
     <table class="table table-striped">
-        <c:forEach var="studyGroup" items="${studyGroups}">
+        <thead>
+        <tr>
+            <td></td>
+        </tr>
+        </thead>
+        <c:forEach var="group" items="${studyGroups}">
             <tr>
-                <td>
-                    <a href='<c:url value="studyGroupInfo?id=${studyGroup.id}"/>'>${studyGroup.groupName}</a>
+                <td width="30">
+                    <a href='<c:url value="studyGroupInfo?id=${group.id}"/>'>${group.name}</a>
                 </td>
+                    <%--<td width="30">--%>
+                    <%--<form action="/editGroup" method="post">--%>
+                    <%--<label>--%>
+                    <%--<input type="hidden" name="id" value="${group.id}">--%>
+                    <%--<input type="submit" class="btn btn-primary launch-modal" name="Edit" value="Edit">--%>
+                    <%--</label>--%>
+                    <%--</form>--%>
+                    <%--</td>--%>
             </tr>
         </c:forEach>
     </table>
-    <form action="${pageContext.request.contextPath}/studyGroupEdit" method="post">
-        <label>
-            ${studyGroup.groupName}
-            <br/><br/>
-            <input type="hidden" name="id" value="${studyGroup.id}">
-            <!--input type="submit" name="Add" value="Add"-->
-                <input class="btn btn-default btn-sm" type="submit" name="Add" value="Add">
-        </label>
+    <form action="${pageContext.request.contextPath}/studyGroupAdd" method="post">
+        <!--input type="submit" name="Add" value="Add"-->
+
+        <button type="submit" class="btn btn-primary" name="Add">Добавить</button>
     </form>
 </div>
 <%--/body>

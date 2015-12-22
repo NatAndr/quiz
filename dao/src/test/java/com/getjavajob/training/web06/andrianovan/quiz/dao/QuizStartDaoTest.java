@@ -36,7 +36,7 @@ public class QuizStartDaoTest {
     @Test
     public void testGetByID() {
         QuizStart quizStart = this.dao.get(2);
-        assertEquals("Java Programming. Language Fundamentals", quizStart.getQuizSet().getQuizName());
+        assertEquals("Java Programming. Language Fundamentals", quizStart.getQuizSet().getName());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class QuizStartDaoTest {
         quizStart.setQuizSet(this.quizSetDao.get(2));
         this.dao.update(quizStart);
         QuizStart updatedQuizStart = this.dao.get(2);
-        assertEquals("Vegetables", updatedQuizStart.getQuizSet().getQuizName());
+        assertEquals("Vegetables", updatedQuizStart.getQuizSet().getName());
     }
 
     @Test

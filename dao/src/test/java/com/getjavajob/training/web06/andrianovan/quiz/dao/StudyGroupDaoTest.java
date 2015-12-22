@@ -41,7 +41,7 @@ public class StudyGroupDaoTest {
     @Test
     public void testGetByID() {
         StudyGroup studyGroup = this.dao.get(2);
-        assertEquals(VALUE_FOR_ID_1, studyGroup.getGroupName());
+        assertEquals(VALUE_FOR_ID_1, studyGroup.getName());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class StudyGroupDaoTest {
     @Transactional
     public void testInsert() throws DaoException {
         StudyGroup studyGroup = new StudyGroup();
-        studyGroup.setGroupName(INSERTED_VALUE);
+        studyGroup.setName(INSERTED_VALUE);
         this.dao.insert(studyGroup);
         List<StudyGroup> studyGroupList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, studyGroupList.size());
@@ -64,10 +64,10 @@ public class StudyGroupDaoTest {
     @Transactional
     public void testUpdate() throws DaoException {
         StudyGroup studyGroup = this.dao.get(1);
-        studyGroup.setGroupName(UPDATED_NEW_VALUE);
+        studyGroup.setName(UPDATED_NEW_VALUE);
         this.dao.update(studyGroup);
         StudyGroup updatedStudyGroup = this.dao.get(1);
-        assertEquals(UPDATED_NEW_VALUE, updatedStudyGroup.getGroupName());
+        assertEquals(UPDATED_NEW_VALUE, updatedStudyGroup.getName());
     }
 
     @Test

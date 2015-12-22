@@ -36,7 +36,7 @@ public class QuizHeaderDaoTest {
     @Test
     public void testGetByID() {
         QuizSet quizHeader = this.dao.get(1);
-        assertEquals(VALUE_FOR_ID_1, quizHeader.getQuizName());
+        assertEquals(VALUE_FOR_ID_1, quizHeader.getName());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class QuizHeaderDaoTest {
     @Test
     public void testInsert() throws DaoException {
         QuizSet quizHeader = new QuizSet();
-        quizHeader.setQuizName(INSERTED_VALUE);
+        quizHeader.setName(INSERTED_VALUE);
         this.dao.insert(quizHeader);
         List<QuizSet> quizHeaderList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, quizHeaderList.size());
@@ -57,10 +57,10 @@ public class QuizHeaderDaoTest {
     @Test
     public void testUpdate() throws DaoException {
         QuizSet quizHeader = this.dao.get(1);
-        quizHeader.setQuizName(UPDATED_NEW_VALUE);
+        quizHeader.setName(UPDATED_NEW_VALUE);
         this.dao.update(quizHeader);
         QuizSet updatedQuizHeader = this.dao.get(1);
-        assertEquals(UPDATED_NEW_VALUE, updatedQuizHeader.getQuizName());
+        assertEquals(UPDATED_NEW_VALUE, updatedQuizHeader.getName());
     }
 
     @Test

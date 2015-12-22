@@ -6,8 +6,10 @@
   Time: 23:39
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="error.jsp" %>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Quizzes management</title>
@@ -18,39 +20,42 @@
     <%@include file="link.jsp" %>
 
     <div class="page-header">
-        <h2>Quizzes management</h2>
+        <h2>Content management</h2>
     </div>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Students</a></li>
-        <li><a data-toggle="tab" href="#menu1">Groups</a></li>
-        <li><a data-toggle="tab" href="#menu2">Quizzes</a></li>
-        <li><a data-toggle="tab" href="#menu3">Questions</a></li>
-        <li><a data-toggle="tab" href="#menu4">Answers</a></li>
+        <li class="active"><a data-toggle="tab" href="#students">Students</a></li>
+        <li><a data-toggle="tab" href="#studyGroups">Groups</a></li>
+        <li><a data-toggle="tab" href="#quizzes">Quizzes</a></li>
+        <li><a data-toggle="tab" href="#questions">Questions</a></li>
+        <li><a data-toggle="tab" href="#answers">Answers</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Some content.</p>
+        <div id="students" class="tab-pane fade in active">
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
-            <%@include file="studyGroups.jsp" %>
+
+        <div id="studyGroups" class="tab-pane fade">
+            <%--<c:set var="elements" value="${studyGroups}" scope="request" />--%>
+            <%--<jsp:include page="entitiesList.jsp"/>--%>
+                <%@include file="studyGroups.jsp" %>
         </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
+
+        <div id="quizzes" class="tab-pane fade">
+            <c:set var="elements" value="${quizzes}" scope="request" />
+            <jsp:include page="entitiesList.jsp"/>
         </div>
-        <div id="menu3" class="tab-pane fade">
+
+        <div id="questions" class="tab-pane fade">
             <h3>Menu 3</h3>
             <p>Some content in menu 3.</p>
         </div>
-        <div id="menu4" class="tab-pane fade">
+
+        <div id="answers" class="tab-pane fade">
             <h3>Menu 4</h3>
             <p>Some content in menu 4.</p>
         </div>
     </div>
 </div>
+
 </body>
 </html>
