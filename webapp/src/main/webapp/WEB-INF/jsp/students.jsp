@@ -20,15 +20,16 @@
             <td></td>
         </tr>
         </thead>
-        <c:forEach var="group" items="${studyGroups}">
+        <c:forEach var="student" items="${students}">
             <tr>
                 <td width="30">
-                        <a href='<c:url value="studyGroupInfo?id=${group.id}"/>'>${group.name}</a>
+                    <a href='<c:url value="studentInfo?id=${student.id}"/>'>${student.firstName} ${student.lastName}</a>
                 </td>
+                <td width="30">${student.studyGroup}</td>
             </tr>
         </c:forEach>
     </table>
-    <form action="${pageContext.request.contextPath}/studyGroupAdd" method="post">
+    <form action="${pageContext.request.contextPath}/studentAdd" method="post">
         <button type="submit" class="btn btn-primary" name="Add">Add new</button>
     </form>
 </div>

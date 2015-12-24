@@ -7,11 +7,9 @@ import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 /**
  * Created by user on 21.12.2015.
@@ -45,11 +43,16 @@ public class ManagementController {
 
     @RequestMapping(value = "/studyGroupEdit", method = RequestMethod.POST)
     public ModelAndView showUpdate(@RequestParam("id") int id) {
-        System.out.println(id);
         StudyGroup studyGroup = studyGroupService.get(id);
         ModelAndView modelAndView = new ModelAndView("studyGroupAddOrUpdate");
         modelAndView.addObject("studyGroup", studyGroup);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/studyGroupDelete", method = RequestMethod.POST)
+    public @ResponseBody String doDelete(@RequestParam("id") int id) throws ServiceException {
+        studyGroupService.delete(studyGroupService.get(id));
+        return "Deleted id="+id;
     }
 
     @RequestMapping(value = "/studyGroupAdd", method = RequestMethod.POST)
@@ -61,8 +64,6 @@ public class ManagementController {
 
     @RequestMapping(value = "/studyGroupAddOrUpdate", method = RequestMethod.POST)
     public String doUpdate(@ModelAttribute StudyGroup studyGroup) throws ServiceException {
-        System.out.print("studyGroupAddOrUpdate: ");
-        System.out.println(studyGroup);
         if (studyGroup.getId() > 0) {
             studyGroupService.update(studyGroup);
         } else {
@@ -70,6 +71,5 @@ public class ManagementController {
         }
         return "redirect:/admin";
     }
-
 
 }

@@ -5,7 +5,7 @@
   Time: 17:30
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html; charset=UTF-8" language="java" %>--%>
 <%@ page errorPage="error.jsp" %>
 <html>
 <head>
@@ -22,7 +22,7 @@
         <p class="lead">${quiz.name}</p>
         <p>${questionsNumber} Questions</p>
     </div>
-    <form action="${pageContext.request.contextPath}/quizRun" method="post">
+    <form action="${pageContext.request.contextPath}/initializeQuiz" method="post">
         <label>
             <input type="hidden" name="id" value="${quiz.id}">
             <button type="submit" class="btn btn-primary">Start</button>

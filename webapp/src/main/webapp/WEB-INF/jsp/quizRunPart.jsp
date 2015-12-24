@@ -13,7 +13,7 @@
     <div class="page-header">
         <p class="lead">Question ${counter+1}/${questionsNumber}</p>
     </div>
-    <form class="form-search" action="${pageContext.request.contextPath}/quizQuestion" method="post">
+    <form class="form-search" <%--action="${pageContext.request.contextPath}/quizQuestion" method="post"--%>>
         ${question.question}
         <br>
         <c:forEach var="answer" items="${question.answers}">
@@ -31,23 +31,7 @@
             </c:choose>
         </c:forEach>
         <br>
-        <button type="submit" class="btn btn-primary" id="next">Next</button>
-    </form>
+        <%--<button type="submit" class="btn btn-primary" id="next">Next</button>--%>
+    <%--</form>--%>
 
-    <%--<form:form action="" commandName="question">--%>
-        <%--<c:choose>--%>
-            <%--<c:when test="${question.questionType == 'SINGLE'}">--%>
-                <%--<form:radiobuttons path="question.answers.anser" items="${question.answers}"/>--%>
-            <%--</c:when>--%>
-            <%--<c:when test="${question.questionType == 'MULTIPLE'}">--%>
-                <%--<form:checkboxes path="question.answers.anser" items="${question.answers}"/>--%>
-            <%--</c:when>--%>
-            <%--&lt;%&ndash;<c:otherwise>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<form:input path="inputAnswer"/>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;</c:otherwise>&ndash;%&gt;--%>
-        <%--</c:choose>--%>
-        <%--<input type="submit" value="Next"/>--%>
-    <%--</form:form>--%>
-</div>
-<%--</body>--%>
-<%--</html>--%>
+<%--</div>--%>

@@ -8,40 +8,20 @@
 <html>
 <head>
     <title>Study group</title>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE html>
     <%@include file="header.jsp" %>
-
     <script type="text/javascript">
-        function addUser() {
-
-            var name = $('#name').val();
-//            var positionid = $("#positions option:selected").val();
-//            var groupid = $("#groups option:selected").val();
-
+        function deleteGroup(id) {
             $.ajax({
                 type: "POST",
-                url: "${pageContext.request.contextPath}/user/addajax.htm",
-                data: "username=" + name+"&positionid="+positionid+"&groupid="+groupid,
-                success: function(response){
-                    $('#info').html(response);
-                    $('#name').val('');
-
+                url: '<c:url value="/studyGroupDelete" />',
+                data: "id=" + id,
+                success: function (response) {
+                    $('#result').html(response);
                 },
-                error: function(e){
-                    alert('Error: ' + e);
-                }
-            });
-        }
-        function deleteUser(id){
-
-            $.ajax({
-                type: "POST",
-                url: "${pageContext.request.contextPath}/user/deleteajax.htm",
-                data: "userid=" + id,
-                success: function(response){
-                    $('#info').html(response);
-
-                },
-                error: function(e){
+                error: function (e) {
                     alert('Error: ' + e);
                 }
             });
@@ -52,20 +32,20 @@
 <div class="container">
     <div class="page-header">
         <h1>Study group</h1>
-
-        <p class="lead">${studyGroup.name}</p>
+        <p class="lead" id="groupName">${studyGroup.name}</p>
     </div>
+    <form action="${pageContext.request.contextPath}/studyGroupEdit" method="post">
+        <label>
+            <input type="hidden" name="id" value="${studyGroup.id}">
+            <button type="submit" class="btn btn-primary" name="Edit">Edit</button>
+        </label>
+    </form>
+    <button type="submit" class="btn btn-primary" name="Delete" onclick="deleteGroup(${studyGroup.id});">Delete</button>
 
-<form action="${pageContext.request.contextPath}/studyGroupEdit" method="post">
-    <label>
-        <input type="hidden" name="id" value="${studyGroup.id}">
-        <%--<input type="submit" name="Edit" value="Edit">--%>
-        <!-- input type="submit" name="Add" value="Add" -->
-            <button type="submit" class="btn btn-primary" name="Edit">Редактировать</button>&nbsp;&nbsp;
-        <button type="submit" class="btn btn-primary" name="Delete">Удалить</button>
-    </label>
-</form>
-    <input type="button" value="Add Users" onclick="addUser()">
+    <div id="result" style="color: green;"></div>
+    <div>
+        <a href='<c:url value="/admin"/>'>Back to admin panel</a>
     </div>
+</div>
 </body>
 </html>

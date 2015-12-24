@@ -14,6 +14,7 @@
 <head>
     <title>Quizzes management</title>
     <%@include file="header.jsp" %>
+
 </head>
 <body>
 <div class="container">
@@ -32,6 +33,7 @@
 
     <div class="tab-content">
         <div id="students" class="tab-pane fade in active">
+            <%@include file="students.jsp" %>
         </div>
 
         <div id="studyGroups" class="tab-pane fade">

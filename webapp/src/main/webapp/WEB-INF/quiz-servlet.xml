@@ -35,6 +35,8 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:view-controller path="/" view-name="quizzesSearch"/>
+
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
 </beans>

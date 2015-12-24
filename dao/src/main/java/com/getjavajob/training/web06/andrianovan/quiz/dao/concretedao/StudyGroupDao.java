@@ -59,4 +59,9 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
     protected String getUpdateByIdStatement() {
         return UPDATE;
     }
+
+    @Override
+    public void update(StudyGroup entity) throws DaoException {
+        jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
+    }
 }
