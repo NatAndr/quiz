@@ -42,7 +42,9 @@
     </form>
     <button type="submit" class="btn btn-primary" name="Delete" onclick="deleteGroup(${studyGroup.id});">Delete</button>
 
+    <br>
     <div id="result" style="color: green;"></div>
+    <br>
     <div>
         <a href='<c:url value="/admin"/>'>Back to admin panel</a>
     </div>

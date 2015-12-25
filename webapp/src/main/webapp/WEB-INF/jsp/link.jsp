@@ -13,14 +13,14 @@
 </head>
 <body--%>
 <c:if test="${userName==null}">
-    <p class="text-right"><a href='<c:url value="login"/>'>
+    <p class="text-right"><a href='<c:url value="/login"/>'>
         <span class="glyphicon glyphicon-log-in"></span> Login</a>
     </p>
 </c:if>
 <c:if test="${userName!=null}">
     <p class="text-right">
         <span class="glyphicon glyphicon-user"></span> ${userName}&nbsp;&nbsp;&nbsp;
-        <a href='<c:url value="logout"/>'>
+        <a href='<c:url value="/logout"/>'>
             <span class="glyphicon glyphicon-log-out"></span> Logout
         </a>
     </p>

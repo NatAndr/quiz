@@ -23,7 +23,7 @@
         <c:forEach var="student" items="${students}">
             <tr>
                 <td width="30">
-                    <a href='<c:url value="studentInfo?id=${student.id}"/>'>${student.firstName} ${student.lastName}</a>
+                    <a href='<c:url value="/studentInfo?id=${student.id}"/>'>${student.firstName} ${student.lastName}</a>
                 </td>
                 <td width="30">${student.studyGroup}</td>
             </tr>

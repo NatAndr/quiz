@@ -24,7 +24,7 @@
 //                url: uu,
                 data: "",
                 success: function (response) {
-                    $('#quiz').html(response + footer);
+                    $('#quiz').html(response);
                 },
                 error: function (e) {
                     alert('Error: ' + e);
@@ -33,24 +33,21 @@
         }
         ;
         $(document).ready(doRequest());
-        $('#next').click(function () {
-            var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: '<c:url value="/quizQuestion" />',
-                data: "",
-                success: function (response) {
-//                    $('#quiz').html(response + footer);
-                    $('#quiz').html("");
-                    var obj = JSON.parse(response);
-                    alert('obj: ' + obj);
-                },
-                error: function (e) {
-                    alert('Error: ' + e);
-                }
-            });
-        });
+        <%--$('#next').click(function () {--%>
+            <%--var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';--%>
+            <%--$.ajax({--%>
+                <%--type: "POST",--%>
+                <%--cache: false,--%>
+                <%--url: '<c:url value="/quizQuestion" />',--%>
+                <%--data: "",--%>
+                <%--success: function (response) {--%>
+                    <%--$('#quiz').html(response + footer);--%>
+                <%--},--%>
+                <%--error: function (e) {--%>
+                    <%--alert('Error: ' + e);--%>
+                <%--}--%>
+            <%--});--%>
+        <%--});--%>
     </script>
 </head>
 <body>

@@ -23,7 +23,7 @@
         <c:forEach var="group" items="${studyGroups}">
             <tr>
                 <td width="30">
-                        <a href='<c:url value="studyGroupInfo?id=${group.id}"/>'>${group.name}</a>
+                        <a href='<c:url value="/studyGroupInfo?id=${group.id}"/>'>${group.name}</a>
                 </td>
             </tr>
         </c:forEach>

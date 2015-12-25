@@ -15,17 +15,21 @@
 </head>
 <body>
 <div class="container" align="center">
-    <div class="page-header">
-        <h2>Result</h2>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="page-header">
+                <h2>Result</h2>
 
-        <p class="lead">Your score: ${result}</p>
+                <p class="lead">Your score: ${result}</p>
+            </div>
+            <c:if test="${result==questionsNumber}">
+                <div class="alert alert-success" role="alert">Well done! You successfully passes this quiz.</div>
+            </c:if>
+            <c:if test="${result<questionsNumber}">
+                <div class="alert alert-danger" role="alert">You should try again.</div>
+            </c:if>
+        </div>
     </div>
-    <c:if test="${result==questionsNumber}">
-        <div class="alert alert-success" role="alert">Well done! You successfully passes this quiz.</div>
-    </c:if>
-    <c:if test="${result<questionsNumber}">
-        <div class="alert alert-danger" role="alert">You should try again.</div>
-    </c:if>
 </div>
 </body>
 </html>

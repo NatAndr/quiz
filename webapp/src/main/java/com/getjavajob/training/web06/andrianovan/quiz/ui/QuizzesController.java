@@ -9,12 +9,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by user on 20.12.2015.
@@ -94,16 +94,15 @@ public class QuizzesController {
         return modelAndView;
     }
 
-    @RequestMapping(value="showQuestion")
-    public @ResponseBody String showQuestion(ModelMap model, HttpServletRequest req) {
+    @RequestMapping(value="/showQuestion")
+    public String showQuestion(ModelMap model, HttpServletRequest req) {
         Question question = generatedQuestions.getQuestions().get(counter);
         model.addAttribute("question", question);
-        return "quizRunPart";
+        return "quizRun";
     }
 
     @RequestMapping(value = "/quizQuestion", method = RequestMethod.POST)
-    public @ResponseBody
-    String processQuiz(/*@RequestParam("inputAnswer") String inputAnswer,
+    public String processQuiz(/*@RequestParam("inputAnswer") String inputAnswer,
                               @RequestParam("answer") String[] results,*/ModelMap model,
                                   HttpServletRequest req) {
         Student student = studentService.get(STUDENT_ID);
@@ -118,18 +117,18 @@ public class QuizzesController {
             } catch (ServiceException e) {
                 throw new RuntimeException("Cannot get result " + student + " " + quizStart + " " + e.getLocalizedMessage());
             }
-            return "redirect:/quizResult";
+            return "quizResult";
         }
         List<Question> generatedQuestions = (List<Question>) session.getAttribute("generatedQuestions");
         session.setAttribute("counter", counter);
         model.addAttribute("question", generatedQuestions.get(counter));
-        return "quizRunPart";
+        return "quizRun";
     }
 
     private void saveResult(HttpServletRequest req, Student student, QuizStart quizStart) {
         String inputAnswer = req.getParameter("inputAnswer");
         String[] results = req.getParameterValues("answer");
-        if (inputAnswer == "") {
+        if (Objects.equals(inputAnswer, "")) {
             inputAnswer = null;
         }
         for (int i = 0; i < results.length; i++) {

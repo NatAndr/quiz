@@ -7,6 +7,11 @@
   Time: 18:48
   To change this template use File | Settings | File Templates.
 --%>
+<html>
+<head>
+    <%@include file="header.jsp" %>
+</head>
+<body>
 <div class="container">
     <h2>${quizSet.name}</h2>
 
@@ -49,5 +54,5 @@
         <%--<input type="submit" value="Next"/>--%>
     <%--</form:form>--%>
 </div>
-<%--</body>--%>
-<%--</html>--%>
+</body>
+</html>

@@ -24,7 +24,7 @@
             <c:forEach var="quiz" items="${foundQuiz}">
                 <tr>
                     <td>
-                        <a href='<c:url value="quizInfo?id=${quiz.id}"/>'>${quiz.name}</a>
+                        <a href='<c:url value="/quizInfo?id=${quiz.id}"/>'>${quiz.name}</a>
                     </td>
                 </tr>
             </c:forEach>

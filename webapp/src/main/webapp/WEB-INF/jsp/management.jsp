@@ -43,8 +43,9 @@
         </div>
 
         <div id="quizzes" class="tab-pane fade">
-            <c:set var="elements" value="${quizzes}" scope="request" />
-            <jsp:include page="entitiesList.jsp"/>
+            <c:set var="foundQuiz" value="" scope="request" />
+            <%--<%@include file="quizzes.jsp" %>--%>
+            <jsp:include page="quizzes.jsp"/>
         </div>
 
         <div id="questions" class="tab-pane fade">

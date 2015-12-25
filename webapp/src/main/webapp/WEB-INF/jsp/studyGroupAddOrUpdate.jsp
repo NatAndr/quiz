@@ -25,7 +25,7 @@
             <%--<input class="form-control" type="text" name="name" value="${studyGroup.name}" maxlength="100" size="60"/>--%>
 
             <div class="form-group">
-                <label for="name" class="col-lg-3 control-label">Название группы<sup>*</sup></label>
+                <label for="name" class="col-lg-3 control-label">Group name<sup>*</sup></label>
 
                 <div class="col-lg-8">
                     <div class="row">
@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-lg-9">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </form>
