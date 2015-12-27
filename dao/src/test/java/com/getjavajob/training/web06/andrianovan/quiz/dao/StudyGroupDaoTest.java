@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNull;
  * Created by Nat on 03.11.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-test.xml"})
+@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class StudyGroupDaoTest {
 
@@ -63,19 +63,19 @@ public class StudyGroupDaoTest {
     @Test
     @Transactional
     public void testUpdate() throws DaoException {
-        StudyGroup studyGroup = this.dao.get(1);
+        StudyGroup studyGroup = this.dao.get(2);
         studyGroup.setName(UPDATED_NEW_VALUE);
         this.dao.update(studyGroup);
-        StudyGroup updatedStudyGroup = this.dao.get(1);
+        StudyGroup updatedStudyGroup = this.dao.get(2);
         assertEquals(UPDATED_NEW_VALUE, updatedStudyGroup.getName());
     }
 
     @Test
     @Transactional
     public void testDelete() throws DaoException {
-        StudyGroup studyGroup = this.dao.get(1);
+        StudyGroup studyGroup = this.dao.get(10);
         this.dao.delete(studyGroup);
-        StudyGroup studyGroup2 = this.dao.get(1);
+        StudyGroup studyGroup2 = this.dao.get(10);
         assertNull(studyGroup2);
     }
 

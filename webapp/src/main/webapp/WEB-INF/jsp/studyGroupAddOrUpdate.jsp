@@ -22,11 +22,8 @@
             <c:if test="${studyGroup!=null}">
                 <input type="hidden" name="id" value="${studyGroup.id}"/>
             </c:if>
-            <%--<input class="form-control" type="text" name="name" value="${studyGroup.name}" maxlength="100" size="60"/>--%>
-
             <div class="form-group">
                 <label for="name" class="col-lg-3 control-label">Group name<sup>*</sup></label>
-
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-lg-4">
@@ -36,16 +33,6 @@
                     </div>
                 </div>
             </div>
-
-            <%--</c:if>--%>
-            <%--<c:if test="${studyGroup==null}">--%>
-            <%--<div class="page-header">--%>
-            <%--<p class="lead">Add new group:</p>--%>
-            <%--</div>--%>
-            <%--<input class="form-control" placeholder="Enter group name" type="text" name="name" maxlength="100" size="60" />--%>
-            <%--</c:if>--%>
-            <%--<input class="btn btn-default btn-sm" type="submit" name="Save" value="Save"/>--%>
-
             <div class="form-group">
                 <div class="col-sm-offset-3 col-lg-9">
                     <button type="submit" class="btn btn-primary">Save</button>

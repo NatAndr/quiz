@@ -142,4 +142,16 @@ public class QuizzesController {
             }
         }
     }
+
+    @RequestMapping(value = "/repeat")
+    public String doUpdate(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        session.setAttribute("result", null);
+        session.setAttribute("counter", null);
+        session.setAttribute("quizStart", null);
+        session.setAttribute("generatedQuestions", null);
+        session.setAttribute("questionsNumber", null);
+        session.setAttribute("quizSet", null);
+        return "redirect:/search";
+    }
 }

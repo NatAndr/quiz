@@ -11,7 +11,7 @@ public class CookieHelper {
 
     public static final String COOKIE_USERNAME = "userName";
     public static final String COOKIE_PASSWORD = "password";
-    public static final int COOKIE_AGE = 30 * 60;
+    public static final int COOKIE_AGE = 9999999;//30 * 60;
 
     public static String getCookieValue(HttpServletRequest req, String name) {
         Cookie[] cookies = req.getCookies();

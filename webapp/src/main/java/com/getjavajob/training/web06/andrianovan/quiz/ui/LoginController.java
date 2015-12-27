@@ -52,7 +52,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("email") String actualName,
+    public String login(@RequestParam("email") String actualName,
                               @RequestParam("password") String actualPass,
                               @RequestParam("rememberMe") Object rememberMe,
                               HttpServletRequest req, HttpServletResponse resp) {
@@ -67,11 +67,11 @@ public class LoginController {
             HttpSession session = req.getSession();
             session.setAttribute("userName", actualName);
             String url = session.getAttribute("requestedURI").toString();
-            return url == null ? new ModelAndView("quizzesSearch") :
-                    new ModelAndView(session.getAttribute("requestedURI").toString());
+            System.out.println("redirect:/" + session.getAttribute("requestedURI").toString());
+            return url == null ? "redirect:/search" : "redirect:" + session.getAttribute("requestedURI").toString();
         } else {
             req.setAttribute("errorLoginMsg", "Wrong username or password");
-            return new ModelAndView("login");
+            return "redirect:/login";
         }
     }
 
@@ -85,6 +85,6 @@ public class LoginController {
         removeCookie(resp, COOKIE_PASSWORD);
         HttpSession session = req.getSession();
         session.invalidate();
-        return "redirect:quizzesSearch";
+        return "redirect:/search";
     }
 }

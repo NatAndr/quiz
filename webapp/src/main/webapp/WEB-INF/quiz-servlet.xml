@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-    	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+
+
     	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz" expected-type="javax.sql.DataSource"/>
+    <import resource="classpath:quiz-context-service.xml"/>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-
-    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz"/>
-    <!--???-->
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <tx:annotation-driven proxy-target-class="true"/>
+    <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz.ui"/>
 
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -43,8 +30,6 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <!--<mvc:exclude-mapping path="/"/>-->
-            <!--<mvc:exclude-mapping path="/allowed/**"/>-->
-            <!--<mvc:exclude-mapping path="/resources/**"/>-->
             <!--<mvc:exclude-mapping path="/loginCheck"/>-->
             <bean class="com.getjavajob.training.web06.andrianovan.quiz.ui.AuthenticationInterceptor"/>
         </mvc:interceptor>

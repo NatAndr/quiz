@@ -11,8 +11,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script-->
 <link href="<c:url value="../../resources/css/bootstrap.min.css" />" rel="stylesheet">
-<script src="<c:url value="../../resources/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="../../resources/js/jquery-1.11.3.min.js" />"></script>
+<script src="<c:url value="../../resources/js/bootstrap.min.js" />"></script>
 <link rel="icon" href="<c:url value="../../resources/images/favicon.ico" />" >
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>

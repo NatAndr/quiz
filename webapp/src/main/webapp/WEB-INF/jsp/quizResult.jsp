@@ -26,8 +26,9 @@
                 <div class="alert alert-success" role="alert">Well done! You successfully passes this quiz.</div>
             </c:if>
             <c:if test="${result<questionsNumber}">
-                <div class="alert alert-danger" role="alert">You should try again.</div>
+                <div class="alert alert-danger" role="alert">Quiz is not passed.</div>
             </c:if>
+            <a href='<c:url value="/repeat"/>'>Try again.</a>
         </div>
     </div>
 </div>
