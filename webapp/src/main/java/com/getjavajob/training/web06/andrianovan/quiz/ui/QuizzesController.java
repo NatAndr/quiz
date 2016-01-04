@@ -98,7 +98,7 @@ public class QuizzesController {
     public String showQuestion(ModelMap model, HttpServletRequest req) {
         Question question = generatedQuestions.getQuestions().get(counter);
         model.addAttribute("question", question);
-        return "quizRun";
+        return "quizRunPart";
     }
 
     @RequestMapping(value = "/quizQuestion", method = RequestMethod.POST)
@@ -122,7 +122,7 @@ public class QuizzesController {
         List<Question> generatedQuestions = (List<Question>) session.getAttribute("generatedQuestions");
         session.setAttribute("counter", counter);
         model.addAttribute("question", generatedQuestions.get(counter));
-        return "quizRun";
+        return "quizRunPart";
     }
 
     private void saveResult(HttpServletRequest req, Student student, QuizStart quizStart) {

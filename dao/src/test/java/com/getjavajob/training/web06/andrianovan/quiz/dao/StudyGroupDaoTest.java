@@ -40,7 +40,7 @@ public class StudyGroupDaoTest {
 
     @Test
     public void testGetByID() {
-        StudyGroup studyGroup = this.dao.get(2);
+        StudyGroup studyGroup = this.dao.get(1);
         assertEquals(VALUE_FOR_ID_1, studyGroup.getName());
     }
 
@@ -73,9 +73,9 @@ public class StudyGroupDaoTest {
     @Test
     @Transactional
     public void testDelete() throws DaoException {
-        StudyGroup studyGroup = this.dao.get(10);
+        StudyGroup studyGroup = this.dao.get(5);
         this.dao.delete(studyGroup);
-        StudyGroup studyGroup2 = this.dao.get(10);
+        StudyGroup studyGroup2 = this.dao.get(5);
         assertNull(studyGroup2);
     }
 

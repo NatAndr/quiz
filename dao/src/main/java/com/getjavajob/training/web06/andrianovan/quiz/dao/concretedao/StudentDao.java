@@ -69,6 +69,12 @@ public class StudentDao extends AbstractDao<Student> {
         return UPDATE;
     }
 
+    @Override
+    public void update(Student entity) throws DaoException {
+        jdbcTemplate.update(getUpdateByIdStatement(), entity.getStudyGroup().getId(), entity.getFirstName(),
+                entity.getLastName(), Long.valueOf(entity.getId()));
+    }
+
     public List<Student> getStudentsByStudyGroup(StudyGroup studyGroup) throws DaoException {
         return super.doExecuteQueryWithParams(SELECT_FROM_STUDENT_BY_GROUP_ID, new Integer[]{studyGroup.getId()});
     }

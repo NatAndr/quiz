@@ -1,3 +1,8 @@
+-- Дамп структуры базы данных quiz
+DROP DATABASE IF EXISTS `quiz`;
+CREATE DATABASE IF NOT EXISTS `quiz` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `quiz`;
+
 -- Дамп структуры для таблица quiz.answer
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE IF NOT EXISTS `answer` (

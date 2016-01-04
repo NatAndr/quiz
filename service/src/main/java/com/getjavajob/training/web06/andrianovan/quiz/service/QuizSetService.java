@@ -2,7 +2,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.service;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuizSetDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.DaoFactory;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
@@ -31,32 +30,31 @@ public class QuizSetService extends AbstractService<QuizSet> {
     public QuizSetService() {
     }
 
-    @Override
-    @Transactional
-    public void insert(QuizSet entity) throws ServiceException {
-        super.insert(entity);
-        for (Question question : entity.getQuestions()) {
-            try {
-                questionDao.insert(question);
-            } catch (DaoException e) {
-                throw new ServiceException(CANNOT_INSERT + entity + e.getLocalizedMessage());
-            }
-            linkQuestionToQuizSet(entity, question);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void update(QuizSet entity) throws ServiceException {
-        super.update(entity);
-        for (Question question : entity.getQuestions()) {
-            linkQuestionToQuizSet(entity, question);
-        }
-    }
+//    @Override
+//    @Transactional
+//    public void insert(QuizSet entity) throws ServiceException {
+//        super.insert(entity);
+//        for (Question question : entity.getQuestions()) {
+//            try {
+//                questionDao.insert(question);
+//            } catch (DaoException e) {
+//                throw new ServiceException(CANNOT_INSERT + entity + e.getLocalizedMessage());
+//            }
+//            linkQuestionToQuizSet(entity, question);
+//        }
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void update(QuizSet entity) throws ServiceException {
+//        super.update(entity);
+//        for (Question question : entity.getQuestions()) {
+//            linkQuestionToQuizSet(entity, question);
+//        }
+//    }
 
     @Transactional
     private void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
-        QuestionDao questionDao = DaoFactory.getDaoFactory().getQuestionDao();
         try {
             questionDao.updateQuestionsQuizId(question, quizSet);
         } catch (DaoException e) {
@@ -77,6 +75,14 @@ public class QuizSetService extends AbstractService<QuizSet> {
             return ((QuizSetDao) super.getDao()).searchQuizSetBySubstring(str);
         } catch (DaoException e) {
             throw new ServiceException("Cannot get quiz by substring " + str + e.getLocalizedMessage());
+        }
+    }
+
+    public List<QuizSet> getQuizSetByQuestion(Question question) throws ServiceException {
+        try {
+            return ((QuizSetDao) super.getDao()).getQuizSetByQuestion(question);
+        } catch (DaoException e) {
+            throw new ServiceException("Cannot get quiz set by question " + e.getLocalizedMessage());
         }
     }
 }

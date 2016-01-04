@@ -12,16 +12,22 @@
     <title>Quiz</title>
     <%@include file="header.jsp" %>
     <script type="text/javascript">
-        //        $('#screenId').click(function() {
-        //        $(document).ready(function () {
+        var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';
+
+        $('#nxt').find('.nextBtn').on('click', nextQuestion());
+
+        $(document).ready(function() {
+            doRequest();
+            $('#nxt').show();
+        });
+
+
         function doRequest() {
             <%--var header = '<div class="container"><h2>${quizSet.name}</h2><div class="page-header"><p class="lead">Question ${counter+1}/${questionsNumber}</p></div><form class="form-search">';--%>
-            var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';
             $.ajax({
                 type: "POST",
                 cache: false,
                 url: '<c:url value="/showQuestion" />',
-//                url: uu,
                 data: "",
                 success: function (response) {
                     $('#quiz').html(response);
@@ -31,28 +37,33 @@
                 }
             });
         }
-        ;
-        $(document).ready(doRequest());
-        <%--$('#next').click(function () {--%>
-            <%--var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';--%>
-            <%--$.ajax({--%>
-                <%--type: "POST",--%>
-                <%--cache: false,--%>
-                <%--url: '<c:url value="/quizQuestion" />',--%>
-                <%--data: "",--%>
-                <%--success: function (response) {--%>
-                    <%--$('#quiz').html(response + footer);--%>
-                <%--},--%>
-                <%--error: function (e) {--%>
-                    <%--alert('Error: ' + e);--%>
-                <%--}--%>
-            <%--});--%>
-        <%--});--%>
+
+        function nextQuestion() {
+            console.info("clicked1");
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: '<c:url value="/quizQuestion" />',
+                data: "",
+                success: function (response) {
+                    $('#quiz').html(response);
+                },
+                error: function (e) {
+                    alert('Error: ' + e);
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
+
 <div id="quiz">
 
+</div>
+<%--<button type="submit" class="btn btn-primary nextBtn" id="next" &lt;%&ndash;style="display: none;"&ndash;%&gt;>Next</button>--%>
+<div id="nxt" style="display: none;">
+    <a class="btn btn-primary nextBtn">Next2</a>
 </div>
 </body>
 </html>

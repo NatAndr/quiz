@@ -22,6 +22,7 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     private static final String INSERT = "INSERT INTO Quiz_header (quiz_name) VALUES (?)";
     private static final String UPDATE = "UPDATE Quiz_header SET quiz_name=? WHERE id=?";
     private static final String SEARCH_QUIZ_SET = "SELECT * FROM Quiz_header WHERE UPPER(quiz_name) LIKE ";
+    private static final String GET_QUIZ_SET_BY_QUESTION_ID = "SELECT quiz_id FROM Question WHERE id=?";
     @Autowired
     private QuestionDao questionDao;
 
@@ -71,5 +72,14 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     public List<QuizSet> searchQuizSetBySubstring(String str) throws DaoException {
         String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
         return super.doExecuteQueryWithoutParams(query);
+    }
+
+    @Override
+    public void update(QuizSet entity) throws DaoException {
+        jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
+    }
+
+    public List<QuizSet> getQuizSetByQuestion(Question question) throws DaoException {
+        return super.doExecuteQueryWithParams(GET_QUIZ_SET_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 }

@@ -13,7 +13,8 @@
     <div class="page-header">
         <p class="lead">Question ${counter+1}/${questionsNumber}</p>
     </div>
-    <form class="form-search" <%--action="${pageContext.request.contextPath}/quizQuestion" method="post"--%>>
+    <%--<form class="form-search" &lt;%&ndash;action="${pageContext.request.contextPath}/quizQuestion" method="post"&ndash;%&gt;>--%>
+        <div id="question">
         ${question.question}
         <br>
         <c:forEach var="answer" items="${question.answers}">
@@ -31,7 +32,10 @@
             </c:choose>
         </c:forEach>
         <br>
-        <%--<button type="submit" class="btn btn-primary" id="next">Next</button>--%>
+        <%--<button type="submit" class="btn btn-primary nextBtn" id="next">Next</button>--%>
+            <%--<a href="" class="btn btn-primary next">Next</a>--%>
     <%--</form>--%>
 
-<%--</div>--%>
+        </div>
+
+</div>

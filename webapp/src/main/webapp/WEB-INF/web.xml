@@ -71,128 +71,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!--<servlet>-->
-        <!--<servlet-name>Search</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizzesSearch</servlet-class>-->
-        <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>Search</servlet-name>-->
-        <!--<url-pattern>/search</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>AllQuizes</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.AllQuizzesServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>AllQuizes</servlet-name>-->
-        <!--<url-pattern>/allQuizes</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>QuizInfo</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizInfoServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>QuizInfo</servlet-name>-->
-        <!--<url-pattern>/quizInfo</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>QuizRun</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizRunServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>QuizRun</servlet-name>-->
-        <!--<url-pattern>/quizRun</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>QuizQuestion</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.QuizQuestionServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>QuizQuestion</servlet-name>-->
-        <!--<url-pattern>/quizQuestion</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>StudyGroupInfo</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupInfoServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>StudyGroupInfo</servlet-name>-->
-        <!--<url-pattern>/studyGroupInfo</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>StudyGroupEdit</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupEditServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>StudyGroupEdit</servlet-name>-->
-        <!--<url-pattern>/studyGroupEdit</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>StudyGroupAddOrUpdate</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupAddOrUpdateServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>StudyGroupAddOrUpdate</servlet-name>-->
-        <!--<url-pattern>/studyGroupAddOrUpdate</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>StudyGroups</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.StudyGroupsServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>StudyGroups</servlet-name>-->
-        <!--<url-pattern>/studyGroups</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>Login</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>Login</servlet-name>-->
-        <!--<url-pattern>/login</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<display-name>Login</display-name>-->
-        <!--<servlet-name>LoginCheck</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LoginCheckServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>LoginCheck</servlet-name>-->
-        <!--<url-pattern>/loginCheck</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>Logout</servlet-name>-->
-        <!--<servlet-class>com.getjavajob.training.web06.andrianovan.quiz.ui.LogoutServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>Logout</servlet-name>-->
-        <!--<url-pattern>/logout</url-pattern>-->
-    <!--</servlet-mapping>-->
-
     <session-config>
         <session-timeout>10</session-timeout>
         <cookie-config>
@@ -202,7 +80,7 @@
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/error</location>
+        <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
 
     <resource-ref>

@@ -1,23 +1,22 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
-  Date: 30.11.2015
-  Time: 15:54
+  Date: 04.01.2016
+  Time: 14:26
   To change this template use File | Settings | File Templates.
 --%>
 <html>
 <head>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <!DOCTYPE html>
-    <%@include file="header.jsp" %>
-    <style type="text/css">
-        .bs-example {
-            margin: 20px;
-        }
-    </style>
+  <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE html>
+  <%@include file="header.jsp" %>
+  <style type="text/css">
+    .bs-example {
+      margin: 20px;
+    }
+  </style>
+    <title></title>
 </head>
 <body>
 
@@ -27,31 +26,35 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th class="col-md-1">Action</th>
-            <th class="col-md-3">First name</th>
-            <th class="col-md-3">Last name</th>
-            <th class="col-md-3">Group</th>
+                <th class="col-md-1">Action</th>
+                <th>Quiz</th>
+                <th>Question</th>
+                <th class="col-md-1">Type</th>
+                <th class="col-md-1">Weight</th>
             </tr>
             </thead>
-            <c:forEach var="student" items="${students}">
+            <c:forEach var="quizSet" items="${quizzes}">
+            <c:forEach var="question" items="${quizSet.questions}">
                 <tr>
                     <td>
-                        <a href="#" data-nameid="${student.id}" data-toggle="modal" data-target="#modalEdit"
+                        <a href="#" data-nameid="${question.id}" data-toggle="modal" data-target="#modalEdit3"
                            class="triggerEdit" data-action="edit">
                             <span class="glyphicon glyphicon-edit"></span></a>
                         &nbsp;&nbsp;
-                        <a href="#" data-nameid="${student.id}" data-name="${student.firstName} ${student.lastName}"
-                           data-toggle="modal" data-target="#modalRemove" class="triggerRemove">
+                        <a href="#" data-nameid="${question.id}" data-name="${question.question}"
+                           data-toggle="modal" data-target="#modalRemove3" class="triggerRemove">
                             <span class="glyphicon glyphicon-remove"></span></a>
 
                     </td>
-                    <td>${student.firstName}</td>
-                    <td>${student.lastName}</td>
-                    <td>${student.studyGroup}</td>
+                    <td>${quizSet.name}</td>
+                    <td>${question.question}</td>
+                    <td>${question.questionType}</td>
+                    <td>${question.weight}</td>
                 </tr>
             </c:forEach>
+            </c:forEach>
         </table>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-action="add">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit3" data-action="add">
             Add new
         </button>
     </div>
@@ -120,19 +123,19 @@
     var studentId = 0;
     var studentName;
 
-    $('#modalRemove').on('show.bs.modal', function (e) {
+    $('#modalRemove3').on('show.bs.modal', function (e) {
         e.preventDefault();
         studentName = $(e.relatedTarget).data('name');
         studentId = $(e.relatedTarget).data('nameid');
         $(this).find('.myval').text('Do you really want to delete ' + studentName + '?');
     });
-    $('#modalRemove').find('.saveBtn').on('click', function () {
+    $('#modalRemove3').find('.saveBtn').on('click', function () {
         $.ajax({
             type: "POST",
             url: '<c:url value="/studentDelete" />',
             data: {id: studentId},
             success: function () {
-                showResultModal($('#modalRemove'), studentName + ' was deleted');
+                showResultModal($('#modalRemove3'), studentName + ' was deleted');
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -140,7 +143,7 @@
         });
     });
 
-    $('#modalEdit').on('show.bs.modal', function (e) {
+    $('#modalEdit3').on('show.bs.modal', function (e) {
         studentId = $(e.relatedTarget).data('nameid');
         var act = $(e.relatedTarget).data('action');
         $.ajax({
@@ -154,7 +157,7 @@
             }
         });
         if (act != 'edit') {
-            resetEdit($('#modalEdit'));
+            resetEdit($('#modalEdit3'));
             studentId = 0;
         } else {
             getStudentInfo(studentId);
@@ -162,9 +165,9 @@
     });
 
     <!--Add or update student -->
-    $('#modalEdit').find('.saveBtn').on('click', function () {
-        var firstName = $('#modalEdit').find('.firstName').val();
-        var lastName = $('#modalEdit').find('.lastName').val();
+    $('#modalEdit3').find('.saveBtn').on('click', function () {
+        var firstName = $('#modalEdit3').find('.firstName').val();
+        var lastName = $('#modalEdit3').find('.lastName').val();
         var studyGroupId = $(".options option:selected").val();
 
         $.ajax({
@@ -172,7 +175,7 @@
             url: '<c:url value="/studentUpdate" />',
             data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&studyGroupId=" + studyGroupId,
             success: function (response) {
-                showResultModal($('#modalEdit'), response);
+                showResultModal($('#modalEdit3'), response);
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -186,9 +189,9 @@
             url: '<c:url value="/studentInfo"/>',
             data: {id: id},
             success: function (obj) {
-                $('#modalEdit').find('.firstName').val(obj.firstName);
-                $('#modalEdit').find('.lastName').val(obj.lastName);
-                $('#modalEdit').find('.options').val(obj.studyGroup.id);
+                $('#modalEdit3').find('.firstName').val(obj.firstName);
+                $('#modalEdit3').find('.lastName').val(obj.lastName);
+                $('#modalEdit3').find('.options').val(obj.studyGroup.id);
             },
             error: function (e) {
                 alert('Error: ' + e);

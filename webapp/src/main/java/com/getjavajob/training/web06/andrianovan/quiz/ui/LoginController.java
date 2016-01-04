@@ -28,7 +28,7 @@ public class LoginController {
     public LoginController() {
         Properties props = new Properties();
         try {
-            props.load(LoginCheckServlet.class.getClassLoader().getResourceAsStream(LOGIN_PROPERTIES));
+            props.load(this.getClass().getClassLoader().getResourceAsStream(LOGIN_PROPERTIES));
         } catch (IOException e) {
             e.printStackTrace();
         }

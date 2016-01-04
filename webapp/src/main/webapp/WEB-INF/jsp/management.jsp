@@ -23,7 +23,7 @@
     <div class="page-header">
         <h2>Content management</h2>
     </div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" id="myTabs">
         <li class="active"><a data-toggle="tab" href="#students">Students</a></li>
         <li><a data-toggle="tab" href="#studyGroups">Groups</a></li>
         <li><a data-toggle="tab" href="#quizzes">Quizzes</a></li>
@@ -37,20 +37,15 @@
         </div>
 
         <div id="studyGroups" class="tab-pane fade">
-            <%--<c:set var="elements" value="${studyGroups}" scope="request" />--%>
-            <%--<jsp:include page="entitiesList.jsp"/>--%>
-                <%@include file="studyGroups.jsp" %>
+            <%@include file="studyGroups.jsp" %>
         </div>
 
         <div id="quizzes" class="tab-pane fade">
-            <c:set var="foundQuiz" value="" scope="request" />
-            <%--<%@include file="quizzes.jsp" %>--%>
-            <jsp:include page="quizzes.jsp"/>
+            <%@include file="quizSets.jsp" %>
         </div>
 
         <div id="questions" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Some content in menu 3.</p>
+            <%@include file="questions.jsp" %>
         </div>
 
         <div id="answers" class="tab-pane fade">
@@ -59,6 +54,26 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Result -->
+<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" align="center">
+                <h4 class="myval"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Result -->
+
+<script type="text/javascript">
+
+
+</script>
 
 </body>
 </html>
