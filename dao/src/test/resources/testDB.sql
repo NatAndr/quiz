@@ -1,7 +1,7 @@
 -- Дамп структуры базы данных quiz
-DROP DATABASE IF EXISTS `quiz`;
-CREATE DATABASE IF NOT EXISTS `quiz` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `quiz`;
+-- DROP DATABASE IF EXISTS `quiz`;
+-- CREATE DATABASE IF NOT EXISTS `quiz` /*!40100 DEFAULT CHARACTER SET utf8 */;
+-- USE `quiz`;
 
 -- Дамп структуры для таблица quiz.answer
 DROP TABLE IF EXISTS `answer`;
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `id`          INT(11)      AUTO_INCREMENT,
   `question_id` INT(11)      DEFAULT NULL,
   `answer`      VARCHAR(300) DEFAULT NULL,
-  `is_correct`  INT(4)       DEFAULT NULL,
+  `is_correct`  INT(4)       DEFAULT '0',
   PRIMARY KEY (`id`)
 );
 
@@ -72,8 +72,9 @@ CREATE TABLE IF NOT EXISTS `question` (
   `id`       INT(11)      AUTO_INCREMENT,
   `quiz_id`  INT(11)      DEFAULT NULL,
   `question` VARCHAR(500) DEFAULT NULL,
-  `type`     INT(11)      DEFAULT NULL,
-  `weight`   INT(11)      DEFAULT NULL,
+  `type` int(11) DEFAULT '1',
+  `weight` int(11) DEFAULT '1',
+  `image` blob,
   PRIMARY KEY (`id`)
 );
 
@@ -165,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `result` (
 DELETE FROM `result`;
 /*!40000 ALTER TABLE `result` DISABLE KEYS */;
 INSERT INTO `result` (`id`, `student_id`, `answer_id`, `input_answer`, `quiz_start_id`) VALUES
-  (4, 2, 2, '', NULL),
+  (4, 2, 2, '', 2),
   (5, 1, 1, NULL, 2),
   (6, 1, 5, NULL, 2),
   (7, 1, 15, NULL, 2),

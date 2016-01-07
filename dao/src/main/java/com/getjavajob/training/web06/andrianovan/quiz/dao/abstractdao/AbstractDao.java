@@ -3,6 +3,7 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.CrudDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -64,34 +65,21 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 
     @Override
     public T get(int id) {
-//        List<T> list = this.jdbcTemplate.query(getSelectByIdStatement(), new RowMapper<T>() {
-//
-//            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                return (T) rs.getObject(1);
-//            }
-//
-//        });
-//
-//        if (list.isEmpty()) {
-//            return null;
-//        } else if (list.size() == 1) { // list contains exactly 1 element
-//            return list.get(0);
-//        } else {
-//            System.out.println("Exception");
-//        }
-//        return null;
-
-        return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
-            @Override
-            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-                try {
-                    return createInstanceFromResult(rs);
-                } catch (DaoException e) {
-                    e.printStackTrace();
-                    return null;
+        try {
+            return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
+                @Override
+                public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        return createInstanceFromResult(rs);
+                    } catch (DaoException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 }
-            }
-        });
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -135,147 +123,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
     public void update(T entity) throws DaoException {
         this.jdbcTemplate.update(getUpdateByIdStatement(), getEntityFields(entity), Long.valueOf(entity.getId()));
     }
-//    public void insert(T entity) throws DaoException {
-//        try (Connection connection = getDataSource().getConnection()) {
-//            Class<?> clazz = entity.getClass();
-//            Field[] fields = clazz.getDeclaredFields();
-//            try (PreparedStatement prepareStatement = connection.prepareStatement(getInsertStatement(), Statement.RETURN_GENERATED_KEYS)) {
-//                for (int i = 0; i < fields.length; i++) {
-//                    if (fields[i].getType() == List.class || fields[i].getName().contains("quizDate")) {
-//                        continue;
-//                    }
-//                    Method getMethod = null;
-//                    Object fieldValue;
-//                    try {
-//                        getMethod = clazz.getMethod("get" + capitalizeFirstLetter(fields[i].getName()));
-//                    } catch (NoSuchMethodException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Object newValue = null;
-//                    try {
-//                        if (getMethod != null) {
-//                            fieldValue = getMethod.invoke(entity);
-//                            newValue = getValue(fields[i], fieldValue);
-//                        }
-//                    } catch (IllegalAccessException | InvocationTargetException e) {
-//                        e.printStackTrace();
-//                    }
-//                    prepareStatement.setObject(i + 1, newValue);
-//                }
-//                prepareStatement.executeUpdate();
-//                connection.commit();
-//                setGeneratedId(entity, prepareStatement);
-//            } catch (SQLException e) {
-//                throw new DaoException(CANNOT_INSERT + entity + e.getLocalizedMessage());
-//            } finally {
-//                try {
-//                    connection.rollback();
-//                } catch (SQLException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        } catch (SQLException e) {
-//            throw new DaoException(CANNOT_GET_CONNECTION + e.getLocalizedMessage());
-//        }
-//    }
-
-//    protected void setGeneratedId(T entity, PreparedStatement prepareStatement) throws SQLException {
-//        ResultSet rs = prepareStatement.getGeneratedKeys();
-//        int generatedID = -1;
-//        if (rs.next()) {
-//            generatedID = rs.getInt(1);
-//        }
-//        if (generatedID > 0) {
-//            entity.setId(generatedID);
-//        }
-//    }
-
-//    public void update(T entity) throws DaoException {
-//        int id = entity.getId();
-//        Class<?> clazz = entity.getClass();
-//        Field[] fields = clazz.getDeclaredFields();
-//        List<Object> values = new ArrayList<>(fields.length);
-//        List<Class<?>> types = new ArrayList<>(fields.length);
-//        for (Field field : fields) {
-//            if (field.getType() == List.class) {
-//                continue;
-//            }
-//            Method getMethod = null;
-//            try {
-//                getMethod = clazz.getMethod("get" + capitalizeFirstLetter(field.getName()));
-//            } catch (NoSuchMethodException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                if (getMethod != null) {
-//                    Object fieldValue = getMethod.invoke(entity);
-//                    Object newValue = getValue(field, fieldValue);
-//                    values.add(newValue);
-//                    types.add(field.getType());
-//                }
-//            } catch (IllegalAccessException | InvocationTargetException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        updateField(values, types, typesMap, id);
-//    }
-
-//    private void initTypesMap() {
-//        typesMap.put(Date.class, Types.DATE);
-//        typesMap.put(String.class, Types.VARCHAR);
-//        typesMap.put(Integer.class, Types.INTEGER);
-//        typesMap.put(QuestionType.class, Types.INTEGER);
-//        typesMap.put(java.util.Date.class, Types.DATE);
-//    }
-
-//    private Object getValue(Field field, Object fieldValue) {
-//        if (fieldValue == null) {
-//            return null;
-//        }
-//        Object newValue;
-//        if (!field.getType().isPrimitive() && !(field.getType() == String.class)
-//                && !(field.getType() == Date.class) && !(field.getType().isEnum())) {
-//            newValue = ((BaseEntity) fieldValue).getId();
-//        } else if (field.getType().isEnum()) {
-//            newValue = ((Enum) fieldValue).ordinal() + 1;
-//        } else {
-//            newValue = fieldValue;
-//        }
-//        return newValue;
-//    }
-
-//    private void updateField(List<Object> values, List<Class<?>> types, Map<Class<?>, Integer> typesMap, int id)
-//            throws DaoException {
-//        try (Connection connection = getDataSource().getConnection()) {
-//            int fieldsQty = values.size();
-//            try (PreparedStatement prepareStatement = connection.prepareStatement(getUpdateByIdStatement())) {
-//                for (int i = 0; i < values.size(); i++) {
-//                    if (values.get(i) == null) {
-//                        prepareStatement.setNull(i + 1, typesMap.get(types.get(i)));
-//                    } else {
-//                        prepareStatement.setObject(i + 1, values.get(i));
-//                    }
-//                }
-//                prepareStatement.setObject(fieldsQty + 1, id);
-//                prepareStatement.executeUpdate();
-//                connection.commit();
-//            } catch (SQLException e) {
-//                throw new DaoException(CANNOT_INSERT + values + e.getLocalizedMessage());
-//            } finally {
-//                try {
-//                    connection.rollback();
-//                } catch (SQLException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        } catch (SQLException e) {
-//            throw new DaoException(CANNOT_GET_CONNECTION + e.getLocalizedMessage());
-//        }
-//    }
-
-//    private String capitalizeFirstLetter(String str) {
-//        return str.substring(0, 1).toUpperCase() + str.substring(1);
-//    }
 
     protected List<T> doExecuteQueryWithParams(String query, Object[] params) throws DaoException {
         return this.jdbcTemplate.query(query, params, new RowMapper<T>() {

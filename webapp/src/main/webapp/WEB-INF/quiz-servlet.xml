@@ -21,12 +21,6 @@
     </bean>
 
     <mvc:annotation-driven/>
-    <!--<mvc:annotation-driven>-->
-        <!--<mvc:message-converters>-->
-            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
-            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
-        <!--</mvc:message-converters>-->
-    <!--</mvc:annotation-driven>-->
 
     <mvc:view-controller path="/" view-name="/quizzesSearch"/>
 
@@ -40,5 +34,10 @@
             <bean class="com.getjavajob.training.web06.andrianovan.quiz.ui.AuthenticationInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1048576"/>
+    </bean>
 
 </beans>

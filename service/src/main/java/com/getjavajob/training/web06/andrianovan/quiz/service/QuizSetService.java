@@ -78,11 +78,11 @@ public class QuizSetService extends AbstractService<QuizSet> {
         }
     }
 
-    public List<QuizSet> getQuizSetByQuestion(Question question) throws ServiceException {
-        try {
-            return ((QuizSetDao) super.getDao()).getQuizSetByQuestion(question);
-        } catch (DaoException e) {
-            throw new ServiceException("Cannot get quiz set by question " + e.getLocalizedMessage());
-        }
-    }
+//    public List<QuizSet> getQuizSetByQuestion(Question question) throws ServiceException {
+//        try {
+//            return ((QuizSetDao) super.getDao()).getQuizSetByQuestion(question);
+//        } catch (DaoException e) {
+//            throw new ServiceException("Cannot get quiz set by question " + e.getLocalizedMessage());
+//        }
+//    }
 }

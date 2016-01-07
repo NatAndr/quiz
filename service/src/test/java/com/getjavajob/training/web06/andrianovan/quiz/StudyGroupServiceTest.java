@@ -5,30 +5,30 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nat on 12.11.2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class StudyGroupServiceTest {
 
     private static final int ROWS_NUMBER = 2;
-    private StudyGroupService studyGroupService;
+    @Mock
     private StudyGroupDao dao;
-
-    @Before
-    public void onBefore() {
-//        this.studyGroupService = new StudyGroupService();
-        this.dao = mock(StudyGroupDao.class);
-        this.studyGroupService.setDao(dao);
-    }
+    @InjectMocks
+    private StudyGroupService studyGroupService;
 
     @Test
     public void testGet() {

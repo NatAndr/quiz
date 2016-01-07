@@ -143,7 +143,8 @@
       url: '<c:url value="/quizSetUpdate" />',
       data: "id=" + quizId + "&name=" + quizName,
       success: function (response) {
-        showResultModal($('#modalEdit2'), response);
+//        showResultModal($('#modalEdit2'), response);
+          showAlert($('#modalEdit2'), response, 'success');
       },
       error: function (e) {
         alert('Error: ' + e);

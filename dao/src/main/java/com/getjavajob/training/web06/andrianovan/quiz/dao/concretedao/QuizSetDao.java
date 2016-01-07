@@ -79,7 +79,7 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
         jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
     }
 
-    public List<QuizSet> getQuizSetByQuestion(Question question) throws DaoException {
-        return super.doExecuteQueryWithParams(GET_QUIZ_SET_BY_QUESTION_ID, new Integer[]{question.getId()});
-    }
+//    public List<QuizSet> getQuizSetByQuestion(Question question) throws DaoException {
+//        return super.doExecuteQueryWithParams(GET_QUIZ_SET_BY_QUESTION_ID, new Integer[]{question.getId()});
+//    }
 }

@@ -12,15 +12,11 @@
     <title>Quiz</title>
     <%@include file="header.jsp" %>
     <script type="text/javascript">
-        var footer = '<button type="submit" class="btn btn-primary" id="next">Next</button></form></div>';
-
-        $('#nxt').find('.nextBtn').on('click', nextQuestion());
-
         $(document).ready(function() {
             doRequest();
             $('#nxt').show();
+            $('#nxt').on('click', '.nextBtn', nextQuestion);
         });
-
 
         function doRequest() {
             <%--var header = '<div class="container"><h2>${quizSet.name}</h2><div class="page-header"><p class="lead">Question ${counter+1}/${questionsNumber}</p></div><form class="form-search">';--%>
@@ -39,7 +35,6 @@
         }
 
         function nextQuestion() {
-            console.info("clicked1");
             $.ajax({
                 type: "POST",
                 cache: false,
@@ -58,12 +53,9 @@
 </head>
 <body>
 
-<div id="quiz">
-
-</div>
-<%--<button type="submit" class="btn btn-primary nextBtn" id="next" &lt;%&ndash;style="display: none;"&ndash;%&gt;>Next</button>--%>
+<div id="quiz"></div>
 <div id="nxt" style="display: none;">
-    <a class="btn btn-primary nextBtn">Next2</a>
+    <a class="btn btn-primary nextBtn">Next</a>
 </div>
 </body>
 </html>

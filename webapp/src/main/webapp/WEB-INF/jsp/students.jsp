@@ -28,9 +28,9 @@
             <thead>
             <tr>
             <th class="col-md-1">Action</th>
-            <th class="col-md-3">First name</th>
-            <th class="col-md-3">Last name</th>
-            <th class="col-md-3">Group</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Group</th>
             </tr>
             </thead>
             <c:forEach var="student" items="${students}">
@@ -55,6 +55,8 @@
             Add new
         </button>
     </div>
+    <br>
+    <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->
@@ -87,7 +89,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-default saveBtn">Save</a>
+                        <a class="btn btn-default saveBtn" data-dismiss="modal">Save</a>
                     </div>
                 </div>
             </div>
@@ -153,10 +155,12 @@
                 alert('Error: ' + e);
             }
         });
-        if (act != 'edit') {
+        if (act == 'add') {
+            console.info("add");
             resetEdit($('#modalEdit'));
             studentId = 0;
         } else {
+            console.info("edit");
             getStudentInfo(studentId);
         }
     });
@@ -172,7 +176,8 @@
             url: '<c:url value="/studentUpdate" />',
             data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&studyGroupId=" + studyGroupId,
             success: function (response) {
-                showResultModal($('#modalEdit'), response);
+//                showResultModal($('#modalEdit'), response);
+                showAlert($('#modalEdit'), response, 'success');
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -180,12 +185,14 @@
         });
     });
 
-    function getStudentInfo(id) {
+    function getStudentInfo(sId) {
+        console.info("studentId " + sId);
         $.ajax({
             type: "POST",
             url: '<c:url value="/studentInfo"/>',
-            data: {id: id},
+            data: {id: sId},
             success: function (obj) {
+                console.info("firstName " + obj.firstName);
                 $('#modalEdit').find('.firstName').val(obj.firstName);
                 $('#modalEdit').find('.lastName').val(obj.lastName);
                 $('#modalEdit').find('.options').val(obj.studyGroup.id);

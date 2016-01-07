@@ -12,7 +12,7 @@ public class DatabaseInitializer {
     private static final String CREATE_DB_QUERY = "testDB.sql";
 //
 //    public void initDatabase() throws DaoException {
-//        InputStream inputStream = QuizHeaderDaoTest.class.getClassLoader().getResourceAsStream(CREATE_DB_QUERY);
+//        InputStream inputStream = QuizSetDaoTest.class.getClassLoader().getResourceAsStream(CREATE_DB_QUERY);
 //        Reader reader = new InputStreamReader(inputStream);
 //        Connection connection = ConnectionPool.getInstance().getConnection();
 //        try {

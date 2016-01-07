@@ -41,15 +41,19 @@ public class QuestionService extends AbstractService<Question> {
     @Transactional
     public void insert(Question entity) throws ServiceException {
         super.insert(entity);
-        insertAnswerToExistingQuestion(entity);
+        if (!entity.getAnswers().isEmpty()) {
+            insertAnswerToExistingQuestion(entity);
+        }
     }
 
     @Override
     @Transactional
     public void update(Question entity) throws ServiceException {
         super.update(entity);
-        for (Answer answer : entity.getAnswers()) {
-            linkAnswerToQuestion(entity, answer);
+        if (!entity.getAnswers().isEmpty()) {
+            for (Answer answer : entity.getAnswers()) {
+                linkAnswerToQuestion(entity, answer);
+            }
         }
     }
 
@@ -65,11 +69,7 @@ public class QuestionService extends AbstractService<Question> {
     @Transactional
     public void insertAnswerToExistingQuestion(Question question) throws ServiceException {
         for (Answer answer : question.getAnswers()) {
-            try {
-                answerDao.insert(answer);
-            } catch (DaoException e) {
-                throw new ServiceException(CANNOT_INSERT + question + e.getLocalizedMessage());
-            }
+            answerService.insert(answer);
             linkAnswerToQuestion(question, answer);
         }
     }

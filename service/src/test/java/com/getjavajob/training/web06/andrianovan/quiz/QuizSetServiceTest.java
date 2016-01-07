@@ -7,8 +7,11 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,23 +19,20 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nat on 12.11.2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class QuizSetServiceTest {
 
     private static final int ROWS_NUMBER = 2;
+    @InjectMocks
     private QuizSetService quizSetService;
+    @Mock
     private QuizSetDao dao;
-
-    @Before
-    public void onBefore() {
-//        this.quizSetService = new QuizSetService();
-        this.dao = mock(QuizSetDao.class);
-        this.quizSetService.setDao(dao);
-    }
 
     @Test
     public void testGet() {

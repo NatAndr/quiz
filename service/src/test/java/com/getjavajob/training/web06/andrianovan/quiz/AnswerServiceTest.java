@@ -7,30 +7,30 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nat on 11.11.2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class AnswerServiceTest {
 
     private static final int ROWS_NUMBER = 46;
+    @InjectMocks
     private AnswerService answerService;
+    @Mock
     private AnswerDao dao;
-
-    @Before
-    public void onBefore() {
-//        this.answerService = new AnswerService();
-        this.dao = mock(AnswerDao.class);
-        this.answerService.setDao(dao);
-    }
 
     @Test
     public void testGet() {

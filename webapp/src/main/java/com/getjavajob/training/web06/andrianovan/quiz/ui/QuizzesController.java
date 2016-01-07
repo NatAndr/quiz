@@ -109,7 +109,7 @@ public class QuizzesController {
         HttpSession session = req.getSession();
         QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
         this.counter = (int) session.getAttribute("counter") + 1;
-        saveResult(req, student, quizStart);
+//        saveResult(req, student, quizStart);
 
         if (this.counter == session.getAttribute("questionsNumber")) {
             try {

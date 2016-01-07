@@ -5,6 +5,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,26 +19,21 @@ import static org.junit.Assert.assertEquals;
  * Created by Nat on 03.11.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
-        "classpath:quiz-context-dao-overrides.xml"})
+@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ResultDaoTest {
 
     private static final int ROWS_NUMBER = 8;
-    //@Autowired
+    @Autowired
     private ResultDao dao;
-    //@Autowired
+    @Autowired
     private AnswerDao answerDao;
-    //@Autowired
+    @Autowired
     private StudentDao studentDao;
-    //@Autowired
+    @Autowired
     private QuizStartDao quizStartDao;
-    //@Autowired
+    @Autowired
     private QuestionDao questionDao;
-
-//    @Before
-//    public void initDatabase() throws DaoException {
-//        new DatabaseInitializer().initDatabase();
-//    }
 
     @Test
     public void testGetByID() {
@@ -61,22 +58,17 @@ public class ResultDaoTest {
         assertEquals(ROWS_NUMBER + 1, resultList.size());
     }
 
-//    @Test
-//    public void testUpdate() throws DaoException {
-//        Result result = this.dao.get(5);
-//        result.setAnswer(AnswerDao.getInstance().get(2));
-//        this.dao.update(result);
-//        Result updatedResult = this.dao.get(5);
-//        assertEquals("2. String -> \"null\"", updatedResult.getAnswer().getAnswer());
-//    }
+    @Test(expected = UnsupportedOperationException.class)
+    public void testDelete() {
+        Result result = this.dao.get(10);
+        this.dao.delete(result);
+    }
 
-//    @Test
-//    public void testDelete() {
-//        Result result = this.dao.get(10);
-//        this.dao.delete(result);
-//        Result result2 = this.dao.get(10);
-//        assertNull(result2);
-//    }
+    @Test(expected = UnsupportedOperationException.class)
+    public void testUpdate() throws DaoException {
+        Result result = this.dao.get(10);
+        this.dao.update(result);
+    }
 
     @Test
     public void testGetAllAnswersByStudentAndQuestionAndQuizStart() throws DaoException {

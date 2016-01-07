@@ -7,12 +7,21 @@ function resetEdit(modal) {
 }
 
 function showResultModal(modal, msg) {
-    modal.modal('hide');
+    modal.modal('toggle');
     $('#result').on('show.bs.modal', function () {
         $(this).find('.myval').text(msg);
     });
 //        $('#result').on('hidden.bs.modal', location.reload());
     $('#result').modal('show');
 }
+
+function showAlert(modalToHide, message, alertType) {
+    modalToHide.modal('hide');
+    $('#alert_placeholder').append('<div id="alertdiv" class="alert alert-' + alertType + '"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+    setTimeout(function() {
+        $("#alertdiv").remove();
+    }, 10000);
+}
+
 
 

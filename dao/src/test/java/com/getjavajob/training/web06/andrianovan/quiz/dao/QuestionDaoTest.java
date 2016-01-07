@@ -8,9 +8,12 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -20,8 +23,8 @@ import static org.junit.Assert.assertNull;
  * Created by Nat on 03.11.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
-        "classpath:quiz-context-dao-overrides.xml"})
+@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class QuestionDaoTest {
 
     private static final int ROWS_NUMBER = 13;
@@ -29,15 +32,10 @@ public class QuestionDaoTest {
             " for array elements of the types indicated?";
     private static final String INSERTED_VALUE = "Сколько полос у арбуза?";
     private static final String UPDATED_NEW_VALUE = "Зачем?";
-    //@Autowired
+    @Autowired
     private QuestionDao dao;
-    //@Autowired
+    @Autowired
     private QuizSetDao quizSetDao;
-
-//    @Before
-//    public void initDatabase() throws DaoException {
-//        new DatabaseInitializer().initDatabase();
-//    }
 
     @Test
     public void testGetByID() {
@@ -67,6 +65,7 @@ public class QuestionDaoTest {
     public void testUpdate() throws DaoException {
         Question question = this.dao.get(1);
         question.setQuestion(UPDATED_NEW_VALUE);
+        question.setQuestionType(QuestionType.SINGLE);
         this.dao.update(question);
         Question question2 = this.dao.get(1);
         assertEquals(UPDATED_NEW_VALUE, question2.getQuestion());
@@ -80,10 +79,10 @@ public class QuestionDaoTest {
         assertNull(question2);
     }
 
-//    @Test
-//    public void testGetQuestionsByQuizHeader() {
-//        List<Question> actual = dao.getQuestionsByQuizSet(QuizSetDao.getInstance().get(2));
-//        List<Question> expected = Arrays.asList(dao.get(11), dao.get(13));
-//        assertEquals(expected, actual);
-//    }
+    @Test
+    public void testGetQuestionsByQuizSet() throws DaoException {
+        List<Question> actual = this.dao.getQuestionsByQuizSet(this.quizSetDao.get(2));
+        List<Question> expected = Arrays.asList(dao.get(11), dao.get(13));
+        assertEquals(expected, actual);
+    }
 }

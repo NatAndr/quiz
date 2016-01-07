@@ -6,31 +6,31 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.Student;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nat on 12.11.2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class StudentServiceTest {
 
     private static final int ROWS_NUMBER = 2;
+    @InjectMocks
     private StudentService studentService;
+    @Mock
     private StudentDao dao;
-
-    @Before
-    public void onBefore() {
-//        this.studentService = new StudentService();
-        this.dao = mock(StudentDao.class);
-        this.studentService.setDao(dao);
-    }
 
     @Test
     public void testGet() {
@@ -56,16 +56,16 @@ public class StudentServiceTest {
 
     @Test
     public void testInsert() throws DaoException, ServiceException {
-        Student quizHeader = new Student();
-        this.studentService.insert(quizHeader);
-        verify(this.dao).insert(quizHeader);
+        Student student = new Student();
+        this.studentService.insert(student);
+        verify(this.dao).insert(student);
     }
 
     @Test
     public void testUpdate() throws DaoException, ServiceException {
-        Student quizHeader = new Student();
-        this.studentService.update(quizHeader);
-        verify(this.dao).update(quizHeader);
+        Student student = new Student();
+        this.studentService.update(student);
+        verify(this.dao).update(student);
     }
 
     @Test

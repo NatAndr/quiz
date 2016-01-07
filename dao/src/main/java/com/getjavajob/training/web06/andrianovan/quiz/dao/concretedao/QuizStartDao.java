@@ -72,6 +72,11 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
 
     @Override
     public void update(QuizStart entity) throws DaoException {
-        throw new DaoException("Update is not allowed for " + entity);
+        throw new UnsupportedOperationException("Update is not allowed for " + entity);
+    }
+
+    @Override
+    public void delete(QuizStart entity) {
+        throw new UnsupportedOperationException("Delete is not allowed for " + entity);
     }
 }

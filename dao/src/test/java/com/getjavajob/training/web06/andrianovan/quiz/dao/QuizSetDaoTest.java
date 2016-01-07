@@ -1,10 +1,13 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao;
 
+import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuizSetDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,21 +20,18 @@ import static org.junit.Assert.assertNull;
  * Created by Nat on 03.11.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
-        "classpath:quiz-context-dao-overrides.xml"})
-public class QuizHeaderDaoTest {
+@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class QuizSetDaoTest {
 
     private static final int ROWS_NUMBER = 2;
     private static final String VALUE_FOR_ID_1 = "Java Programming. Language Fundamentals";
     private static final String INSERTED_VALUE = "Ботаника";
     private static final String UPDATED_NEW_VALUE = "Математика";
-    //@Autowired
+    @Autowired
     private QuizSetDao dao;
-
-//    @Before
-//    public void initDatabase() throws DaoException {
-//        new DatabaseInitializer().initDatabase();
-//    }
+    @Autowired
+    private QuestionDao questionDao;
 
     @Test
     public void testGetByID() {
@@ -65,9 +65,9 @@ public class QuizHeaderDaoTest {
 
     @Test
     public void testDelete() throws DaoException {
-        QuizSet quizHeader = this.dao.get(1);
-        this.dao.delete(quizHeader);
-        QuizSet quizHeader2 = this.dao.get(1);
-        assertNull(quizHeader2);
+        QuizSet quizSet = this.dao.get(1);
+        this.dao.delete(quizSet);
+        QuizSet quizSet2 = this.dao.get(1);
+        assertNull(quizSet2);
     }
 }

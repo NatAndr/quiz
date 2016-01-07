@@ -9,8 +9,11 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,33 +21,39 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nat on 12.11.2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class QuestionServiceTest {
 
     private static final int ROWS_NUMBER = 13;
+    @InjectMocks
     private QuestionService questionService;
+    @InjectMocks
     private AnswerService answerService;
+    @Mock
     private QuestionDao dao;
+    @Mock
     private AnswerDao answerDao;
 
-    @Before
-    public void onBefore() {
-//        this.questionService = new QuestionService();
-//        this.answerService = new AnswerService();
-
-
-        this.dao = mock(QuestionDao.class);
-        this.questionService.setDao(dao);
-        this.answerDao = mock(AnswerDao.class);
-        this.answerService.setDao(answerDao);
-
-//        this.answerService = mock(AnswerService.class);
-//        this.questionService.setAnswerService(answerService);
-    }
+//    @Before
+//    public void onBefore() {
+////        this.questionService = new QuestionService();
+////        this.answerService = new AnswerService();
+//
+//
+//        this.dao = mock(QuestionDao.class);
+//        this.questionService.setDao(dao);
+//        this.answerDao = mock(AnswerDao.class);
+//        this.answerService.setDao(answerDao);
+//
+////        this.answerService = mock(AnswerService.class);
+////        this.questionService.setAnswerService(answerService);
+//    }
 
     @Test
     public void testGet() {
@@ -74,12 +83,15 @@ public class QuestionServiceTest {
         Question question = new Question("Question");
         quizSet.setQuestions(Collections.singletonList(question));
         question.setId(30);
-//        Answer answer1 = new Answer("Answer3");
-//        Answer answer2 = new Answer("Answer4");
-//        question.setAnswers(Arrays.asList(answer1, answer2));
+        Answer answer1 = new Answer("Answer3");
+        Answer answer2 = new Answer("Answer4");
+        question.setAnswers(Arrays.asList(answer1, answer2));
 
         this.questionService.insert(question);
+
         verify(this.dao).insert(question);
+//        verify(this.answerDao).insert(answer1);
+//        verify(this.answerDao).insert(answer2);
     }
 
     @Test

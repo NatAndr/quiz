@@ -7,15 +7,15 @@
 --%>
 <html>
 <head>
-  <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-  <?xml version="1.0" encoding="UTF-8" ?>
-  <!DOCTYPE html>
-  <%@include file="header.jsp" %>
-  <style type="text/css">
-    .bs-example {
-      margin: 20px;
-    }
-  </style>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE html>
+    <%@include file="header.jsp" %>
+    <style type="text/css">
+        .bs-example {
+            margin: 20px;
+        }
+    </style>
     <title></title>
 </head>
 <body>
@@ -34,24 +34,26 @@
             </tr>
             </thead>
             <c:forEach var="quizSet" items="${quizzes}">
-            <c:forEach var="question" items="${quizSet.questions}">
-                <tr>
-                    <td>
-                        <a href="#" data-nameid="${question.id}" data-toggle="modal" data-target="#modalEdit3"
-                           class="triggerEdit" data-action="edit">
-                            <span class="glyphicon glyphicon-edit"></span></a>
-                        &nbsp;&nbsp;
-                        <a href="#" data-nameid="${question.id}" data-name="${question.question}"
-                           data-toggle="modal" data-target="#modalRemove3" class="triggerRemove">
-                            <span class="glyphicon glyphicon-remove"></span></a>
+                <c:forEach var="question" items="${quizSet.questions}">
+                    <tr>
+                        <td>
+                            <a href="#" data-nameid="${question.id}" data-toggle="modal" data-target="#modalEdit3"
+                               class="triggerEdit" data-action="edit"
+                               data-quiz="${quizSet.id}" data-qtype="${question.questionType}"
+                               data-quizzes="${quizzes}">
+                                <span class="glyphicon glyphicon-edit"></span></a>
+                            &nbsp;&nbsp;
+                            <a href="#" data-nameid="${question.id}" data-name="${question.question}"
+                               data-toggle="modal" data-target="#modalRemove3" class="triggerRemove">
+                                <span class="glyphicon glyphicon-remove"></span></a>
 
-                    </td>
-                    <td>${quizSet.name}</td>
-                    <td>${question.question}</td>
-                    <td>${question.questionType}</td>
-                    <td>${question.weight}</td>
-                </tr>
-            </c:forEach>
+                        </td>
+                        <td>${quizSet.name}</td>
+                        <td>${question.question}</td>
+                        <td>${question.questionType}</td>
+                        <td>${question.weight}</td>
+                    </tr>
+                </c:forEach>
             </c:forEach>
         </table>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit3" data-action="add">
@@ -61,36 +63,56 @@
 </div>
 
 <!-- Modal Edit -->
-<div id="modalEdit" class="modal fade">
+<div id="modalEdit3" class="modal fade modal-lg">
     <div class="container">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Student</h4>
+                    <h4 class="modal-title">Question</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="firstName" class="control-label">First name:</label>
-                            <input type="text" class="form-control firstName" id="firstName"
-                                   required="required">
+                            <label for="dynamicInputQuizSet" class="control-label">Quiz:</label>
+
+                            <div id="dynamicInputQuizSet" class="form-group"></div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName" class="control-label">Last name:</label>
-                            <input type="text" class="form-control lastName" id="lastName" required="required">
+                            <label for="question" class="control-label">Question:</label>
+                            <input type="text" class="form-control question" id="question">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight" class="control-label">Weight:</label>
+                            <input type="text" class="form-control weight" id="weight" maxlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="dynamicInputType" class="control-label">Type:</label>
+                            <select id="dynamicInputType" name="optionsType" class="form-control optionsType">
+                                <option value="SINGLE">Single</option>
+                                <option value="MULTIPLE">Multiple</option>
+                                <option value="INPUT">Input</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="dynamicInput" class="control-label">Study group:</label>
 
-                            <div id="dynamicInput" class="form-group"></div>
+                            <label for="imgContainer" class="control-label">Image:</label>
+
+                            <div class="box">
+                                <div id="imgContainer"></div>
+                                <form id="fileForm">
+                                    <input type="file" name="file"/>
+                                    <a class="btn btn-primary uploadBtn">Upload</a>
+                                    <a class="btn btn-primary clearBtn">Clear</a>
+                                </form>
+                            </div>
                         </div>
                     </form>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-default saveBtn">Save</a>
+                        <a class="btn btn-primary saveBtn">Save</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +122,7 @@
 <!-- Modal Edit-->
 
 <!-- Modal Remove -->
-<div id="modalRemove" class="modal fade">
+<div id="modalRemove3" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,22 +142,22 @@
 <!-- Modal Remove -->
 
 <script type="text/javascript">
-    var studentId = 0;
-    var studentName;
+    var questionId = 0;
+    var questionName;
 
     $('#modalRemove3').on('show.bs.modal', function (e) {
         e.preventDefault();
-        studentName = $(e.relatedTarget).data('name');
-        studentId = $(e.relatedTarget).data('nameid');
-        $(this).find('.myval').text('Do you really want to delete ' + studentName + '?');
+        questionName = $(e.relatedTarget).data('name');
+        questionId = $(e.relatedTarget).data('nameid');
+        $(this).find('.myval').text('Do you really want to delete ' + questionName + '?');
     });
     $('#modalRemove3').find('.saveBtn').on('click', function () {
         $.ajax({
             type: "POST",
-            url: '<c:url value="/studentDelete" />',
-            data: {id: studentId},
+            url: '<c:url value="/questionDelete" />',
+            data: {id: questionId},
             success: function () {
-                showResultModal($('#modalRemove3'), studentName + ' was deleted');
+                showResultModal($('#modalRemove3'), questionName + ' was deleted');
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -144,38 +166,85 @@
     });
 
     $('#modalEdit3').on('show.bs.modal', function (e) {
-        studentId = $(e.relatedTarget).data('nameid');
+        questionId = $(e.relatedTarget).data('nameid');
         var act = $(e.relatedTarget).data('action');
+        var quizId = $(e.relatedTarget).data('quiz');
+        var questionType = $(e.relatedTarget).data('qtype');
+        var file = $('[name="file"]');
+        var imgContainer = $('#imgContainer');
+
+        var isJpg = function (name) {
+            return name.match(/jpg$/i)
+        };
+
+        var isPng = function (name) {
+            return name.match(/png$/i)
+        };
+
         $.ajax({
             type: "POST",
-            url: '<c:url value="/studyGroupsList"/>',
+            url: '<c:url value="/quizSetList"/>',
             success: function (obj) {
-                createSelectStudyGroup(obj, 'dynamicInput');
+                createSelectQuizSet(obj, 'dynamicInputQuizSet');
+                $('.optionsQuizSet').val(quizId);
+                $('.optionsType').val(questionType);
             },
             error: function (e) {
                 alert('Error: ' + e);
             }
         });
-        if (act != 'edit') {
+        if (act == 'add') {
             resetEdit($('#modalEdit3'));
-            studentId = 0;
+            questionId = 0;
         } else {
-            getStudentInfo(studentId);
+            getQuestionInfo(questionId);
         }
+
+        $('.uploadBtn').on('click', function () {
+            var filename = $.trim(file.val());
+            if (!(isJpg(filename) || isPng(filename))) {
+                alert('Please upload a JPG/PNG file');
+                return;
+            }
+            $.ajax({
+                url: '<c:url value="/upload"/>',
+                type: "POST",
+                data: new FormData(document.getElementById("fileForm")),
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false
+            }).done(function (data) {
+                imgContainer.html('');
+                var img = '<img src="data:' + data.contenttype + ';base64,' + data.base64 + '"/>';
+                imgContainer.append(img);
+            }).fail(function (jqXHR, textStatus) {
+                //alert(jqXHR.responseText);
+                alert('File upload failed ...');
+            });
+
+        });
+
+        $('.clearBtn').on('click', function() {
+            imgContainer.html('<img src="../../resources/images/blank.jpg">');
+            file.val('');
+        });
     });
 
     <!--Add or update student -->
     $('#modalEdit3').find('.saveBtn').on('click', function () {
-        var firstName = $('#modalEdit3').find('.firstName').val();
-        var lastName = $('#modalEdit3').find('.lastName').val();
-        var studyGroupId = $(".options option:selected").val();
+        var question = $('.question').val();
+        var weight = $('.weight').val();
+        var quizId = $(".optionsQuizSet option:selected").val();
+        var questionType = $(".optionsType option:selected").val();
 
         $.ajax({
             type: "POST",
-            url: '<c:url value="/studentUpdate" />',
-            data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&studyGroupId=" + studyGroupId,
+            url: '<c:url value="/questionUpdate" />',
+            data: "id=" + questionId + "&question=" + question + "&weight=" + weight + "&quizId=" + quizId +
+            "&questionType=" + questionType,
             success: function (response) {
-                showResultModal($('#modalEdit3'), response);
+//                showResultModal($('#modalEdit3'), response);
+                showAlert($('#modalEdit3'), response, 'success');
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -183,15 +252,14 @@
         });
     });
 
-    function getStudentInfo(id) {
+    function getQuestionInfo(id) {
         $.ajax({
             type: "POST",
-            url: '<c:url value="/studentInfo"/>',
+            url: '<c:url value="/questionInfo"/>',
             data: {id: id},
             success: function (obj) {
-                $('#modalEdit3').find('.firstName').val(obj.firstName);
-                $('#modalEdit3').find('.lastName').val(obj.lastName);
-                $('#modalEdit3').find('.options').val(obj.studyGroup.id);
+                $('#question').val(obj.question);
+                $('#weight').val(obj.weight);
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -199,8 +267,8 @@
         });
     }
 
-    function createSelectStudyGroup(values, divName) {
-        var select = $('<select name="options" class="form-control options"></select>');
+    function createSelectQuizSet(values, divName) {
+        var select = $('<select name="optionsQuizSet" class="form-control optionsQuizSet"></select>');
         $("#" + divName).html("");
         $.each(values, function (i, obj) {
             var option = $('<option></option>');

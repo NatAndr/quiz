@@ -7,7 +7,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -67,28 +66,13 @@ public class AnswerDao extends AbstractDao<Answer> {
         return UPDATE;
     }
 
-    @Transactional
+    @Override
+    public void update(Answer entity) throws DaoException {
+        jdbcTemplate.update(getUpdateByIdStatement(), entity.getAnswer(), entity.isCorrect(), Long.valueOf(entity.getId()));
+    }
+
     public void updateQuestionId(Answer entity, Question question) throws DaoException {
         super.jdbcTemplate.update(UPDATE_QUESTION_ID, question.getId(), entity.getId());
-
-//        try (Connection connection = getDataSource().getConnection();) {
-//            try (PreparedStatement prepareStatement = connection.prepareStatement(UPDATE_QUESTION_ID)) {
-//                prepareStatement.setInt(1, question.getId());
-//                prepareStatement.setInt(2, entity.getId());
-//                prepareStatement.executeUpdate();
-//                connection.commit();
-//            } catch (SQLException e) {
-//                throw new DaoException(CANNOT_UPDATE + entity + e.getLocalizedMessage());
-//            } finally {
-//                try {
-//                    connection.rollback();
-//                } catch (SQLException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public List<Answer> getAnswersByQuestion(Question question) throws DaoException {

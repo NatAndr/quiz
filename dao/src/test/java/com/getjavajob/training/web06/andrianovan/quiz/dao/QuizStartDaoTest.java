@@ -6,32 +6,28 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by Nat on 10.11.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { //"classpath:quiz-context.xml",
-        "classpath:quiz-context-dao-overrides.xml"})
+@ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class QuizStartDaoTest {
 
     private static final int ROWS_NUMBER = 2;
-    //@Autowired
+    @Autowired
     private QuizStartDao dao;
-    //@Autowired
+    @Autowired
     private QuizSetDao quizSetDao;
-
-//    @Before
-//    public void initDatabase() throws DaoException {
-//        new DatabaseInitializer().initDatabase();
-//    }
 
     @Test
     public void testGetByID() {
@@ -54,21 +50,16 @@ public class QuizStartDaoTest {
         assertEquals(ROWS_NUMBER + 1, quizStartList.size());
     }
 
-    @Test
-    public void testUpdate() throws DaoException {
-        QuizStart quizStart = dao.get(2);
-        quizStart.setQuizSet(this.quizSetDao.get(2));
-        this.dao.update(quizStart);
-        QuizStart updatedQuizStart = this.dao.get(2);
-        assertEquals("Vegetables", updatedQuizStart.getQuizSet().getName());
-    }
-
-    @Test
-    public void testDelete() throws DaoException {
+    @Test(expected = UnsupportedOperationException.class)
+    public void testDelete() {
         QuizStart quizStart = this.dao.get(2);
         this.dao.delete(quizStart);
-        QuizStart quizStart2 = this.dao.get(2);
-        assertNull(quizStart2);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testUpdate() throws DaoException {
+        QuizStart quizStart = this.dao.get(2);
+        this.dao.update(quizStart);
     }
 
 }
