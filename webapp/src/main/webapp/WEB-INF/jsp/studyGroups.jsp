@@ -24,8 +24,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th class="col-md-1">Action</th>
-            <th>Stydy group</th>
+                <th class="col-md-1">Action</th>
+                <th>Stydy group</th>
             </tr>
             </thead>
             <c:forEach var="studyGroup" items="${studyGroups}">
@@ -70,7 +70,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-default saveBtn">Save</a>
+                        <a class="btn btn-default saveBtn" data-dismiss="modal">Save</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger saveBtn">Delete</a>
+                <a class="btn btn-danger saveBtn" data-dismiss="modal">Delete</a>
             </div>
         </div>
     </div>

@@ -27,9 +27,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th class="col-md-1">Action</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th class="col-lg-1">Action</th>
+            <th class="col-lg-2">First name</th>
+            <th class="col-lg-2">Last name</th>
             <th>Group</th>
             </tr>
             </thead>
@@ -186,13 +186,11 @@
     });
 
     function getStudentInfo(sId) {
-        console.info("studentId " + sId);
         $.ajax({
             type: "POST",
             url: '<c:url value="/studentInfo"/>',
             data: {id: sId},
             success: function (obj) {
-                console.info("firstName " + obj.firstName);
                 $('#modalEdit').find('.firstName').val(obj.firstName);
                 $('#modalEdit').find('.lastName').val(obj.lastName);
                 $('#modalEdit').find('.options').val(obj.studyGroup.id);

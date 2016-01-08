@@ -54,7 +54,7 @@ public class QuizSetService extends AbstractService<QuizSet> {
 //    }
 
     @Transactional
-    private void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
+    public void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
         try {
             questionDao.updateQuestionsQuizId(question, quizSet);
         } catch (DaoException e) {
@@ -62,13 +62,13 @@ public class QuizSetService extends AbstractService<QuizSet> {
         }
     }
 
-    @Transactional
-    public void insertQuestionToExistingQuizSet(QuizSet entity) throws ServiceException {
-        for (Question question : entity.getQuestions()) {
-            questionService.insert(question);
-            linkQuestionToQuizSet(entity, question);
-        }
-    }
+//    @Transactional
+//    public void insertQuestionToExistingQuizSet(QuizSet entity) throws ServiceException {
+//        for (Question question : entity.getQuestions()) {
+//            questionService.insert(question);
+//            linkQuestionToQuizSet(entity, question);
+//        }
+//    }
 
     public List<QuizSet> searchQuizSetBySubstring(String str) throws ServiceException {
         try {

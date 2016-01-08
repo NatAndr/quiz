@@ -44,7 +44,7 @@ public class QuestionDao extends AbstractDao<Question> {
             question.setQuestion(resultSet.getString("question"));
             question.setQuestionType(questionType);
             question.setWeight(resultSet.getInt("weight"));
-            question.setImage(resultSet.getBytes("image"));
+            question.setPicture(resultSet.getBytes("image"));
             List<Answer> answers = answerDao.getAnswersByQuestion(question);
             question.setAnswers(answers);
         } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class QuestionDao extends AbstractDao<Question> {
 
     @Override
     protected Object[] getEntityFields(Question entity) {
-        return new Object[]{entity.getQuestion(), entity.getQuestionType().ordinal() + 1, entity.getWeight(), entity.getImage()};
+        return new Object[]{entity.getQuestion(), entity.getQuestionType().ordinal() + 1, entity.getWeight(), entity.getPicture()};
     }
 
     @Override
@@ -76,7 +76,7 @@ public class QuestionDao extends AbstractDao<Question> {
     @Override
     public void update(Question entity) throws DaoException {
         jdbcTemplate.update(getUpdateByIdStatement(), entity.getQuestion(), entity.getQuestionType().ordinal() + 1,
-                entity.getWeight(), entity.getImage(), Long.valueOf(entity.getId()));
+                entity.getWeight(), entity.getPicture(), Long.valueOf(entity.getId()));
     }
 
     public List<Question> getQuestionsByQuizSet(QuizSet quizSet) throws DaoException {

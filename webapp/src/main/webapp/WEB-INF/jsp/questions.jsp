@@ -60,6 +60,8 @@
             Add new
         </button>
     </div>
+    <br>
+    <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->
@@ -72,47 +74,85 @@
                     <h4 class="modal-title">Question</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="dynamicInputQuizSet" class="control-label">Quiz:</label>
+                    <div class="form-group">
+                        <label for="dynamicInputQuizSet" class="control-label">Quiz:</label>
 
-                            <div id="dynamicInputQuizSet" class="form-group"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="question" class="control-label">Question:</label>
-                            <input type="text" class="form-control question" id="question">
-                        </div>
-                        <div class="form-group">
+                        <div id="dynamicInputQuizSet" class="form-group"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="question" class="control-label">Question:</label>
+                        <%--<input type="text" class="form-control question" id="question">--%>
+                        <textarea class="form-control question" id="question" rows="3"></textarea>
+                    </div>
+
+
+                    <%--<div class="form-group">--%>
+                        <%--<label for="weight" class="control-label">Weight:</label>--%>
+                        <%--<input type="text" class="form-control weight" id="weight" maxlength="3">--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="dynamicInputType" class="control-label">Type:</label>--%>
+                        <%--<select id="dynamicInputType" name="optionsType" class="form-control optionsType">--%>
+                            <%--<option value="SINGLE" selected>Single</option>--%>
+                            <%--<option value="MULTIPLE">Multiple</option>--%>
+                            <%--<option value="INPUT">Input</option>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+
+                    <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
                             <label for="weight" class="control-label">Weight:</label>
                             <input type="text" class="form-control weight" id="weight" maxlength="3">
                         </div>
-                        <div class="form-group">
+                        <div class="col-lg-6">
                             <label for="dynamicInputType" class="control-label">Type:</label>
                             <select id="dynamicInputType" name="optionsType" class="form-control optionsType">
-                                <option value="SINGLE">Single</option>
+                                <option value="SINGLE" selected>Single</option>
                                 <option value="MULTIPLE">Multiple</option>
                                 <option value="INPUT">Input</option>
                             </select>
                         </div>
+                    </div>
+                    </div>
 
-                        <div class="form-group">
-
-                            <label for="imgContainer" class="control-label">Image:</label>
-
-                            <div class="box">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="imgContainer" class="control-label">Image:</label>
                                 <div id="imgContainer"></div>
+                            </div>
+                            <div class="col-lg-8">
                                 <form id="fileForm">
-                                    <input type="file" name="file"/>
-                                    <a class="btn btn-primary uploadBtn">Upload</a>
-                                    <a class="btn btn-primary clearBtn">Clear</a>
+                                    <%--<input type="file" name="file" class="filestyle" data-buttonName="btn-primary" />--%>
+                                    <input type="file" name="file" title="Search file">
                                 </form>
+                                <a class="btn btn-primary uploadBtn">Upload</a>
+                                <a class="btn btn-primary clearBtn">Clear</a>
                             </div>
                         </div>
-                    </form>
+
+                    </div>
+
+
+                    <%--<div class="form-group">--%>
+
+                        <%--<label for="imgContainer" class="control-label">Image:</label>--%>
+                                    <%--<div class="box">--%>
+                                        <%--<div id="imgContainer"></div>--%>
+                                    <%--</div>--%>
+                                    <%--<form id="fileForm">--%>
+                                        <%--&lt;%&ndash;<input type="file" title="Search for a file to add">&ndash;%&gt;--%>
+                                        <%--<input type="file" name="file" class="filestyle" data-buttonName="btn-primary" />--%>
+                                        <%--<br>--%>
+                                        <%--<a class="btn btn-primary uploadBtn">Upload</a>--%>
+                                        <%--<a class="btn btn-primary clearBtn">Clear</a>--%>
+                                    <%--</form>--%>
+                    <%--</div>--%>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary saveBtn">Save</a>
+                        <a class="btn btn-primary saveBtn" data-dismiss="modal">Save</a>
                     </div>
                 </div>
             </div>
@@ -134,7 +174,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger saveBtn">Delete</a>
+                <a class="btn btn-danger saveBtn" data-dismiss="modal">Delete</a>
             </div>
         </div>
     </div>
@@ -144,6 +184,7 @@
 <script type="text/javascript">
     var questionId = 0;
     var questionName;
+    var questionImage = "";
 
     $('#modalRemove3').on('show.bs.modal', function (e) {
         e.preventDefault();
@@ -157,7 +198,8 @@
             url: '<c:url value="/questionDelete" />',
             data: {id: questionId},
             success: function () {
-                showResultModal($('#modalRemove3'), questionName + ' was deleted');
+//                showResultModal($('#modalRemove3'), questionName + ' was deleted');
+                showAlert($('#modalRemove3'), questionName + ' was deleted', 'success');
             },
             error: function (e) {
                 alert('Error: ' + e);
@@ -176,11 +218,9 @@
         var isJpg = function (name) {
             return name.match(/jpg$/i)
         };
-
         var isPng = function (name) {
             return name.match(/png$/i)
         };
-
         $.ajax({
             type: "POST",
             url: '<c:url value="/quizSetList"/>',
@@ -196,6 +236,7 @@
         if (act == 'add') {
             resetEdit($('#modalEdit3'));
             questionId = 0;
+            imgContainer.html('<img src="../../resources/images/blank.jpg">');
         } else {
             getQuestionInfo(questionId);
         }
@@ -209,28 +250,30 @@
             $.ajax({
                 url: '<c:url value="/upload"/>',
                 type: "POST",
-                data: new FormData(document.getElementById("fileForm")),
+                data: new FormData(document.getElementById('fileForm')),
                 enctype: 'multipart/form-data',
                 processData: false,
-                contentType: false
-            }).done(function (data) {
-                imgContainer.html('');
-                var img = '<img src="data:' + data.contenttype + ';base64,' + data.base64 + '"/>';
-                imgContainer.append(img);
-            }).fail(function (jqXHR, textStatus) {
-                //alert(jqXHR.responseText);
-                alert('File upload failed ...');
+                contentType: false,
+                success: function (data) {
+//                    imgContainer.html('');
+                    questionImage = data;
+                    var img = '<img class="img-responsive" src="data:image/png;base64,' + data + '" />';
+                    console.info(img);
+                    imgContainer.html(img);
+                },
+                error: function (e) {
+                    alert('Error: ' + e);
+                }
             });
 
-        });
-
-        $('.clearBtn').on('click', function() {
-            imgContainer.html('<img src="../../resources/images/blank.jpg">');
-            file.val('');
+            $('.clearBtn').on('click', function () {
+                imgContainer.html('<img src="../../resources/images/blank.jpg">');
+                file.val('');
+            });
         });
     });
 
-    <!--Add or update student -->
+    <!--Add or update -->
     $('#modalEdit3').find('.saveBtn').on('click', function () {
         var question = $('.question').val();
         var weight = $('.weight').val();
@@ -241,9 +284,8 @@
             type: "POST",
             url: '<c:url value="/questionUpdate" />',
             data: "id=" + questionId + "&question=" + question + "&weight=" + weight + "&quizId=" + quizId +
-            "&questionType=" + questionType,
+            "&questionType=" + questionType + "&questionImage=" + questionImage,
             success: function (response) {
-//                showResultModal($('#modalEdit3'), response);
                 showAlert($('#modalEdit3'), response, 'success');
             },
             error: function (e) {
@@ -258,8 +300,14 @@
             url: '<c:url value="/questionInfo"/>',
             data: {id: id},
             success: function (obj) {
-                $('#question').val(obj.question);
-                $('#weight').val(obj.weight);
+                $('#question').val(obj.question.question);
+                $('#weight').val(obj.question.weight);
+//                console.info(obj.picture);
+                if (obj.picture != null ) {
+                    $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
+                } else {
+                    $('#imgContainer').html('<img src="../../resources/images/blank.jpg"/>');
+                }
             },
             error: function (e) {
                 alert('Error: ' + e);
