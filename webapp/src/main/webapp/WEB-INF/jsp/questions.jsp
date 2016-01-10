@@ -23,6 +23,7 @@
 <!--data table -->
 <div class="container">
     <div class="row">
+        <%--<div id="alert_placeholder"></div><br>--%>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -63,12 +64,8 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit3" data-action="add">
             Add new
         </button>
-        <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA8UExURQAAAAAAOgAAZgA6kABmtjoAADqQ22YAAGa2/5A6AJDb/7ZmALb//9uQOtv///+2Zv/bkP//tv//2////+YRgBkAAAEoSURBVGje7ZdrD4IwDEWr4nPO+fj//9WEJQaQXW6nIRJvv5ETd+ZKW2aPGcIkkUQSSSSRRBJJJJFEEkk+k1y3luPgp5wkWTc2Fw8lJbe9DWJHU1ZyP9pbNCR1Stbn9iEOd4upS9LZW15odaIon5PQ/03sHwmmtXXSOyAn5YsxwYpIE/VCSvJLu6uitCSfSFNF+d4V4DJhOZJZjmuWxOe+fqiitCTAzhEm+oo5arGpoqwkwRGYJgeksUkvbRVTRhLhjI3sBDbmP4yvgikteX2QjJ44pm7J+KjA1CcproGpLyfFZTD9QUnxxcFUkgVL2rHa1FHdGRcsaVNbbByY0hJ88YjT9zhGEuDUC9TN948ks+Sk3Wx5q+ErvUsVL4kkkkgiiSSSSPK1eAICtbqXmpeAKwAAAABJRU5ErkJggg==" />
-        <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR…CjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAsIxHo77nfrDqfbnwzKTe5TF t0uH3wpv3x7fZv uQmQyWx rf51rdXbvKI38d6/m40NV6e3ORBiVgrn/TZ3i fgtzkQaWxWue5ttiLpXKTBxXcWdd7pfeTrWz1PERu8piSCx5ZLlW1U27yzfxYK19xZTvlJl9tEWuxU93tkpv8YZNYi/el7AHITf6wSazFA1C3Um7yhbEAX0PACx7YItZffbC2iPV4 nXHn5v8aXqsxUJlp5 b/GVurOU VRvlJv8wLdbaNhcFC UmP0rFWly1a4aulNzkplCsJ6f90 A ucltmVit0x9/RXKTO0yO9etdcpM7zIlVt0lucoc5d1bhSrnJbcYCpsSq/HrKTW4zFmAswFiAsYBQrPufQ5VfWbnJbaFY/5OxAGMBxgKmXPCV93Buclsk1uN/DVwULZWb3CMS6/630FXRD6Lc5B7GAowFeGcBkVgXd49A6eHnJjelYv1LxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxup3P72/ 8m5FTkPPAAAAAElFTkSuQmCC" />
     </div>
-    <br>
 
-    <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->

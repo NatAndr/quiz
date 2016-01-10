@@ -23,6 +23,7 @@
     <div class="page-header">
         <h2>Content management</h2>
     </div>
+    <div id="alert_placeholder"></div><br>
     <ul class="nav nav-tabs" id="myTabs">
         <li class="active"><a data-toggle="tab" href="#students">Students</a></li>
         <li><a data-toggle="tab" href="#studyGroups">Groups</a></li>

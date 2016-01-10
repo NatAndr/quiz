@@ -3,7 +3,9 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 import com.getjavajob.training.web06.andrianovan.quiz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -27,12 +29,17 @@ public class ManagementController {
     @RequestMapping(value = "/admin")
     public ModelAndView showAdminPanel() {
         ModelAndView modelAndView = new ModelAndView("management");
-//        ModelAndView modelAndView = new ModelAndView("classic");
         modelAndView.addObject("quizzes", quizSetService.getAll());
         modelAndView.addObject("studyGroups", studyGroupService.getAll());
         modelAndView.addObject("students", studentService.getAll());
         modelAndView.addObject("questions", questionService.getAll());
         modelAndView.addObject("answers", answerService.getAll());
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/questionsManagement", method = RequestMethod.POST)
+    public String processQuiz(ModelMap model) {
+        model.addAttribute("questions", questionService.getAll());
+        return "questions";
     }
 }

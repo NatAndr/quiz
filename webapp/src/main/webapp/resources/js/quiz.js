@@ -21,6 +21,23 @@ function showAlert(modalToHide, message, alertType) {
     setTimeout(function() {
         $("#alertdiv").remove();
     }, 10000);
+    modalToHide.on('hide.bs.modal', showTab('questionsManagement', '#questions'))
+}
+
+function showTab(url, tab) {
+    $.ajax({
+        type: "POST",
+        cache: false,
+        url: '<c:url value="/'+ url +'" />',
+        data: "",
+        success: function (response) {
+            //$('.tab-content').html(response);
+            $('.tab-content').find(tab).html(response);
+        },
+        error: function (e) {
+            alert('Error: ' + e);
+        }
+    });
 }
 
 
