@@ -27,7 +27,7 @@
                     <input type="checkbox" name="answer" value="${answer.id}"> ${answer.answer}<br>
                 </c:when>
                 <c:otherwise>
-                    <input type="text" class="form-control" name="inputAnswer" value="">
+                    <input type="text" class="form-control" name="inputAnswer" id="inputAnswer" value="">
                 </c:otherwise>
             </c:choose>
         </c:forEach>

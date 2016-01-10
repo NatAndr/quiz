@@ -17,28 +17,20 @@ function showResultModal(modal, msg) {
 
 function showAlert(modalToHide, message, alertType) {
     modalToHide.modal('hide');
+
     $('#alert_placeholder').append('<div id="alertdiv" class="alert alert-' + alertType + '"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
     setTimeout(function() {
         $("#alertdiv").remove();
-    }, 10000);
-    modalToHide.on('hide.bs.modal', showTab('questionsManagement', '#questions'))
+    }, 5000);
+    modalToHide.on('hide.bs.modal', updateTab());
 }
 
-function showTab(url, tab) {
-    $.ajax({
-        type: "POST",
-        cache: false,
-        url: '<c:url value="/'+ url +'" />',
-        data: "",
-        success: function (response) {
-            //$('.tab-content').html(response);
-            $('.tab-content').find(tab).html(response);
-        },
-        error: function (e) {
-            alert('Error: ' + e);
-        }
-    });
+function jump(h){
+    var top = document.getElementById(h).offsetTop;
+    window.scrollTo(0, top);
 }
+
+
 
 
 

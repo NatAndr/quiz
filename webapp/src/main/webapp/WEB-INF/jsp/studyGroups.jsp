@@ -48,8 +48,6 @@
             Add new
         </button>
     </div>
-    <br>
-    <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->
@@ -117,7 +115,8 @@
             url: '<c:url value="/studyGroupDelete" />',
             data: {id: grId},
             success: function () {
-                showResultModal($('#modalRemove1'), grName + ' was deleted');
+//                showResultModal($('#modalRemove1'), grName + ' was deleted');
+                showAlert($('#modalRemove1'), grName + ' was deleted', 'success');
             },
             error: function (e) {
                 alert('Error: ' + e);

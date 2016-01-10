@@ -51,7 +51,7 @@ public class QuestionController {
         Question question = new Question(questionString, QuestionType.valueOf(questionType), weight);
         QuizSet quizSet = quizSetService.get(quizId);
 
-        String newImg = null;
+        String newImg = "";
         if (questionImage.length() != 0) {
             question.setPicture(this.imageString);
             newImg = " image";
@@ -64,7 +64,7 @@ public class QuestionController {
             questionService.update(question);
         }
         quizSetService.linkQuestionToQuizSet(quizSet, question);
-        return "Saved " + question + " " + weight + " " + questionType + newImg;
+        return "Saved " + question + " " + weight + " " + questionType + " " + newImg;
     }
 
     @ResponseBody

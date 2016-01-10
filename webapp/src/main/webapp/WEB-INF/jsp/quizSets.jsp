@@ -48,8 +48,6 @@
       Add new
     </button>
   </div>
-  <br>
-  <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->
@@ -72,7 +70,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-default saveBtn">Save</a>
+            <a class="btn btn-default saveBtn" data-dismiss="modal">Save</a>
           </div>
         </div>
       </div>
@@ -117,7 +115,8 @@
       url: '<c:url value="/quizSetDelete" />',
       data: {id: quizId},
       success: function () {
-        showResultModal($('#modalRemove2'), quizName + ' was deleted');
+//        showResultModal($('#modalRemove2'), quizName + ' was deleted');
+          showAlert($('#modalRemove2'), quizName + ' was deleted', 'success');
       },
       error: function (e) {
         alert('Error: ' + e);

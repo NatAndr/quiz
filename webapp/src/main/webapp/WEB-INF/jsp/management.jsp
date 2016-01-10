@@ -20,15 +20,15 @@
 <div class="container">
     <%@include file="link.jsp" %>
 
-    <div class="page-header">
+    <div class="page-header" id="top">
         <h2>Content management</h2>
     </div>
-    <div id="alert_placeholder"></div><br>
+    <div id="alert_placeholder"></div>
     <ul class="nav nav-tabs" id="myTabs">
         <li class="active"><a data-toggle="tab" href="#students">Students</a></li>
         <li><a data-toggle="tab" href="#studyGroups">Groups</a></li>
-        <li><a data-toggle="tab" href="#quizzes">Quizzes</a></li>
-        <li><a data-toggle="tab" href="#questions">Questions</a></li>
+        <li><a data-toggle="tab" href="#quizSets">Quizzes</a></li>
+        <li><a data-toggle="tab" href="#questions" id="#questions">Questions</a></li>
         <li><a data-toggle="tab" href="#answers">Answers</a></li>
     </ul>
 
@@ -41,7 +41,7 @@
             <%@include file="studyGroups.jsp" %>
         </div>
 
-        <div id="quizzes" class="tab-pane fade">
+        <div id="quizSets" class="tab-pane fade">
             <%@include file="quizSets.jsp" %>
         </div>
 
@@ -71,7 +71,6 @@
 <!-- Modal Result -->
 
 <script type="text/javascript">
-
 
 </script>
 

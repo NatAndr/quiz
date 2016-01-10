@@ -23,7 +23,7 @@
 <!--data table -->
 <div class="container">
     <div class="row">
-        <%--<div id="alert_placeholder"></div><br>--%>
+        <div id="alert_placeholder"></div><br>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -163,6 +163,7 @@
     var questionId = 0;
     var questionName;
     var questionImage = "";
+    var blankImageURL = '<img src="../../resources/images/blank.png">';
 
     $('#modalRemove3').on('show.bs.modal', function (e) {
         e.preventDefault();
@@ -176,7 +177,6 @@
             url: '<c:url value="/questionDelete" />',
             data: {id: questionId},
             success: function () {
-//                showResultModal($('#modalRemove3'), questionName + ' was deleted');
                 showAlert($('#modalRemove3'), questionName + ' was deleted', 'success');
             },
             error: function (e) {
@@ -215,10 +215,9 @@
         if (act == 'add') {
             resetEdit($('#modalEdit3'));
             questionId = 0;
-            imgContainer.html('<img src="../../resources/images/blank.png">');
+            imgContainer.html(blankImageURL);
         } else {
             getQuestionInfo(questionId);
-//            getQuestionPicture(questionId);
         }
 
         $('.uploadBtn').on('click', function () {
@@ -236,7 +235,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-//                    imgContainer.html('');
+                    imgContainer.html('');
                     questionImage = data;
                     var img = '<img class="img-responsive" src="data:image/png;base64,' + data + '" />';
                     imgContainer.html(img);
@@ -248,7 +247,7 @@
         });
 
         $('.clearBtn').on('click', function () {
-            imgContainer.html('<img src="../../resources/images/blank.png">');
+            imgContainer.html(blankImageURL);
             file.val('');
         });
 
@@ -288,11 +287,9 @@
             url: '<c:url value="/questionInfo"/>',
             data: {id: id},
             success: function (obj) {
-                console.info("getQuestionInfo");
                 $('#question').val(obj.question);
                 $('#weight').val(obj.weight);
                 if (obj.picture != null) {
-                    console.info('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
                     $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
                 } else {
                     $('#imgContainer').html('<img src="../../resources/images/blank.png"/>');
@@ -314,6 +311,42 @@
             select.append(option);
         });
         $("#" + divName).append(select);
+    }
+
+    function updateTab() {
+        var tabText = $('.nav-tabs .active').text();
+        var tab;
+        switch (tabText) {
+            case 'Students':
+                tab = 'students';
+                break;
+            case 'Groups':
+                tab = 'studyGroups';
+                break;
+            case 'Quizzes':
+                tab = 'quizSets';
+                break;
+            case 'Questions':
+                tab = 'questions';
+                break;
+            case 'Answers':
+                tab = 'answers';
+                break;
+        }
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: '<c:url value="/updateManagement" />',
+            data: {tab : tab},
+            success: function (response) {
+                $('.tab-content').find('#' + tab).html(response);
+                jump('top');
+            },
+            error: function (e) {
+                alert('Error: ' + e);
+            }
+        });
     }
 
 </script>

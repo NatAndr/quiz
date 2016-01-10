@@ -34,6 +34,10 @@
         }
 
         function nextQuestion() {
+            var inputAnswer = $('input[type=text]').val();
+            var inputAnswer = $('input[type=text]').val();
+            var inputAnswer = $('input[type=text]').val();
+
             $.ajax({
                 type: "POST",
                 cache: false,

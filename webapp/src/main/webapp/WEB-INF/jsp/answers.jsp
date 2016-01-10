@@ -66,9 +66,6 @@
             Add new
         </button>
     </div>
-    <br>
-
-    <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->
@@ -93,7 +90,7 @@
 
                     <div class="form-group">
                         <label for="setCorrect" class="control-label">Is correct:</label>
-                        <div id="setCorrect"></div>
+                        <div id="setCorrect"><input type="checkbox" class="isCorrect" id="isCorrect">&nbsp;yes</div>
                     </div>
 
                     <div class="modal-footer">
@@ -138,6 +135,45 @@
 
     });
 
+    $('#modalRemove4').on('show.bs.modal', function (e) {
+        e.preventDefault();
+        answerName = $(e.relatedTarget).data('name');
+        answerId = $(e.relatedTarget).data('nameid');
+        $(this).find('.myval').text('Do you really want to delete ' + answerName + '?');
+    });
+    $('#modalRemove4').find('.saveBtn').on('click', function () {
+        $.ajax({
+            type: "POST",
+            url: '<c:url value="/answerDelete" />',
+            data: {id: answerId},
+            success: function () {
+                showAlert($('#modalRemove4'), answerName + ' was deleted', 'success');
+            },
+            error: function (e) {
+                alert('Error: ' + e);
+            }
+        });
+    });
+
+    <!--Add or update -->
+    $('#modalEdit4').find('.saveBtn').on('click', function () {
+        var answer = $('.answer').val();
+        var isCorrect = $('.isCorrect').prop('checked');
+        var question = $(".optionsQuestion option:selected").val();
+
+        $.ajax({
+            type: "POST",
+            url: '<c:url value="/answerUpdate" />',
+            data: "id=" + answerId + "&questionId=" + question + "&isCorrect=" + isCorrect + "&answer=" + answer,
+            success: function (response) {
+                showAlert($('#modalEdit4'), response, 'success');
+            },
+            error: function (e) {
+                alert('Error: ' + e);
+            }
+        });
+    });
+
     function getAnswerInfo(id) {
         $.ajax({
             type: "POST",
@@ -147,8 +183,6 @@
                 $('#answer').val(obj.answer);
                 if (obj.isCorrect) {
                     $('#setCorrect').html('<input type="checkbox" class="isCorrect" id="isCorrect" checked>&nbsp;yes');
-                } else {
-                    $('#setCorrect').html('<input type="checkbox" class="isCorrect" id="isCorrect">&nbsp;yes');
                 }
             },
             error: function (e) {

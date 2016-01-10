@@ -43,4 +43,24 @@ public class AnswerController {
         Answer answer = answerService.get(id);
         answerService.delete(answer);
     }
+
+    @RequestMapping(value = "/answerUpdate", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String answerUpdate(@RequestParam(value = "id") int id,
+                          @RequestParam(value = "questionId") int questionId,
+                          @RequestParam(value = "answer") String answerString,
+                          @RequestParam(value = "isCorrect") String isCorrect) throws ServiceException {
+        Answer answer = new Answer(answerString, Boolean.valueOf(isCorrect));
+        Question question = questionService.get(questionId);
+
+        if (id == 0) {
+            answerService.insert(answer);
+        } else {
+            answer.setId(id);
+            answerService.update(answer);
+        }
+        questionService.linkAnswerToQuestion(question, answer);
+        return "Saved " + answerString;
+    }
 }
