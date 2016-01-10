@@ -31,6 +31,7 @@
                 <th>Question</th>
                 <th class="col-md-1">Type</th>
                 <th class="col-md-1">Weight</th>
+                <th class="col-md-1">Image</th>
             </tr>
             </thead>
             <c:forEach var="quizSet" items="${quizzes}">
@@ -52,6 +53,9 @@
                         <td>${question.question}</td>
                         <td>${question.questionType}</td>
                         <td>${question.weight}</td>
+                        <td><c:if test="${not empty question.picture}"><input type="checkbox" checked disabled></c:if>
+                            <c:if test="${empty question.picture}"><input type="checkbox" disabled></c:if>
+                        </td>
                     </tr>
                 </c:forEach>
             </c:forEach>
@@ -59,8 +63,11 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit3" data-action="add">
             Add new
         </button>
+        <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA8UExURQAAAAAAOgAAZgA6kABmtjoAADqQ22YAAGa2/5A6AJDb/7ZmALb//9uQOtv///+2Zv/bkP//tv//2////+YRgBkAAAEoSURBVGje7ZdrD4IwDEWr4nPO+fj//9WEJQaQXW6nIRJvv5ETd+ZKW2aPGcIkkUQSSSSRRBJJJJFEEkk+k1y3luPgp5wkWTc2Fw8lJbe9DWJHU1ZyP9pbNCR1Stbn9iEOd4upS9LZW15odaIon5PQ/03sHwmmtXXSOyAn5YsxwYpIE/VCSvJLu6uitCSfSFNF+d4V4DJhOZJZjmuWxOe+fqiitCTAzhEm+oo5arGpoqwkwRGYJgeksUkvbRVTRhLhjI3sBDbmP4yvgikteX2QjJ44pm7J+KjA1CcproGpLyfFZTD9QUnxxcFUkgVL2rHa1FHdGRcsaVNbbByY0hJ88YjT9zhGEuDUC9TN948ks+Sk3Wx5q+ErvUsVL4kkkkgiiSSSSPK1eAICtbqXmpeAKwAAAABJRU5ErkJggg==" />
+        <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR…CjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAsIxHo77nfrDqfbnwzKTe5TF t0uH3wpv3x7fZv uQmQyWx rf51rdXbvKI38d6/m40NV6e3ORBiVgrn/TZ3i fgtzkQaWxWue5ttiLpXKTBxXcWdd7pfeTrWz1PERu8piSCx5ZLlW1U27yzfxYK19xZTvlJl9tEWuxU93tkpv8YZNYi/el7AHITf6wSazFA1C3Um7yhbEAX0PACx7YItZffbC2iPV4 nXHn5v8aXqsxUJlp5 b/GVurOU VRvlJv8wLdbaNhcFC UmP0rFWly1a4aulNzkplCsJ6f90 A ucltmVit0x9/RXKTO0yO9etdcpM7zIlVt0lucoc5d1bhSrnJbcYCpsSq/HrKTW4zFmAswFiAsYBQrPufQ5VfWbnJbaFY/5OxAGMBxgKmXPCV93Buclsk1uN/DVwULZWb3CMS6/630FXRD6Lc5B7GAowFeGcBkVgXd49A6eHnJjelYv1LxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxup3P72/ 8m5FTkPPAAAAAElFTkSuQmCC" />
     </div>
     <br>
+
     <div id="alert_placeholder"></div>
 </div>
 
@@ -85,70 +92,44 @@
                         <textarea class="form-control question" id="question" rows="3"></textarea>
                     </div>
 
-
-                    <%--<div class="form-group">--%>
-                        <%--<label for="weight" class="control-label">Weight:</label>--%>
-                        <%--<input type="text" class="form-control weight" id="weight" maxlength="3">--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="dynamicInputType" class="control-label">Type:</label>--%>
-                        <%--<select id="dynamicInputType" name="optionsType" class="form-control optionsType">--%>
-                            <%--<option value="SINGLE" selected>Single</option>--%>
-                            <%--<option value="MULTIPLE">Multiple</option>--%>
-                            <%--<option value="INPUT">Input</option>--%>
-                        <%--</select>--%>
-                    <%--</div>--%>
-
                     <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label for="weight" class="control-label">Weight:</label>
-                            <input type="text" class="form-control weight" id="weight" maxlength="3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="weight" class="control-label">Weight:</label>
+                                <input type="text" class="form-control weight" id="weight" maxlength="3">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="dynamicInputType" class="control-label">Type:</label>
+                                <select id="dynamicInputType" name="optionsType" class="form-control optionsType">
+                                    <option value="SINGLE">Single</option>
+                                    <option value="MULTIPLE">Multiple</option>
+                                    <option value="INPUT">Input</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <label for="dynamicInputType" class="control-label">Type:</label>
-                            <select id="dynamicInputType" name="optionsType" class="form-control optionsType">
-                                <option value="SINGLE" selected>Single</option>
-                                <option value="MULTIPLE">Multiple</option>
-                                <option value="INPUT">Input</option>
-                            </select>
-                        </div>
-                    </div>
                     </div>
 
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="imgContainer" class="control-label">Image:</label>
+
                                 <div id="imgContainer"></div>
                             </div>
                             <div class="col-lg-8">
                                 <form id="fileForm">
                                     <%--<input type="file" name="file" class="filestyle" data-buttonName="btn-primary" />--%>
-                                    <input type="file" name="file" title="Search file">
+                                    <%--<label for="inputfile" class="control-label">Browse:</label>--%>
+                                    <input id="inputfile" type="file" name="file" style="display: none;">
+                                    <br>
+                                    <a class="btn btn-primary browseBtn"><span class="glyphicon glyphicon-folder-open"></span></a>
+                                        <a class="btn btn-primary uploadBtn"><span class="glyphicon glyphicon-ok"></span></a>
+                                        <a class="btn btn-primary clearBtn"><span class="glyphicon glyphicon-remove"></span></a>
+                                        <br><div id="fileName"></div>
                                 </form>
-                                <a class="btn btn-primary uploadBtn">Upload</a>
-                                <a class="btn btn-primary clearBtn">Clear</a>
                             </div>
                         </div>
-
                     </div>
-
-
-                    <%--<div class="form-group">--%>
-
-                        <%--<label for="imgContainer" class="control-label">Image:</label>--%>
-                                    <%--<div class="box">--%>
-                                        <%--<div id="imgContainer"></div>--%>
-                                    <%--</div>--%>
-                                    <%--<form id="fileForm">--%>
-                                        <%--&lt;%&ndash;<input type="file" title="Search for a file to add">&ndash;%&gt;--%>
-                                        <%--<input type="file" name="file" class="filestyle" data-buttonName="btn-primary" />--%>
-                                        <%--<br>--%>
-                                        <%--<a class="btn btn-primary uploadBtn">Upload</a>--%>
-                                        <%--<a class="btn btn-primary clearBtn">Clear</a>--%>
-                                    <%--</form>--%>
-                    <%--</div>--%>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -213,6 +194,7 @@
         var quizId = $(e.relatedTarget).data('quiz');
         var questionType = $(e.relatedTarget).data('qtype');
         var file = $('[name="file"]');
+        file.val('');
         var imgContainer = $('#imgContainer');
 
         var isJpg = function (name) {
@@ -236,9 +218,10 @@
         if (act == 'add') {
             resetEdit($('#modalEdit3'));
             questionId = 0;
-            imgContainer.html('<img src="../../resources/images/blank.jpg">');
+            imgContainer.html('<img src="../../resources/images/blank.png">');
         } else {
             getQuestionInfo(questionId);
+//            getQuestionPicture(questionId);
         }
 
         $('.uploadBtn').on('click', function () {
@@ -252,24 +235,32 @@
                 type: "POST",
                 data: new FormData(document.getElementById('fileForm')),
                 enctype: 'multipart/form-data',
+                dataType: 'text',
                 processData: false,
                 contentType: false,
                 success: function (data) {
 //                    imgContainer.html('');
                     questionImage = data;
                     var img = '<img class="img-responsive" src="data:image/png;base64,' + data + '" />';
-                    console.info(img);
                     imgContainer.html(img);
                 },
                 error: function (e) {
                     alert('Error: ' + e);
                 }
             });
+        });
 
-            $('.clearBtn').on('click', function () {
-                imgContainer.html('<img src="../../resources/images/blank.jpg">');
-                file.val('');
-            });
+        $('.clearBtn').on('click', function () {
+            imgContainer.html('<img src="../../resources/images/blank.png">');
+            file.val('');
+        });
+
+        $('.browseBtn').click(function () {
+            $('input[type=file]').click();
+        });
+        $('input[type=file]').change(function () {
+            console.info("input[type=file]=" + $(this).val());
+            $('#fileName').html($(this).val());
         });
     });
 
@@ -300,13 +291,14 @@
             url: '<c:url value="/questionInfo"/>',
             data: {id: id},
             success: function (obj) {
-                $('#question').val(obj.question.question);
-                $('#weight').val(obj.question.weight);
-//                console.info(obj.picture);
-                if (obj.picture != null ) {
+                console.info("getQuestionInfo");
+                $('#question').val(obj.question);
+                $('#weight').val(obj.weight);
+                if (obj.picture != null) {
+                    console.info('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
                     $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
                 } else {
-                    $('#imgContainer').html('<img src="../../resources/images/blank.jpg"/>');
+                    $('#imgContainer').html('<img src="../../resources/images/blank.png"/>');
                 }
             },
             error: function (e) {

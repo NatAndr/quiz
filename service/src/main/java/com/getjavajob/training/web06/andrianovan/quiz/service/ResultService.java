@@ -40,7 +40,8 @@ public class ResultService extends AbstractService<Result> {
 
     public int calculateQuizResult(Student student, QuizStart quizStart) throws ServiceException {
         int result = 0;
-        QuizSet quizSet = quizSetService.get(quizStart.getQuizSet().getId());
+//        QuizSet quizSet = quizSetService.get(quizStart.getQuizSet().getId());
+        QuizSet quizSet = quizStart.getQuizSet();
 
         for (Question question : quizSet.getQuestions()) {
             switch (question.getQuestionType()) {
@@ -58,14 +59,14 @@ public class ResultService extends AbstractService<Result> {
 
     protected int getInputQuestionResult(Student student, QuizStart quizStart,
                                          AnswerService answerService, Question question) throws ServiceException {
-        String correctAnswer = answerService.getCorrectAnswerByQuestion(question).get(0).getAnswer().toUpperCase();
+        String correctAnswer = answerService.getCorrectAnswerByQuestion(question).get(0).getAnswer();
 
         List<Result> results = getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
         if (results.isEmpty()) {
             return 0;
         }
-        String actualAnswer = results.get(0).getInputAnswer().trim().toUpperCase();
-        if (correctAnswer.equals(actualAnswer)) {
+        String actualAnswer = results.get(0).getInputAnswer().trim();
+        if (correctAnswer.equalsIgnoreCase(actualAnswer)) {
             return question.getWeight();
         }
         return 0;

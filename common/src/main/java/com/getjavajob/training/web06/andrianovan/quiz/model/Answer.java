@@ -37,7 +37,7 @@ public class Answer extends BaseEntity {
         this.answer = answer;
     }
 
-    public boolean isCorrect() {
+    public boolean getIsCorrect() {
         return isCorrect;
     }
 
@@ -48,7 +48,7 @@ public class Answer extends BaseEntity {
     @Override
     public String toString() {
         return answer + '\'' +
-                ", isCorrect=" + isCorrect;
+                ", getIsCorrect=" + isCorrect;
     }
 
     @Override

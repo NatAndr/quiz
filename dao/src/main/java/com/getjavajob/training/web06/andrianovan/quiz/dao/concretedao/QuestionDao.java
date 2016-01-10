@@ -44,7 +44,7 @@ public class QuestionDao extends AbstractDao<Question> {
             question.setQuestion(resultSet.getString("question"));
             question.setQuestionType(questionType);
             question.setWeight(resultSet.getInt("weight"));
-            question.setPicture(resultSet.getBytes("image"));
+            question.setPicture(resultSet.getString("image"));
             List<Answer> answers = answerDao.getAnswersByQuestion(question);
             question.setAnswers(answers);
         } catch (SQLException e) {

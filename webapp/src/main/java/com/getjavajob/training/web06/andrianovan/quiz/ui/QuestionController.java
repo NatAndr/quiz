@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +30,8 @@ public class QuestionController {
     @Autowired
     private QuizSetService quizSetService;
 
+    private String imageString;
+
     @ResponseBody
     @RequestMapping(value = "/questionDelete", method = RequestMethod.POST)
     public void questionDelete(@RequestParam("id") int id) throws ServiceException {
@@ -39,20 +39,21 @@ public class QuestionController {
         questionService.delete(question);
     }
 
-    @RequestMapping(value="/questionUpdate", method=RequestMethod.POST)
-    public @ResponseBody String questionUpdate(@RequestParam(value = "id") int id,
-                                              @RequestParam(value = "question") String questionString,
-                                              @RequestParam(value = "weight") int weight,
-                                              @RequestParam(value = "quizId") int quizId,
-                                              @RequestParam(value = "questionType") String questionType,
-                                              @RequestParam(value = "questionImage") String questionImage) throws ServiceException {
+    @RequestMapping(value = "/questionUpdate", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String questionUpdate(@RequestParam(value = "id") int id,
+                          @RequestParam(value = "question") String questionString,
+                          @RequestParam(value = "weight") int weight,
+                          @RequestParam(value = "quizId") int quizId,
+                          @RequestParam(value = "questionType") String questionType,
+                          @RequestParam(value = "questionImage") String questionImage) throws ServiceException {
         Question question = new Question(questionString, QuestionType.valueOf(questionType), weight);
         QuizSet quizSet = quizSetService.get(quizId);
 
         String newImg = null;
         if (questionImage.length() != 0) {
-            question.setPicture(Base64.decodeBase64(questionImage)); // for field byte[]
-//            question.setPicture(questionImage); //for String field
+            question.setPicture(this.imageString);
             newImg = " image";
         }
 
@@ -68,14 +69,8 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping(value = "/questionInfo", method = RequestMethod.POST)
-    public HashMap<String, Object> getQuestionInfo(@RequestParam("id") int id) {
-        HashMap<String, Object> map = new HashMap<>();
-        Question question = questionService.get(id);
-        map.put("question", question);
-        if (question.getPicture() != null) {
-            map.put("picture", new String(Base64.encodeBase64(question.getPicture())));
-        }
-        return map;
+    public Question getQuestionInfo(@RequestParam("id") int id) {
+        return questionService.get(id);
     }
 
     @ResponseBody
@@ -86,36 +81,12 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String/*HashMap<String, Object>*/ uploadImage(MultipartHttpServletRequest request) throws Exception {
-
-//        MultipartFile multipartFile = request.getFile("file");
-//        Long size = multipartFile.getSize();
-//        String contentType = multipartFile.getContentType();
-//        InputStream stream = multipartFile.getInputStream();
-//        byte[] bytes = IOUtils.toByteArray(stream);
-//
-//        HashMap<String, Object> map = new HashMap<>();
-//        map.put("fileoriginalsize", size);
-//        map.put("contenttype", contentType);
-//        map.put("base64", new String(Base64Utils.encode(bytes)));
-//        map.put("base64", new String(encodeBase64 , "UTF-8"));
-
-//        InputStream is = request.getInputStream();
-//        byte[] bytes = IOUtils.toByteArray(is);
-//        byte[] encodeBase64 = Base64.encodeBase64(bytes);
-////        String base64DataString = new String(encodeBase64 , "UTF-8");
-//        String base64DataString = new String(Base64Utils.encode(bytes));
-
-
+    public String uploadImage(MultipartHttpServletRequest request) throws Exception {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         byte[] bytes = file.getBytes();
         String base64DataString = new String(Base64.encodeBase64(bytes));
-
-        System.out.println("bytes = " + Arrays.toString(bytes));
-        System.out.println("base64DataString = " + base64DataString);
-
-//        return "<img src=\'data:image/jpeg;base64," + base64DataString + "\'>";
+        this.imageString = base64DataString;
         return base64DataString;
     }
 

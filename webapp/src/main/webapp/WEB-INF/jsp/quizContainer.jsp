@@ -13,13 +13,12 @@
     <%@include file="header.jsp" %>
     <script type="text/javascript">
         $(document).ready(function() {
-            doRequest();
+            initQuestions();
             $('#nxt').show();
             $('#nxt').on('click', '.nextBtn', nextQuestion);
         });
 
-        function doRequest() {
-            <%--var header = '<div class="container"><h2>${quizSet.name}</h2><div class="page-header"><p class="lead">Question ${counter+1}/${questionsNumber}</p></div><form class="form-search">';--%>
+        function initQuestions() {
             $.ajax({
                 type: "POST",
                 cache: false,

@@ -48,6 +48,8 @@
       Add new
     </button>
   </div>
+  <br>
+  <div id="alert_placeholder"></div>
 </div>
 
 <!-- Modal Edit -->

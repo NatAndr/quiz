@@ -49,8 +49,7 @@
         </div>
 
         <div id="answers" class="tab-pane fade">
-            <h3>Menu 4</h3>
-            <p>Some content in menu 4.</p>
+            <%@include file="answers.jsp" %>
         </div>
     </div>
 </div>

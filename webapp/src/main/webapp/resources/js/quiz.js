@@ -7,11 +7,11 @@ function resetEdit(modal) {
 }
 
 function showResultModal(modal, msg) {
-    modal.modal('toggle');
+    modal.modal('hide');
     $('#result').on('show.bs.modal', function () {
         $(this).find('.myval').text(msg);
     });
-//        $('#result').on('hidden.bs.modal', location.reload());
+        //$('#result').on('hide.bs.modal', location.reload());
     $('#result').modal('show');
 }
 
@@ -22,6 +22,8 @@ function showAlert(modalToHide, message, alertType) {
         $("#alertdiv").remove();
     }, 10000);
 }
+
+
 
 
 

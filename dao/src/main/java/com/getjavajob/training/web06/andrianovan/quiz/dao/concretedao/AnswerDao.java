@@ -48,7 +48,7 @@ public class AnswerDao extends AbstractDao<Answer> {
 
     @Override
     protected Object[] getEntityFields(Answer entity) {
-        return new Object[]{entity.getAnswer(), entity.isCorrect()};
+        return new Object[]{entity.getAnswer(), entity.getIsCorrect()};
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AnswerDao extends AbstractDao<Answer> {
 
     @Override
     public void update(Answer entity) throws DaoException {
-        jdbcTemplate.update(getUpdateByIdStatement(), entity.getAnswer(), entity.isCorrect(), Long.valueOf(entity.getId()));
+        jdbcTemplate.update(getUpdateByIdStatement(), entity.getAnswer(), entity.getIsCorrect(), Long.valueOf(entity.getId()));
     }
 
     public void updateQuestionId(Answer entity, Question question) throws DaoException {

@@ -1,9 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
-import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
-import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
-import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
-import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
+import com.getjavajob.training.web06.andrianovan.quiz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +21,8 @@ public class ManagementController {
     private StudyGroupService studyGroupService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private AnswerService answerService;
 
     @RequestMapping(value = "/admin")
     public ModelAndView showAdminPanel() {
@@ -33,6 +32,7 @@ public class ManagementController {
         modelAndView.addObject("studyGroups", studyGroupService.getAll());
         modelAndView.addObject("students", studentService.getAll());
         modelAndView.addObject("questions", questionService.getAll());
+        modelAndView.addObject("answers", answerService.getAll());
         return modelAndView;
     }
 }

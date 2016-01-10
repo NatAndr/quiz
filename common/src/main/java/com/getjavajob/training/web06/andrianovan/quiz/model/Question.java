@@ -11,7 +11,7 @@ public class Question extends BaseEntity {
     private QuestionType questionType;
     private int weight;
     private List<Answer> answers;
-    private byte[] picture;
+    private String picture;
 
     public Question() {
     }
@@ -72,11 +72,11 @@ public class Question extends BaseEntity {
         this.answers = answers;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
