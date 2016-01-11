@@ -34,15 +34,28 @@
         }
 
         function nextQuestion() {
-            var inputAnswer = $('input[type=text]').val();
-            var inputAnswer = $('input[type=text]').val();
-            var inputAnswer = $('input[type=text]').val();
+            var answers = [];
+            var inputAnswer = '';
+
+            if ($('input[type=text]').val() != null) {
+                inputAnswer = $('input[type=text]').val();
+            }
+//            if ($('input[name=answer]:checked').val() != null) {
+//                answers = $('input[name=answer]:checked').val();
+//            }
+//            var data = { 'user_ids[]' : []};
+
+            $(":checked").each(function() {
+                answers.push($(this).val());
+            });
+
+            console.log("answers:" + answers);
 
             $.ajax({
                 type: "POST",
                 cache: false,
                 url: '<c:url value="/quizQuestion" />',
-                data: "",
+                data: "inputAnswer=" + inputAnswer + "&answers=" +  answers,
                 success: function (response) {
                     $('#quiz').html(response);
                 },

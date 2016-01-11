@@ -20,7 +20,7 @@
         <h1>Quiz</h1>
 
         <p class="lead">${quiz.name}</p>
-        <p>${questionsNumber} Questions</p>
+        <p>${questionsNumber} questions</p>
     </div>
     <form action="${pageContext.request.contextPath}/initializeQuiz" method="post">
         <label>

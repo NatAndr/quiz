@@ -52,14 +52,14 @@ public class QuizzesController {
     public ModelAndView doQuizzesSearch(@RequestParam("searchParams") String searchParams) {
         ModelAndView modelAndView = new ModelAndView("quizzesSearch");
         if (searchParams != null) {
-            List<QuizSet> quizes;
+            List<QuizSet> quizzes;
             try {
-                quizes = quizSetService.searchQuizSetBySubstring(searchParams);
+                quizzes = quizSetService.searchQuizSetBySubstring(searchParams);
             } catch (ServiceException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-            modelAndView.addObject("foundQuiz", quizes);
+            modelAndView.addObject("foundQuiz", quizzes);
         }
         return modelAndView;
     }
@@ -69,7 +69,7 @@ public class QuizzesController {
         ModelAndView modelAndView = new ModelAndView("quizInfo");
         QuizSet quizSet = quizSetService.get(id);
         modelAndView.addObject("quiz", quizSet);
-        modelAndView.addObject("questionsNumber", quizSet.getQuestions().size());
+        modelAndView.addObject("questionsNumber", genQuestionsService.getQuestionsNumberProperty());
         return modelAndView;
     }
 
@@ -102,14 +102,14 @@ public class QuizzesController {
     }
 
     @RequestMapping(value = "/quizQuestion", method = RequestMethod.POST)
-    public String processQuiz(/*@RequestParam("inputAnswer") String inputAnswer,
-                              @RequestParam("answer") String[] results,*/ModelMap model,
+    public String processQuiz(@RequestParam("inputAnswer") String inputAnswer,
+                              @RequestParam("answers") String[] answers, ModelMap model,
                                   HttpServletRequest req) {
         Student student = studentService.get(STUDENT_ID);
         HttpSession session = req.getSession();
         QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
         this.counter = (int) session.getAttribute("counter") + 1;
-//        saveResult(req, student, quizStart);
+        saveResult(inputAnswer, answers, student, quizStart);
 
         if (this.counter == session.getAttribute("questionsNumber")) {
             try {
@@ -125,9 +125,9 @@ public class QuizzesController {
         return "quizRunPart";
     }
 
-    private void saveResult(HttpServletRequest req, Student student, QuizStart quizStart) {
-        String inputAnswer = req.getParameter("inputAnswer");
-        String[] results = req.getParameterValues("answer");
+    private void saveResult(String inputAnswer, String[] results, Student student, QuizStart quizStart) {
+//        String inputAnswer = req.getParameter("inputAnswer");
+//        String[] results = req.getParameterValues("answer");
         if (Objects.equals(inputAnswer, "")) {
             inputAnswer = null;
         }

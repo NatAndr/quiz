@@ -39,11 +39,6 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
     public GeneratedQuestionsService() {
     }
 
-    @Override
-    public void insert(GeneratedQuestions entity) throws ServiceException {
-        super.insert(entity);
-    }
-
     public GeneratedQuestions generateQuestions(QuizStart quizStart) throws ServiceException {
         int questionsNumber = getQuestionsNumberProperty();
         List<Question> generatedQuestions = new ArrayList<>(questionsNumber);
@@ -66,11 +61,11 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
         GeneratedQuestions quizGeneratedQuestions = new GeneratedQuestions();
         quizGeneratedQuestions.setQuizStart(quizStart);
         quizGeneratedQuestions.setQuestions(generatedQuestions);
-//        this.insert(quizGeneratedQuestions);
+        this.insert(quizGeneratedQuestions);
         return quizGeneratedQuestions;
     }
 
-    private int getQuestionsNumberProperty() {
+    public int getQuestionsNumberProperty() {
         Properties props = new Properties();
         try {
             props.load(this.getClass().getClassLoader().getResourceAsStream(QUIZ_PROPERTIES));

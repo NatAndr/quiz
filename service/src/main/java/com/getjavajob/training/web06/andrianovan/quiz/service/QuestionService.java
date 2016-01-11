@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class QuestionService extends AbstractService<Question> {
 
-//    @Autowired
-//    private AnswerService answerService;
     @Autowired
     private AnswerDao answerDao;
 
@@ -29,33 +27,9 @@ public class QuestionService extends AbstractService<Question> {
     public QuestionService() {
     }
 
-//    public void setAnswerService(AnswerService answerService) {
-//        this.answerService = answerService;
-//    }
-
     public void setAnswerDao(AnswerDao answerDao) {
         this.answerDao = answerDao;
     }
-
-//    @Override
-//    @Transactional
-//    public void insert(Question entity) throws ServiceException {
-//        super.insert(entity);
-//        if (entity.getAnswers() != null) {
-//            insertAnswerToExistingQuestion(entity);
-//        }
-//    }
-
-//    @Override
-//    @Transactional
-//    public void update(Question entity) throws ServiceException {
-//        super.update(entity);
-//        if (entity.getAnswers() != null) {
-//            for (Answer answer : entity.getAnswers()) {
-//                linkAnswerToQuestion(entity, answer);
-//            }
-//        }
-//    }
 
     @Transactional
     public void linkAnswerToQuestion(Question question, Answer answer) throws ServiceException {
@@ -65,12 +39,4 @@ public class QuestionService extends AbstractService<Question> {
             throw new ServiceException(CANNOT_UPDATE + question + e.getLocalizedMessage());
         }
     }
-
-//    @Transactional
-//    public void insertAnswerToExistingQuestion(Question question) throws ServiceException {
-//        for (Answer answer : question.getAnswers()) {
-//            answerService.insert(answer);
-//            linkAnswerToQuestion(question, answer);
-//        }
-//    }
 }

@@ -30,29 +30,6 @@ public class QuizSetService extends AbstractService<QuizSet> {
     public QuizSetService() {
     }
 
-//    @Override
-//    @Transactional
-//    public void insert(QuizSet entity) throws ServiceException {
-//        super.insert(entity);
-//        for (Question question : entity.getQuestions()) {
-//            try {
-//                questionDao.insert(question);
-//            } catch (DaoException e) {
-//                throw new ServiceException(CANNOT_INSERT + entity + e.getLocalizedMessage());
-//            }
-//            linkQuestionToQuizSet(entity, question);
-//        }
-//    }
-//
-//    @Override
-//    @Transactional
-//    public void update(QuizSet entity) throws ServiceException {
-//        super.update(entity);
-//        for (Question question : entity.getQuestions()) {
-//            linkQuestionToQuizSet(entity, question);
-//        }
-//    }
-
     @Transactional
     public void linkQuestionToQuizSet(QuizSet quizSet, Question question) throws ServiceException {
         try {
@@ -62,14 +39,6 @@ public class QuizSetService extends AbstractService<QuizSet> {
         }
     }
 
-//    @Transactional
-//    public void insertQuestionToExistingQuizSet(QuizSet entity) throws ServiceException {
-//        for (Question question : entity.getQuestions()) {
-//            questionService.insert(question);
-//            linkQuestionToQuizSet(entity, question);
-//        }
-//    }
-
     public List<QuizSet> searchQuizSetBySubstring(String str) throws ServiceException {
         try {
             return ((QuizSetDao) super.getDao()).searchQuizSetBySubstring(str);
@@ -77,12 +46,4 @@ public class QuizSetService extends AbstractService<QuizSet> {
             throw new ServiceException("Cannot get quiz by substring " + str + e.getLocalizedMessage());
         }
     }
-
-//    public List<QuizSet> getQuizSetByQuestion(Question question) throws ServiceException {
-//        try {
-//            return ((QuizSetDao) super.getDao()).getQuizSetByQuestion(question);
-//        } catch (DaoException e) {
-//            throw new ServiceException("Cannot get quiz set by question " + e.getLocalizedMessage());
-//        }
-//    }
 }
