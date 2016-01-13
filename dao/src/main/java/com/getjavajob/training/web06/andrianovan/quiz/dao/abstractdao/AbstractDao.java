@@ -3,18 +3,12 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.daofactory.CrudDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.BaseEntity;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +24,11 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
     protected static final String CANNOT_UPDATE = "Cannot update ";
     protected static final String CANNOT_CREATE_INSTANCE = "Cannot create instance for ";
 
+    @Autowired
+    protected EntityManager entityManager;
+//    @Autowired
+//    protected EntityManagerFactory entityManagerFactory;
+//
     private DataSource dataSource;
     protected JdbcTemplate jdbcTemplate;
 
@@ -63,92 +62,98 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
         return "DELETE FROM " + getTableName() + " WHERE id = ?";
     }
 
-    @Override
-    public T get(int id) {
-        try {
-            return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
-                @Override
-                public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    try {
-                        return createInstanceFromResult(rs);
-                    } catch (DaoException e) {
-                        e.printStackTrace();
-                        return null;
-                    }
-                }
-            });
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
+//    @Override
+//    public T get(int id) {
+//        try {
+//            return this.jdbcTemplate.queryForObject(getSelectByIdStatement(), new Object[]{id}, new RowMapper<T>() {
+//                @Override
+//                public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                    try {
+//                        return createInstanceFromResult(rs);
+//                    } catch (DaoException e) {
+//                        e.printStackTrace();
+//                        return null;
+//                    }
+//                }
+//            });
+//        } catch (EmptyResultDataAccessException e) {
+//            return null;
+//        }
+//    }
 
-    @Override
-    public List<T> getAll() {
-        return this.jdbcTemplate.query(getSelectAllStatement(), new RowMapper<T>() {
-            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-                try {
-                    return createInstanceFromResult(rs);
-                } catch (DaoException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        });
-    }
+//    @Override
+//    public List<T> getAll() {
+//        EntityManager em = entityManagerFactory.createEntityManager();
+//        return em.createNativeQuery("")
+//        try {
+//            em.getTransaction().begin();
+//            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+//            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(T.);
+//            CriteriaQuery<T> select = criteriaQuery.select(criteriaQuery.from(Employee.class));
+//            List<T> resultList = em.createQuery(select).getResultList();
+//            em.getTransaction().commit();
+//            return resultList;
+//        } finally {
+//            if (em.getTransaction().isActive()) {
+//                em.getTransaction().rollback();
+//            }
+//        }
+
+
+//        return this.jdbcTemplate.query(getSelectAllStatement(), new RowMapper<T>() {
+//            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                try {
+//                    return createInstanceFromResult(rs);
+//                } catch (DaoException e) {
+//                    e.printStackTrace();
+//                    return null;
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public void delete(T entity) throws DaoException {
-        this.jdbcTemplate.update(getDeleteByIdStatement(), Long.valueOf(entity.getId()));
+            entityManager.remove(entity);
     }
 
     @Override
     public void insert(final T entity) throws DaoException {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        final Object[] entityFields = getEntityFields(entity);
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection)
-                    throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(getInsertStatement(), new String[]{"id"});
-                for (int i = 0; i < entityFields.length; i++) {
-                    ps.setObject(i + 1, entityFields[i]);
-                }
-                return ps;
-            }
-        }, keyHolder);
-        entity.setId(keyHolder.getKey().intValue());
+            entityManager.persist(entity);
     }
 
     @Override
     public void update(T entity) throws DaoException {
-        this.jdbcTemplate.update(getUpdateByIdStatement(), getEntityFields(entity), Long.valueOf(entity.getId()));
+            entityManager.merge(entity);
     }
 
     protected List<T> doExecuteQueryWithParams(String query, Object[] params) throws DaoException {
-        return this.jdbcTemplate.query(query, params, new RowMapper<T>() {
-            @Override
-            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-                try {
-                    return createInstanceFromResult(rs);
-                } catch (DaoException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        });
+//        return this.jdbcTemplate.query(query, params, new RowMapper<T>() {
+//            @Override
+//            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                try {
+//                    return createInstanceFromResult(rs);
+//                } catch (DaoException e) {
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
+//        });
+        return null;
     }
 
     protected List<T> doExecuteQueryWithoutParams(String query) throws DaoException {
-        return this.jdbcTemplate.query(query, new RowMapper<T>() {
-            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
-                try {
-                    return createInstanceFromResult(rs);
-                } catch (DaoException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        });
+//        return this.jdbcTemplate.query(query, new RowMapper<T>() {
+//            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                try {
+//                    return createInstanceFromResult(rs);
+//                } catch (DaoException e) {
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
+//        });
+        return entityManager.createQuery(query).getResultList();
     }
 
 }

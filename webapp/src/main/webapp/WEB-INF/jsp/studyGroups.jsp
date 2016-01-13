@@ -144,7 +144,6 @@
             url: '<c:url value="/studyGroupUpdate" />',
             data: "id=" + grId + "&name=" + groupName,
             success: function (response) {
-//                showResultModal($('#modalEdit1'), response);
                 showAlert($('#modalEdit1'), response, 'success');
             },
             error: function (e) {

@@ -5,14 +5,15 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Nat on 09.11.2015.
@@ -25,10 +26,10 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     @Autowired
     private QuizSetDao quizSetDao;
 
-    @Autowired
-    public QuizStartDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        super(dataSource, jdbcTemplate);
-    }
+//    @Autowired
+//    public QuizStartDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+//        super(dataSource, jdbcTemplate);
+//    }
 
     public QuizStartDao() {
     }
@@ -73,6 +74,20 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     @Override
     public void update(QuizStart entity) throws DaoException {
         throw new UnsupportedOperationException("Update is not allowed for " + entity);
+    }
+
+    @Override
+    public QuizStart get(int id) {
+        return entityManager.find(QuizStart.class, id);
+
+    }
+
+    @Override
+    public List<QuizStart> getAll() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<QuizStart> criteriaQuery = criteriaBuilder.createQuery(QuizStart.class);
+        CriteriaQuery<QuizStart> select = criteriaQuery.select(criteriaQuery.from(QuizStart.class));
+        return entityManager.createQuery(select).getResultList();
     }
 
     @Override

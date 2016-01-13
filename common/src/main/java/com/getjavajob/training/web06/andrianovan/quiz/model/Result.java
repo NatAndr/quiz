@@ -1,15 +1,29 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
+
 /**
  * Created by Nat on 30.10.2015.
  */
+@Entity
+@Table(name = "question")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Result extends BaseEntity {
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="student_id", nullable = false)
     private Student student;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="answer_id", nullable = false)
     private Answer answer;
+
+    @Column(name = "input_answer")
     private String inputAnswer;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="quiz_start_id", nullable = false)
     private QuizStart quizStart;
-//    private Question question;
 
     public Result() {
     }

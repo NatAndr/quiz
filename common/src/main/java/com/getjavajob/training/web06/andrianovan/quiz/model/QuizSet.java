@@ -1,13 +1,21 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Nat on 30.10.2015.
  */
+@Entity
+@Table(name = "quiz_header")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class QuizSet extends BaseEntity {
 
+    @Column(name = "quiz_name", nullable = false)
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quiz_id")
     private List<Question> questions;
 
     public QuizSet() {

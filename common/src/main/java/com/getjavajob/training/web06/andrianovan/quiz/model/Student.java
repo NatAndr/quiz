@@ -1,14 +1,29 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
+
 /**
  * Created by Nat on 30.10.2015.
  */
+@Entity
+@Table(name = "student")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Student extends BaseEntity {
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="group_id")
     private StudyGroup studyGroup;
+
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    @Transient
     private String login;
+
+    @Transient
     private String password;
 
     public Student() {

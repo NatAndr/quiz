@@ -1,10 +1,19 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
+
 /**
  * Created by Nat on 30.10.2015.
  */
+@Entity
+@Table(name = "answer")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Answer extends BaseEntity {
+
+    @Column(nullable = false)
     private String answer;
+
+    @Column(name = "is_correct", columnDefinition = "INTEGER(1)")
     private boolean isCorrect;
 
     public Answer() {

@@ -1,16 +1,30 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Nat on 30.10.2015.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "question")
 public class Question extends BaseEntity {
 
+    @Column(nullable = false)
     private String question;
+
+    @Enumerated
+    @Column(name = "type")
     private QuestionType questionType;
+
     private int weight;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     private List<Answer> answers;
+
+    @Column(name = "image")
     private String picture;
 
     public Question() {

@@ -1,13 +1,21 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Nat on 09.11.2015.
  */
+@Entity
+@Table(name = "quiz_start")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class QuizStart extends BaseEntity {
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="quiz_id")
     private QuizSet quizSet;
+
+    @Column(name = "quiz_date", nullable = false)
     private Date quizDate;
 
     public QuizStart() {

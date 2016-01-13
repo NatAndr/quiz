@@ -3,13 +3,13 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Nat on 30.10.2015.
@@ -23,10 +23,10 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
     public StudyGroupDao() {
     }
 
-    @Autowired
-    public StudyGroupDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        super(dataSource, jdbcTemplate);
-    }
+//    @Autowired
+//    public StudyGroupDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+//        super(dataSource, jdbcTemplate);
+//    }
 
     @Override
     protected StudyGroup createInstanceFromResult(ResultSet resultSet) throws DaoException {
@@ -61,7 +61,15 @@ public class StudyGroupDao extends AbstractDao<StudyGroup> {
     }
 
     @Override
-    public void update(StudyGroup entity) throws DaoException {
-        jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
+    public StudyGroup get(int id) {
+        return entityManager.find(StudyGroup.class, id);
+    }
+
+    @Override
+    public List<StudyGroup> getAll() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<StudyGroup> criteriaQuery = criteriaBuilder.createQuery(StudyGroup.class);
+        CriteriaQuery<StudyGroup> select = criteriaQuery.select(criteriaQuery.from(StudyGroup.class));
+        return entityManager.createQuery(select).getResultList();
     }
 }

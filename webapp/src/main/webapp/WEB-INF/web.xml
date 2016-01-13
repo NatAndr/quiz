@@ -15,7 +15,7 @@
 
     <!--<context-param>-->
         <!--<param-name>contextConfigLocation</param-name>-->
-        <!--<param-value>classpath:quiz-context.xml</param-value>-->
+        <!--<param-value>classpath:quiz-servlet.xml</param-value>-->
     <!--</context-param>-->
 
     <!--<listener>-->

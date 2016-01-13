@@ -6,10 +6,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,10 +30,10 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
     private QuizStartDao quizStartDao;
     @Autowired
     private QuestionDao questionDao;
-    @Autowired
-    public GeneratedQuestionsDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        super(dataSource, jdbcTemplate);
-    }
+//    @Autowired
+//    public GeneratedQuestionsDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+//        super(dataSource, jdbcTemplate);
+//    }
 
     public GeneratedQuestionsDao() {
     }
@@ -94,6 +94,19 @@ public class GeneratedQuestionsDao extends AbstractDao<GeneratedQuestions> {
     @Override
     public void update(GeneratedQuestions entity) throws DaoException {
         throw new UnsupportedOperationException(NOT_ALLOWED_TO_UPDATE_RESULT);
+    }
+
+    @Override
+    public GeneratedQuestions get(int id) {
+        return entityManager.find(GeneratedQuestions.class, id);
+    }
+
+    @Override
+    public List<GeneratedQuestions> getAll() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<GeneratedQuestions> criteriaQuery = criteriaBuilder.createQuery(GeneratedQuestions.class);
+        CriteriaQuery<GeneratedQuestions> select = criteriaQuery.select(criteriaQuery.from(GeneratedQuestions.class));
+        return entityManager.createQuery(select).getResultList();
     }
 
     @Override

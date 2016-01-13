@@ -5,7 +5,6 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.GeneratedQuestions;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
-import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizStart;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +80,9 @@ public class GeneratedQuestionsService extends AbstractService<GeneratedQuestion
         return r.nextInt(max - min) + min;
     }
 
-    public GeneratedQuestions startQuiz(QuizSet quizSet) throws ServiceException {
-        QuizStart quizStart = new QuizStart(quizSet, null);
-        quizStartService.insert(quizStart);
-        return generateQuestions(quizStart);
-    }
+//    public GeneratedQuestions startQuiz(QuizSet quizSet) throws ServiceException {
+//        QuizStart quizStart = new QuizStart(quizSet, null);
+//        quizStartService.insert(quizStart);
+//        return generateQuestions(quizStart);
+//    }
 }

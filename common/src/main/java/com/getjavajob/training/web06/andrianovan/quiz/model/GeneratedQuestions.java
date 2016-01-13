@@ -1,13 +1,24 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Nat on 24.11.2015.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "quiz_generated_questions")
 public class GeneratedQuestions extends BaseEntity{
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="quiz_start_id")
     private QuizStart quizStart;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "question",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questions;
 
     public GeneratedQuestions() {

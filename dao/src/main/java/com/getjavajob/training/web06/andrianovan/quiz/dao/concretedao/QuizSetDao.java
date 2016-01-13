@@ -5,10 +5,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,10 +26,10 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     @Autowired
     private QuestionDao questionDao;
 
-    @Autowired
-    public QuizSetDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        super(dataSource, jdbcTemplate);
-    }
+//    @Autowired
+//    public QuizSetDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+//        super(dataSource, jdbcTemplate);
+//    }
 
     public QuizSetDao() {
     }
@@ -72,6 +72,20 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     public List<QuizSet> searchQuizSetBySubstring(String str) throws DaoException {
         String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
         return super.doExecuteQueryWithoutParams(query);
+    }
+
+    @Override
+    public QuizSet get(int id) {
+        return entityManager.find(QuizSet.class, id);
+
+    }
+
+    @Override
+    public List<QuizSet> getAll() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<QuizSet> criteriaQuery = criteriaBuilder.createQuery(QuizSet.class);
+        CriteriaQuery<QuizSet> select = criteriaQuery.select(criteriaQuery.from(QuizSet.class));
+        return entityManager.createQuery(select).getResultList();
     }
 
     @Override

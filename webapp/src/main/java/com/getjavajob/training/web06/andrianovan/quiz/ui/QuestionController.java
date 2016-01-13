@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,8 +30,6 @@ public class QuestionController {
     private QuestionService questionService;
     @Autowired
     private QuizSetService quizSetService;
-
-    private String imageString;
 
     @ResponseBody
     @RequestMapping(value = "/questionDelete", method = RequestMethod.POST)
@@ -47,13 +46,14 @@ public class QuestionController {
                           @RequestParam(value = "weight") int weight,
                           @RequestParam(value = "quizId") int quizId,
                           @RequestParam(value = "questionType") String questionType,
-                          @RequestParam(value = "questionImage") String questionImage) throws ServiceException {
+                          @RequestParam(value = "questionImage") String questionImage,
+                          HttpServletRequest servletRequest) throws ServiceException {
         Question question = new Question(questionString, QuestionType.valueOf(questionType), weight);
         QuizSet quizSet = quizSetService.get(quizId);
 
         String newImg = "";
         if (questionImage.length() != 0) {
-            question.setPicture(this.imageString);
+            question.setPicture((String) servletRequest.getSession().getAttribute("image"));
             newImg = " image";
         }
 
@@ -81,12 +81,12 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String uploadImage(MultipartHttpServletRequest request) throws Exception {
+    public String uploadImage(MultipartHttpServletRequest request, HttpServletRequest servletRequest) throws Exception {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         byte[] bytes = file.getBytes();
         String base64DataString = new String(Base64.encodeBase64(bytes));
-        this.imageString = base64DataString;
+        servletRequest.getSession().setAttribute("image", base64DataString);
         return base64DataString;
     }
 

@@ -4,10 +4,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDa
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,10 +27,10 @@ public class QuestionDao extends AbstractDao<Question> {
     @Autowired
     private AnswerDao answerDao;
 
-    @Autowired
-    public QuestionDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-        super(dataSource, jdbcTemplate);
-    }
+//    @Autowired
+//    public QuestionDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
+//        super(dataSource, jdbcTemplate);
+//    }
 
     public QuestionDao() {
     }
@@ -71,6 +71,20 @@ public class QuestionDao extends AbstractDao<Question> {
     @Override
     protected String getUpdateByIdStatement() {
         return UPDATE;
+    }
+
+    @Override
+    public Question get(int id) {
+        return entityManager.find(Question.class, id);
+
+    }
+
+    @Override
+    public List<Question> getAll() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Question> criteriaQuery = criteriaBuilder.createQuery(Question.class);
+        CriteriaQuery<Question> select = criteriaQuery.select(criteriaQuery.from(Question.class));
+        return entityManager.createQuery(select).getResultList();
     }
 
     @Override
