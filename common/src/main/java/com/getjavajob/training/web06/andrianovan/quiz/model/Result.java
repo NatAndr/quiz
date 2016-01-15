@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by Nat on 30.10.2015.
  */
 @Entity
-@Table(name = "question")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "result")
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Result extends BaseEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)

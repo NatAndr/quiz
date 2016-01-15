@@ -41,14 +41,6 @@ public class ManagementController {
     @ResponseBody
     @RequestMapping(value = "/updateManagement", method = RequestMethod.POST)
     public ModelAndView updateTabs(@RequestParam(value = "tab") String tab) {
-//        model.addAttribute("questions", questionService.getAll());
-//        model.addAttribute("quizzes", quizSetService.getAll());
-//        model.addAttribute("studyGroups", studyGroupService.getAll());
-//        model.addAttribute("students", studentService.getAll());
-//        model.addAttribute("answers", answerService.getAll());
-//        return "questions";
-        System.out.println("tab=" + tab);
-//        String pageName = tab.substring(1);
         ModelAndView modelAndView = new ModelAndView();
         switch (tab) {
             case "students":

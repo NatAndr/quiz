@@ -7,18 +7,17 @@ import java.util.List;
  * Created by Nat on 24.11.2015.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "quiz_generated_questions")
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class GeneratedQuestions extends BaseEntity{
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="quiz_start_id")
     private QuizStart quizStart;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "question",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id"))
+//    @OneToMany(fetch=FetchType.LAZY)
+//    @JoinColumn(name="id", referencedColumnName = "question_id")
+    @Transient
     private List<Question> questions;
 
     public GeneratedQuestions() {

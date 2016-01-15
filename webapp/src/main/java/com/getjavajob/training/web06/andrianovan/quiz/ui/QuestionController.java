@@ -50,6 +50,7 @@ public class QuestionController {
                           HttpServletRequest servletRequest) throws ServiceException {
         Question question = new Question(questionString, QuestionType.valueOf(questionType), weight);
         QuizSet quizSet = quizSetService.get(quizId);
+        question.setQuizSet(quizSet);
 
         String newImg = "";
         if (questionImage.length() != 0) {
@@ -57,13 +58,16 @@ public class QuestionController {
             newImg = " image";
         }
 
-        if (id == 0) {
-            questionService.insert(question);
-        } else {
-            question.setId(id);
-            questionService.update(question);
-        }
-        quizSetService.linkQuestionToQuizSet(quizSet, question);
+//        if (id == 0) {
+//            questionService.insert(question);
+//        } else {
+//            question.setId(id);
+//            questionService.update(question);
+//        }
+        quizSet.getQuestions().add(question);
+        quizSetService.update(quizSet);
+
+//        quizSetService.linkQuestionToQuizSet(quizSet, question);
         return "Saved " + question + " " + weight + " " + questionType + " " + newImg;
     }
 

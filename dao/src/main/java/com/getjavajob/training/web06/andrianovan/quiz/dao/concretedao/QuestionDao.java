@@ -76,7 +76,6 @@ public class QuestionDao extends AbstractDao<Question> {
     @Override
     public Question get(int id) {
         return entityManager.find(Question.class, id);
-
     }
 
     @Override
@@ -87,18 +86,24 @@ public class QuestionDao extends AbstractDao<Question> {
         return entityManager.createQuery(select).getResultList();
     }
 
-    @Override
-    public void update(Question entity) throws DaoException {
-        jdbcTemplate.update(getUpdateByIdStatement(), entity.getQuestion(), entity.getQuestionType().ordinal() + 1,
-                entity.getWeight(), entity.getPicture(), Long.valueOf(entity.getId()));
-    }
+//    @Override
+//    public void update(Question entity) throws DaoException {
+//        jdbcTemplate.update(getUpdateByIdStatement(), entity.getQuestion(), entity.getQuestionType().ordinal() + 1,
+//                entity.getWeight(), entity.getPicture(), Long.valueOf(entity.getId()));
+//    }
 
     public List<Question> getQuestionsByQuizSet(QuizSet quizSet) throws DaoException {
         return super.doExecuteQueryWithParams(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizSet.getId()});
     }
 
     public void updateQuestionsQuizId(Question entity, QuizSet quiz) throws DaoException {
-        jdbcTemplate.update(UPDATE_QUIZ_ID, quiz.getId(), entity.getId());
+//        jdbcTemplate.update(UPDATE_QUIZ_ID, quiz.getId(), entity.getId());
+
+//        entityManager.createQuery(
+//                "UPDATE QuizSet q SET q.")
+//                .setParameter(1, type)
+//                .setParameter(2, storeIds)
+//                .executeUpdate();
     }
 
     public List<Question> getQuestionsFromQuizGeneratedQuestionsByQuizStart(QuizStart quizStart) throws DaoException {

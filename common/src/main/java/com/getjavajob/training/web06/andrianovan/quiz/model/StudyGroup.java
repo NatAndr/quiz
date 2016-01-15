@@ -1,14 +1,14 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by Nat on 30.10.2015.
  */
 @Entity
 @Table(name = "study_group")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@NamedQuery(name = "StudyGroup.getAll", query = "SELECT s FROM StudyGroup s")
 public class StudyGroup extends BaseEntity {
 
     @Column(name = "group_name", nullable = false)
@@ -48,8 +48,6 @@ public class StudyGroup extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return name.hashCode();
     }
 }

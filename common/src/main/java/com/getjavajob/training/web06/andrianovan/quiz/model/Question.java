@@ -7,10 +7,9 @@ import java.util.List;
  * Created by Nat on 30.10.2015.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "question")
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Question extends BaseEntity {
-
     @Column(nullable = false)
     private String question;
 
@@ -26,6 +25,10 @@ public class Question extends BaseEntity {
 
     @Column(name = "image")
     private String picture;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "quiz_id")
+    private QuizSet quizSet;
 
     public Question() {
     }
@@ -92,6 +95,14 @@ public class Question extends BaseEntity {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public QuizSet getQuizSet() {
+        return quizSet;
+    }
+
+    public void setQuizSet(QuizSet quizSet) {
+        this.quizSet = quizSet;
     }
 
     @Override

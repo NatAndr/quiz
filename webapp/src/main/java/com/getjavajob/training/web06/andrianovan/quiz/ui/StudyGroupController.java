@@ -28,6 +28,9 @@ public class StudyGroupController {
     public @ResponseBody String studyGroupUpdate(@RequestParam(value = "id") int id,
                                                  @RequestParam(value = "name") String name) throws ServiceException {
         StudyGroup studyGroup = new StudyGroup(name);
+        System.out.println("studyGroup id = " + studyGroup.getId());
+        System.out.println("studyGroup name = " + studyGroup.getName());
+
         if (id == 0) {
             studyGroupService.insert(studyGroup);
         } else {

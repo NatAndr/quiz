@@ -1,13 +1,14 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by Nat on 30.10.2015.
  */
 @Entity
 @Table(name = "answer")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)
@@ -26,16 +27,6 @@ public class Answer extends BaseEntity {
     public Answer(String answer, boolean isCorrect) {
         this(answer);
         this.isCorrect = isCorrect;
-    }
-
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
     }
 
     public String getAnswer() {

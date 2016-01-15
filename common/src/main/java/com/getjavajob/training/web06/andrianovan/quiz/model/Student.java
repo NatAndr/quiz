@@ -7,10 +7,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "student")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Student extends BaseEntity {
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="group_id")
     private StudyGroup studyGroup;
 

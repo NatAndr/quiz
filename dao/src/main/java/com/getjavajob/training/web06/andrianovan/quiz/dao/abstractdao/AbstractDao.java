@@ -114,17 +114,20 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 
     @Override
     public void delete(T entity) throws DaoException {
-            entityManager.remove(entity);
+//            entityManager.remove(entity);
+        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
     }
 
     @Override
     public void insert(final T entity) throws DaoException {
-            entityManager.persist(entity);
+        System.out.println("insert " + entity);
+            entityManager.merge(entity);
     }
 
     @Override
     public void update(T entity) throws DaoException {
-            entityManager.merge(entity);
+        System.out.println("update " + entity);
+        entityManager.merge(entity);
     }
 
     protected List<T> doExecuteQueryWithParams(String query, Object[] params) throws DaoException {

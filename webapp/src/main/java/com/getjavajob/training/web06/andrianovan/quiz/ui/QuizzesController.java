@@ -69,7 +69,7 @@ public class QuizzesController {
         ModelAndView modelAndView = new ModelAndView("quizInfo");
         QuizSet quizSet = quizSetService.get(id);
         modelAndView.addObject("quiz", quizSet);
-        modelAndView.addObject("questionsNumber", genQuestionsService.getQuestionsNumberProperty());
+        modelAndView.addObject("questionsNumber", quizStartService.getQuestionsNumberProperty());
         return modelAndView;
     }
 
@@ -80,8 +80,9 @@ public class QuizzesController {
         this.quizSet = quizSetService.get(id);
         try {
             quizStart = new QuizStart(quizSet);
+//            generatedQuestions = quizStartService.generateQuestions(quizStart);
             quizStartService.insert(quizStart);
-            generatedQuestions = genQuestionsService.generateQuestions(quizStart);
+//            generatedQuestions = genQuestionsService.generateQuestions(quizStart);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

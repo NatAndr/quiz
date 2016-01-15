@@ -8,13 +8,13 @@ import java.util.List;
  */
 @Entity
 @Table(name = "quiz_header")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class QuizSet extends BaseEntity {
 
     @Column(name = "quiz_name", nullable = false)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id")
     private List<Question> questions;
 

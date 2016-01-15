@@ -2,13 +2,14 @@ package com.getjavajob.training.web06.andrianovan.quiz.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Nat on 09.11.2015.
  */
 @Entity
 @Table(name = "quiz_start")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class QuizStart extends BaseEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -17,6 +18,11 @@ public class QuizStart extends BaseEntity {
 
     @Column(name = "quiz_date", nullable = false)
     private Date quizDate;
+
+    @ManyToMany
+    @JoinTable(name = "quiz_generated_questions", joinColumns = @JoinColumn(name = "quiz_start_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
+    private List<Question> generatedQuestions;
 
     public QuizStart() {
     }
@@ -44,6 +50,14 @@ public class QuizStart extends BaseEntity {
 
     public void setQuizDate(Date quizDate) {
         this.quizDate = quizDate;
+    }
+
+    public List<Question> getGeneratedQuestions() {
+        return generatedQuestions;
+    }
+
+    public void setGeneratedQuestions(List<Question> generatedQuestions) {
+        this.generatedQuestions = generatedQuestions;
     }
 
     @Override

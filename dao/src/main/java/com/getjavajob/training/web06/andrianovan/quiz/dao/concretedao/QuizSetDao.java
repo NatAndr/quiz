@@ -70,14 +70,17 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
     }
 
     public List<QuizSet> searchQuizSetBySubstring(String str) throws DaoException {
-        String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
-        return super.doExecuteQueryWithoutParams(query);
+//        String query = SEARCH_QUIZ_SET + "'%" + str.toUpperCase() + "%'";
+//        return super.doExecuteQueryWithoutParams(query);
+        return entityManager.createQuery(
+                "SELECT q FROM QuizSet q WHERE UPPER(q.name) LIKE ?1")
+                .setParameter(1, "%" + str.toUpperCase() + "%")
+                .getResultList();
     }
 
     @Override
     public QuizSet get(int id) {
         return entityManager.find(QuizSet.class, id);
-
     }
 
     @Override
@@ -88,10 +91,10 @@ public class QuizSetDao extends AbstractDao<QuizSet> {
         return entityManager.createQuery(select).getResultList();
     }
 
-    @Override
-    public void update(QuizSet entity) throws DaoException {
-        jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
-    }
+//    @Override
+//    public void update(QuizSet entity) throws DaoException {
+//        jdbcTemplate.update(getUpdateByIdStatement(), entity.getName(), Long.valueOf(entity.getId()));
+//    }
 
 //    public List<QuizSet> getQuizSetByQuestion(Question question) throws DaoException {
 //        return super.doExecuteQueryWithParams(GET_QUIZ_SET_BY_QUESTION_ID, new Integer[]{question.getId()});
