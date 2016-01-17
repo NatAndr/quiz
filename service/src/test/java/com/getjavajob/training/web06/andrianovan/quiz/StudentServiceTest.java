@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -73,18 +72,5 @@ public class StudentServiceTest {
         Student student = new Student();
         this.studentService.delete(student);
         verify(this.dao).delete(student);
-    }
-
-    @Test
-    public void testGetStudentsByStudyGroup() throws DaoException, ServiceException {
-        StudyGroup studyGroup = new StudyGroup("java-algo02");
-        studyGroup.setId(2);
-        Student student1 = new Student(studyGroup, "Oleg", "Sokolov");
-        Student student2 = new Student(studyGroup, "Artem", "Artemov");
-        List<Student> expected = Arrays.asList(student1, student2);
-
-        when(this.dao.getStudentsByStudyGroup(studyGroup)).thenReturn(expected);
-        List<Student> actual = this.studentService.getStudentsByStudyGroup(studyGroup);
-        assertEquals(expected, actual);
     }
 }

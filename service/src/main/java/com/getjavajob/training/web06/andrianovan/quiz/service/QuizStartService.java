@@ -35,7 +35,7 @@ public class QuizStartService extends AbstractService<QuizStart> {
         if (questionsNumber > quizSetQuestions.size()) {
             questionsNumber = quizSetQuestions.size();
         }
-        generatedQuestions.add(quizSetQuestions.get(quizSetQuestions.size() - 1));
+        generatedQuestions.add(quizSetQuestions.get(0));
         while (generatedQuestions.size() < questionsNumber) {
             Question question = quizSetQuestions.get(getRandomNumber(0, quizSetQuestions.size()));
             if (!generatedQuestions.contains(question)) {

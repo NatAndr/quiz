@@ -7,26 +7,36 @@
   Time: 18:48
   To change this template use File | Settings | File Templates.
 --%>
-<div class="page-header">
-    <p class="lead">Question ${counter + 1}/${questionsNumber}</p>
-</div>
+<h3>Question ${counter + 1}/${questionsNumber}</h3>
+
 <div id="question">
     ${question.question}
+    <div class="col-lg-6">
+        <div class="row">
+            <c:if test="${not empty question.picture}">
+                <img class="img-responsive" src="data:image/png;base64,${question.picture}"/>
+            </c:if>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <c:forEach var="answer" items="${question.answers}">
+                <input type="hidden" name="id" value="${answer.id}"/>
+                <c:choose>
+                    <c:when test="${question.questionType == 'SINGLE'}">
+                        <input type="radio" name="answer" value="${answer.id}"> ${answer.answer}<br>
+                    </c:when>
+                    <c:when test="${question.questionType == 'MULTIPLE'}">
+                        <input type="checkbox" name="answer" value="${answer.id}"> ${answer.answer}<br>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" class="form-control" name="${answer.id}" id="inputAnswer" value="">
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
+    </div>
     <br>
-    <c:forEach var="answer" items="${question.answers}">
-        <input type="hidden" name="id" value="${answer.id}"/>
-        <c:choose>
-            <c:when test="${question.questionType == 'SINGLE'}">
-                <input type="radio" name="answer" value="${answer.id}"> ${answer.answer}<br>
-            </c:when>
-            <c:when test="${question.questionType == 'MULTIPLE'}">
-                <input type="checkbox" name="answer" value="${answer.id}"> ${answer.answer}<br>
-            </c:when>
-            <c:otherwise>
-                <input type="text" class="form-control" name="${answer.id}" id="inputAnswer" value="">
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-    <br>
+
 </div>
 

@@ -86,7 +86,6 @@
                     </div>
                     <div class="form-group">
                         <label for="question" class="control-label">Question:</label>
-                        <%--<input type="text" class="form-control question" id="question">--%>
                         <textarea class="form-control question" id="question" rows="3"></textarea>
                     </div>
 
@@ -116,8 +115,6 @@
                             </div>
                             <div class="col-lg-8">
                                 <form id="fileForm">
-                                    <%--<input type="file" name="file" class="filestyle" data-buttonName="btn-primary" />--%>
-                                    <%--<label for="inputfile" class="control-label">Browse:</label>--%>
                                     <input id="inputfile" type="file" name="file" style="display: none;">
                                     <br>
                                     <a class="btn btn-primary browseBtn"><span class="glyphicon glyphicon-folder-open"></span></a>
