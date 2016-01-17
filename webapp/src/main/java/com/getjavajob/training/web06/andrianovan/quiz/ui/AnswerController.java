@@ -2,6 +2,8 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
+import com.getjavajob.training.web06.andrianovan.quiz.model.dto.AnswerDTO;
+import com.getjavajob.training.web06.andrianovan.quiz.model.dto.QuestionDTO;
 import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,20 +30,30 @@ public class AnswerController {
 
     @ResponseBody
     @RequestMapping(value = "/questionList", method = RequestMethod.POST)
-    public List<Question> getQuestionList() {
-        return questionService.getAll();
+    public List<QuestionDTO> getQuestionList() {
+        List<QuestionDTO> dtoList = new ArrayList<>();
+        for (Question question : questionService.getAll()) {
+            dtoList.add(new QuestionDTO(question.getId(), question.getQuestion(), question.getQuestionType(),
+                    question.getWeight(), question.getPicture()));
+        }
+        return dtoList;
     }
 
     @ResponseBody
     @RequestMapping(value = "/answerInfo", method = RequestMethod.POST)
-    public Answer getQuestionInfo(@RequestParam("id") int id) {
-        return answerService.get(id);
+    public AnswerDTO getQuestionInfo(@RequestParam("id") int id) {
+        Answer answer = answerService.get(id);
+        return new AnswerDTO(id, answer.getAnswer(), answer.getIsCorrect());
     }
 
     @ResponseBody
     @RequestMapping(value = "/answerDelete", method = RequestMethod.POST)
-    public void answerDelete(@RequestParam("id") int id) throws ServiceException {
+    public void answerDelete(@RequestParam("id") int id,
+                             @RequestParam(value = "questionId") int questionId) throws ServiceException {
+        Question question = questionService.get(questionId);
         Answer answer = answerService.get(id);
+        question.getAnswers().remove(answer);
+        questionService.update(question);
         answerService.delete(answer);
     }
 
@@ -51,16 +64,20 @@ public class AnswerController {
                           @RequestParam(value = "questionId") int questionId,
                           @RequestParam(value = "answer") String answerString,
                           @RequestParam(value = "isCorrect") String isCorrect) throws ServiceException {
-        Answer answer = new Answer(answerString, Boolean.valueOf(isCorrect));
+        Answer answer;
         Question question = questionService.get(questionId);
-
         if (id == 0) {
-            answerService.insert(answer);
+            answer = new Answer(answerString, Boolean.valueOf(isCorrect));
+            answer.setQuestion(question);
+            question.getAnswers().add(answer);
         } else {
-            answer.setId(id);
+            answer = answerService.get(id);
+            answer.setAnswer(answerString);
+            answer.setIsCorrect(Boolean.valueOf(isCorrect));
+            answer.setQuestion(question);
             answerService.update(answer);
         }
-        questionService.linkAnswerToQuestion(question, answer);
-        return "Saved " + answerString;
+        questionService.update(question);
+        return "Saved " + answer.getAnswer() + " " + answer.getIsCorrect();
     }
 }

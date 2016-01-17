@@ -3,6 +3,8 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
+import com.getjavajob.training.web06.andrianovan.quiz.model.dto.QuestionDTO;
+import com.getjavajob.training.web06.andrianovan.quiz.model.dto.QuizSetDTO;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,8 +36,12 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping(value = "/questionDelete", method = RequestMethod.POST)
-    public void questionDelete(@RequestParam("id") int id) throws ServiceException {
+    public void questionDelete(@RequestParam("id") int id,
+                               @RequestParam(value = "quizId") int quizId) throws ServiceException {
+        QuizSet quizSet = quizSetService.get(quizId);
         Question question = questionService.get(id);
+        quizSet.getQuestions().remove(question);
+        quizSetService.update(quizSet);
         questionService.delete(question);
     }
 
@@ -48,39 +55,45 @@ public class QuestionController {
                           @RequestParam(value = "questionType") String questionType,
                           @RequestParam(value = "questionImage") String questionImage,
                           HttpServletRequest servletRequest) throws ServiceException {
-        Question question = new Question(questionString, QuestionType.valueOf(questionType), weight);
+        Question question;
         QuizSet quizSet = quizSetService.get(quizId);
-        question.setQuizSet(quizSet);
-
         String newImg = "";
         if (questionImage.length() != 0) {
-            question.setPicture((String) servletRequest.getSession().getAttribute("image"));
             newImg = " image";
         }
-
-//        if (id == 0) {
-//            questionService.insert(question);
-//        } else {
-//            question.setId(id);
-//            questionService.update(question);
-//        }
-        quizSet.getQuestions().add(question);
+        if (id == 0) {
+            question = new Question(questionString, QuestionType.valueOf(questionType), weight);
+            question.setQuizSet(quizSet);
+            quizSet.getQuestions().add(question);
+        } else {
+            question = questionService.get(id);
+            question.setQuestion(questionString);
+            question.setWeight(weight);
+            question.setQuizSet(quizSet);
+            question.setQuestionType(QuestionType.valueOf(questionType));
+            question.setPicture((String) servletRequest.getSession().getAttribute("image"));
+            questionService.update(question);
+        }
         quizSetService.update(quizSet);
-
-//        quizSetService.linkQuestionToQuizSet(quizSet, question);
-        return "Saved " + question + " " + weight + " " + questionType + " " + newImg;
+        return "Saved " + question.getQuestion() + " " + question.getWeight() + " " + question.getQuestionType() + " " + newImg;
     }
 
     @ResponseBody
     @RequestMapping(value = "/questionInfo", method = RequestMethod.POST)
-    public Question getQuestionInfo(@RequestParam("id") int id) {
-        return questionService.get(id);
+    public QuestionDTO getQuestionInfo(@RequestParam("id") int id) {
+        Question question = questionService.get(id);
+        return new QuestionDTO(question.getId(), question.getQuestion(), question.getQuestionType(),
+                question.getWeight(), question.getPicture());
     }
 
     @ResponseBody
     @RequestMapping(value = "/quizSetList", method = RequestMethod.POST)
-    public List<QuizSet> getQuizSetList() {
-        return quizSetService.getAll();
+    public List<QuizSetDTO> getQuizSetList() {
+        List<QuizSetDTO> dtoList = new ArrayList<>();
+        for (QuizSet quizSet : quizSetService.getAll()) {
+            dtoList.add(new QuizSetDTO(quizSet.getId(), quizSet.getName()));
+        }
+        return dtoList;
     }
 
     @ResponseBody

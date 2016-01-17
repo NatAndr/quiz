@@ -1,6 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Nat on 30.10.2015.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "result")
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class Result extends BaseEntity {
+public class Result extends BaseEntity implements Serializable{
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="student_id", nullable = false)

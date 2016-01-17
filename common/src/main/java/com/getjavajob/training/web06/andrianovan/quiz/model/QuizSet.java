@@ -14,7 +14,7 @@ public class QuizSet extends BaseEntity {
     @Column(name = "quiz_name", nullable = false)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id")
     private List<Question> questions;
 

@@ -28,7 +28,7 @@
             <c:if test="${result<questionsNumber}">
                 <div class="alert alert-danger" role="alert">Quiz is not passed.</div>
             </c:if>
-            <a href='<c:url value="/repeat"/>'>Try again.</a>
+            <a href='<c:url value="/repeat"/>'>Try again</a>
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.*;
 import com.getjavajob.training.web06.andrianovan.quiz.service.*;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,19 +30,16 @@ public class QuizzesController {
     @Autowired
     private QuizStartService quizStartService;
     @Autowired
-    private GeneratedQuestionsService genQuestionsService;
-    @Autowired
     private StudentService studentService;
     @Autowired
     private AnswerService answerService;
     @Autowired
     private ResultService resultService;
 
-    private QuizSet quizSet;
-    private GeneratedQuestions generatedQuestions;
-    private QuizStart quizStart;
-    private int counter;
-    private Student student;
+    @Value("${quiz.time}")
+    private int time;
+    @Value("${quiz.questionsNumber}")
+    private int questionsNumber;
 
     @RequestMapping(value = "/search")
     public ModelAndView showQuizzesSearch() {
@@ -69,7 +67,7 @@ public class QuizzesController {
         ModelAndView modelAndView = new ModelAndView("quizInfo");
         QuizSet quizSet = quizSetService.get(id);
         modelAndView.addObject("quiz", quizSet);
-        modelAndView.addObject("questionsNumber", quizStartService.getQuestionsNumberProperty());
+        modelAndView.addObject("questionsNumber", this.questionsNumber);
         return modelAndView;
     }
 
@@ -77,28 +75,30 @@ public class QuizzesController {
     public ModelAndView startQuiz(@RequestParam("id") int id,
                                   HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView("quizContainer");
-        this.quizSet = quizSetService.get(id);
+        QuizSet quizSet = quizSetService.get(id);
+        QuizStart quizStart;
         try {
             quizStart = new QuizStart(quizSet);
-//            generatedQuestions = quizStartService.generateQuestions(quizStart);
+            quizStartService.generateQuestions(quizStart);
             quizStartService.insert(quizStart);
-//            generatedQuestions = genQuestionsService.generateQuestions(quizStart);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
         HttpSession session = req.getSession();
-        session.setAttribute("counter", counter);
+        session.setAttribute("counter", 0);
         session.setAttribute("quizStart", quizStart);
-        session.setAttribute("generatedQuestions", generatedQuestions.getQuestions());
-        session.setAttribute("questionsNumber", generatedQuestions.getQuestions().size());
-        session.setAttribute("quizSet", quizSet);
+        session.setAttribute("questionsNumber", quizStart.getGeneratedQuestions().size());
+        session.setAttribute("quizSetName", quizStart.getQuizSet().getName());
+        modelAndView.addObject("time", this.time);
         return modelAndView;
     }
 
     @RequestMapping(value="/showQuestion")
     public String showQuestion(ModelMap model, HttpServletRequest req) {
-        Question question = generatedQuestions.getQuestions().get(counter);
-        model.addAttribute("question", question);
+        HttpSession session = req.getSession();
+        int counter = (int) session.getAttribute("counter");
+        QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
+        model.addAttribute("question", quizStart.getGeneratedQuestions().get(counter));
         return "quizRunPart";
     }
 
@@ -109,26 +109,23 @@ public class QuizzesController {
         Student student = studentService.get(STUDENT_ID);
         HttpSession session = req.getSession();
         QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
-        this.counter = (int) session.getAttribute("counter") + 1;
+        int counter = (int) session.getAttribute("counter") + 1;
         saveResult(inputAnswer, answers, student, quizStart);
 
-        if (this.counter == session.getAttribute("questionsNumber")) {
+        if (counter == session.getAttribute("questionsNumber")) {
             try {
-                session.setAttribute("result", resultService.calculateQuizResult(student, quizStart));
+                session.setAttribute("result", String.valueOf(resultService.calculateQuizResult(student, quizStart)));
             } catch (ServiceException e) {
                 throw new RuntimeException("Cannot get result " + student + " " + quizStart + " " + e.getLocalizedMessage());
             }
             return "quizResult";
         }
-        List<Question> generatedQuestions = (List<Question>) session.getAttribute("generatedQuestions");
         session.setAttribute("counter", counter);
-        model.addAttribute("question", generatedQuestions.get(counter));
+        model.addAttribute("question", quizStart.getGeneratedQuestions().get(counter));
         return "quizRunPart";
     }
 
     private void saveResult(String inputAnswer, String[] results, Student student, QuizStart quizStart) {
-//        String inputAnswer = req.getParameter("inputAnswer");
-//        String[] results = req.getParameterValues("answer");
         if (Objects.equals(inputAnswer, "")) {
             inputAnswer = null;
         }
@@ -142,6 +139,11 @@ public class QuizzesController {
                         + e.getLocalizedMessage());
             }
         }
+    }
+
+    @RequestMapping(value = "/result")
+    public ModelAndView showResult() {
+        return new ModelAndView("quizResult");
     }
 
     @RequestMapping(value = "/repeat")

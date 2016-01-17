@@ -11,6 +11,7 @@
     <?xml version="1.0" encoding="UTF-8" ?>
     <!DOCTYPE html>
     <%@include file="header.jsp" %>
+
     <style type="text/css">
         .bs-example {
             margin: 20px;
@@ -45,7 +46,7 @@
                                data-quizzes="${quizzes}">
                                 <span class="glyphicon glyphicon-edit"></span></a>
                             &nbsp;&nbsp;
-                            <a href="#" data-nameid="${question.id}" data-name="${question.question}"
+                            <a href="#" data-nameid="${question.id}" data-name="${question.question}" data-quiz="${quizSet.id}"
                                data-toggle="modal" data-target="#modalRemove3" class="triggerRemove">
                                 <span class="glyphicon glyphicon-remove"></span></a>
 
@@ -158,24 +159,25 @@
     </div>
 </div>
 <!-- Modal Remove -->
-
 <script type="text/javascript">
     var questionId = 0;
     var questionName;
     var questionImage = "";
     var blankImageURL = '<img src="../../resources/images/blank.png">';
+    var quizId;
 
     $('#modalRemove3').on('show.bs.modal', function (e) {
         e.preventDefault();
         questionName = $(e.relatedTarget).data('name');
         questionId = $(e.relatedTarget).data('nameid');
+        quizId = $(e.relatedTarget).data('quiz');
         $(this).find('.myval').text('Do you really want to delete ' + questionName + '?');
     });
     $('#modalRemove3').find('.saveBtn').on('click', function () {
         $.ajax({
             type: "POST",
             url: '<c:url value="/questionDelete" />',
-            data: {id: questionId},
+            data: {id: questionId, quizId: quizId},
             success: function () {
                 showAlert($('#modalRemove3'), questionName + ' was deleted', 'success');
             },
@@ -303,13 +305,13 @@
 
     function createSelectQuizSet(values, divName) {
         var select = $('<select name="optionsQuizSet" class="form-control optionsQuizSet"></select>');
-        $("#" + divName).html("");
-        $.each(values, function (i, obj) {
-            var option = $('<option></option>');
-            option.attr('value', obj.id);
-            option.text(obj.name);
-            select.append(option);
-        });
+            $("#" + divName).html("");
+            $.each(values, function (i, obj) {
+                var option = $('<option></option>');
+                option.attr('value', obj.id);
+                option.text(obj.name);
+                select.append(option);
+            });
         $("#" + divName).append(select);
     }
 

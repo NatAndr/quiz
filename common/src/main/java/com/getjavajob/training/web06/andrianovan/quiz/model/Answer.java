@@ -1,8 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Nat on 30.10.2015.
@@ -16,6 +14,10 @@ public class Answer extends BaseEntity {
 
     @Column(name = "is_correct", columnDefinition = "INTEGER(1)")
     private boolean isCorrect;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
 
     public Answer() {
     }
@@ -43,6 +45,14 @@ public class Answer extends BaseEntity {
 
     public void setIsCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     @Override

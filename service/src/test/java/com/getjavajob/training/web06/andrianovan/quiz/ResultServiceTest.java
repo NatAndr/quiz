@@ -107,7 +107,7 @@ public class ResultServiceTest {
 
         when(this.resultDao.getAllAnswersByStudentAndQuestionAndQuizStart(any(Student.class), any(Question.class),
                 any(QuizStart.class))).thenReturn(Collections.EMPTY_LIST);
-        when(this.answerDao.getCorrectAnswerByQuestion(any(Question.class))).thenReturn(Arrays.asList(answer));
+//        when(this.answerDao.getCorrectAnswerByQuestion(any(Question.class))).thenReturn(Arrays.asList(answer));
 
         int actual = this.resultService.calculateQuizResult(student, quizStart);
         assertEquals(expected, actual);

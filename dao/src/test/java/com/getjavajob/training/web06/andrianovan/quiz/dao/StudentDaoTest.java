@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class StudentDaoTest {
 
     private static final int ROWS_NUMBER = 5;
@@ -72,13 +73,6 @@ public class StudentDaoTest {
         this.dao.delete(student);
         Student student2 = this.dao.get(1);
         assertNull(student2);
-    }
-
-    @Test
-    public void testGetStudentsByStudyGroup() throws DaoException {
-        List<Student> actual = dao.getStudentsByStudyGroup(this.studyGroupDao.get(2));
-        List<Student> expected = Arrays.asList(dao.get(3), dao.get(4));
-        assertEquals(expected, actual);
     }
 
 }

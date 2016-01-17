@@ -26,7 +26,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 
     @Autowired
     protected EntityManager entityManager;
-//    @Autowired
+    //    @Autowired
 //    protected EntityManagerFactory entityManagerFactory;
 //
     private DataSource dataSource;
@@ -120,13 +120,12 @@ public abstract class AbstractDao<T extends BaseEntity> implements CrudDao<T> {
 
     @Override
     public void insert(final T entity) throws DaoException {
-        System.out.println("insert " + entity);
-            entityManager.merge(entity);
+        entityManager.persist(entity);
+        entityManager.flush();
     }
 
     @Override
     public void update(T entity) throws DaoException {
-        System.out.println("update " + entity);
         entityManager.merge(entity);
     }
 

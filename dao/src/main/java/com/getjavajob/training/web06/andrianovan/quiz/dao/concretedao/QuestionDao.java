@@ -2,7 +2,10 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
-import com.getjavajob.training.web06.andrianovan.quiz.model.*;
+import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
+import com.getjavajob.training.web06.andrianovan.quiz.model.Question;
+import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
+import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -86,29 +89,8 @@ public class QuestionDao extends AbstractDao<Question> {
         return entityManager.createQuery(select).getResultList();
     }
 
-//    @Override
-//    public void update(Question entity) throws DaoException {
-//        jdbcTemplate.update(getUpdateByIdStatement(), entity.getQuestion(), entity.getQuestionType().ordinal() + 1,
-//                entity.getWeight(), entity.getPicture(), Long.valueOf(entity.getId()));
-//    }
-
     public List<Question> getQuestionsByQuizSet(QuizSet quizSet) throws DaoException {
         return super.doExecuteQueryWithParams(SELECT_FROM_QUESTION_BY_QUIZ_ID, new Integer[]{quizSet.getId()});
-    }
-
-    public void updateQuestionsQuizId(Question entity, QuizSet quiz) throws DaoException {
-//        jdbcTemplate.update(UPDATE_QUIZ_ID, quiz.getId(), entity.getId());
-
-//        entityManager.createQuery(
-//                "UPDATE QuizSet q SET q.")
-//                .setParameter(1, type)
-//                .setParameter(2, storeIds)
-//                .executeUpdate();
-    }
-
-    public List<Question> getQuestionsFromQuizGeneratedQuestionsByQuizStart(QuizStart quizStart) throws DaoException {
-        return super.doExecuteQueryWithParams(SELECT_FROM_QUIZ_GENERATED_QUESTIONS_BY_QUIZ_START_ID,
-                new Integer[]{quizStart.getId()});
     }
 
 }

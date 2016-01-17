@@ -23,8 +23,6 @@ public abstract class DaoFactory {
 
     public abstract QuizStartDao getQuizStartDao();
 
-    public abstract GeneratedQuestionsDao getQuizGeneratedQuestionsDao();
-
     public static DaoFactory getDaoFactory() {
         String factory = null;
         Properties props = new Properties();

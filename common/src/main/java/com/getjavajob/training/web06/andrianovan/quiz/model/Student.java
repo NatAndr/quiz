@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "student")
 public class Student extends BaseEntity {
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="group_id")
     private StudyGroup studyGroup;
 

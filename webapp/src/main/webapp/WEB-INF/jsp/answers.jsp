@@ -41,11 +41,10 @@
                         <td>
                             <a href="#" data-nameid="${answer.id}" data-toggle="modal" data-target="#modalEdit4"
                                class="triggerEdit" data-action="edit"
-                               data-question="${question.id}"
-                               data-questions="${questions}">
+                               data-question="${question.id}" data-questions="${questions}">
                                 <span class="glyphicon glyphicon-edit"></span></a>
                             &nbsp;&nbsp;
-                            <a href="#" data-nameid="${answer.id}" data-name="${answer.answer}"
+                            <a href="#" data-nameid="${answer.id}" data-name="${answer.answer}" data-question="${question.id}"
                                data-toggle="modal" data-target="#modalRemove4" class="triggerRemove">
                                 <span class="glyphicon glyphicon-remove"></span></a>
 
@@ -90,7 +89,7 @@
 
                     <div class="form-group">
                         <label for="setCorrect" class="control-label">Is correct:</label>
-                        <div id="setCorrect"><input type="checkbox" class="isCorrect" id="isCorrect">&nbsp;yes</div>
+                        <div id="setCorrect"><input type="checkbox" class="isCorrect" id="isCorrect" checked="">&nbsp;yes</div>
                     </div>
 
                     <div class="modal-footer">
@@ -104,10 +103,30 @@
 </div>
 <!-- Modal Edit-->
 
+<!-- Modal Remove -->
+<div id="modalRemove4" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="myval"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger saveBtn" data-dismiss="modal">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Remove -->
 
 <script type="text/javascript">
     var answerId = 0;
     var answerName;
+    var questionId;
 
     $('#modalEdit4').on('show.bs.modal', function (e) {
         questionId = $(e.relatedTarget).data('question');
@@ -139,13 +158,14 @@
         e.preventDefault();
         answerName = $(e.relatedTarget).data('name');
         answerId = $(e.relatedTarget).data('nameid');
+        questionId = $(e.relatedTarget).data('question');
         $(this).find('.myval').text('Do you really want to delete ' + answerName + '?');
     });
     $('#modalRemove4').find('.saveBtn').on('click', function () {
         $.ajax({
             type: "POST",
             url: '<c:url value="/answerDelete" />',
-            data: {id: answerId},
+            data: {id: answerId, questionId: questionId},
             success: function () {
                 showAlert($('#modalRemove4'), answerName + ' was deleted', 'success');
             },
@@ -181,8 +201,10 @@
             data: {id: id},
             success: function (obj) {
                 $('#answer').val(obj.answer);
-                if (obj.isCorrect) {
+                if (obj.correct == true) {
                     $('#setCorrect').html('<input type="checkbox" class="isCorrect" id="isCorrect" checked>&nbsp;yes');
+                } else {
+                    $('#setCorrect').html('<input type="checkbox" class="isCorrect" id="isCorrect">&nbsp;yes');
                 }
             },
             error: function (e) {

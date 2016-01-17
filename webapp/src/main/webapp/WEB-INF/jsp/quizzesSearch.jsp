@@ -23,7 +23,7 @@
     <form class="form-search" action="${pageContext.request.contextPath}/quizzesSearch" method="get">
         <div class="input-append">
             <label>
-                <input type="text" name="searchParams" class="span2 search-query">
+                <input type="text" name="searchParams" class="span2 search-query" placeholder="Quiz">
             </label>
             <button type="submit" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-search"></span> Search

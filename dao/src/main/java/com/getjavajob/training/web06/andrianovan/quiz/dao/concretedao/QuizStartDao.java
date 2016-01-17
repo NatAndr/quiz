@@ -79,7 +79,6 @@ public class QuizStartDao extends AbstractDao<QuizStart> {
     @Override
     public QuizStart get(int id) {
         return entityManager.find(QuizStart.class, id);
-
     }
 
     @Override

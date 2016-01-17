@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:quiz-context-dao.xml", "classpath:quiz-context-dao-overrides.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class AnswerDaoTest {
 
     private static final int ROWS_NUMBER = 46;
@@ -47,9 +48,9 @@ public class AnswerDaoTest {
     }
 
     @Test
+
     public void testInsert() throws DaoException {
         Answer answer = new Answer();
-        answer.setId(1);
         answer.setAnswer(INSERTED_VALUE);
         answer.setIsCorrect(false);
         this.answerDao.insert(answer);
@@ -73,20 +74,5 @@ public class AnswerDaoTest {
         this.answerDao.delete(answer);
         Answer newAnswer = this.answerDao.get(1);
         assertNull(newAnswer);
-    }
-
-    @Test
-    public void testGetCorrectAnswerByQuestion() throws DaoException {
-        List<Answer> actual = answerDao.getCorrectAnswerByQuestion(this.questionDao.get(1));
-        List<Answer> expected = Arrays.asList(answerDao.get(1), answerDao.get(3), answerDao.get(23));
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testGetAnswersByQuestion() throws DaoException {
-        List<Answer> actual = answerDao.getAnswersByQuestion(this.questionDao.get(1));
-        List<Answer> expected = Arrays.asList(answerDao.get(1), answerDao.get(2), answerDao.get(3),
-                answerDao.get(23), answerDao.get(24));
-        assertEquals(expected, actual);
     }
 }

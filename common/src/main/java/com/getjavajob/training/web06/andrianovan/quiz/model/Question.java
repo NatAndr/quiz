@@ -1,6 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,14 +20,14 @@ public class Question extends BaseEntity {
 
     private int weight;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
 
     @Column(name = "image")
     private String picture;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "quiz_id")
     private QuizSet quizSet;
 
@@ -124,5 +125,16 @@ public class Question extends BaseEntity {
     @Override
     public int hashCode() {
         return question.hashCode();
+    }
+
+    public List<Answer> getCorrectAnswers(){
+        List<Answer> correctAnswers = this.getAnswers();
+        Iterator<Answer> iterator = correctAnswers.iterator();
+        while (iterator.hasNext()) {
+            if (!iterator.next().getIsCorrect()) {
+                iterator.remove();
+            }
+        }
+        return correctAnswers;
     }
 }

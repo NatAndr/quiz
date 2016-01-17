@@ -82,19 +82,19 @@ CREATE TABLE IF NOT EXISTS `question` (
 DELETE FROM `question`;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
 INSERT INTO `question` (`id`, `quiz_id`, `question`, type, `weight`) VALUES
-  (1, 1, 'Which four options describe the correct default values for array elements of the types indicated?', 2, 1),
-  (2, 1, 'Which one of these lists contains only Java programming language keywords?', 1, 1),
-  (3, 1, 'Which will legally declare, construct, and initialize an array?', 1, 1),
-  (4, 1, 'Which is a reserved word in the Java programming language?', 1, 1),
-  (5, 1, 'Which is a valid keyword in java?', 1, 1),
-  (6, 1, 'Which three are legal array declarations?', 2, 1),
-  (7, 1, 'public interface Foo \n{ \n    int k = 4; /* Line 3 */\n}\nWhich three piece of codes are equivalent to line 3?', 2, 1),
-  (8, 1, 'Which one of the following will declare an array and initialize it with five numbers?', 1, 1),
-  (9, 1, 'Which three are valid declarations of a char?', 2, 1),
-  (10, 1, 'Which is the valid declarations within an interface definition?', 1, 1),
-  (11, 2, 'Test question', 1, 1),
-  (13, 2, 'Новый вопрос', 2, 1),
-  (14, 1, 'Who initiated the Java language project?', 3, 1);
+  (1, 1, 'Which four options describe the correct default values for array elements of the types indicated?', 1, 1),
+  (2, 1, 'Which one of these lists contains only Java programming language keywords?', 0, 1),
+  (3, 1, 'Which will legally declare, construct, and initialize an array?', 0, 1),
+  (4, 1, 'Which is a reserved word in the Java programming language?', 0, 1),
+  (5, 1, 'Which is a valid keyword in java?', 0, 1),
+  (6, 1, 'Which three are legal array declarations?', 1, 1),
+  (7, 1, 'public interface Foo \n{ \n    int k = 4; /* Line 3 */\n}\nWhich three piece of codes are equivalent to line 3?', 1, 1),
+  (8, 1, 'Which one of the following will declare an array and initialize it with five numbers?', 0, 1),
+  (9, 1, 'Which three are valid declarations of a char?', 1, 1),
+  (10, 1, 'Which is the valid declarations within an interface definition?', 0, 1),
+  (11, 2, 'Test question', 0, 1),
+  (13, 2, 'Новый вопрос', 1, 1),
+  (14, 1, 'Who initiated the Java language project?', 2, 1);
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 
 

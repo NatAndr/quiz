@@ -78,21 +78,8 @@ public class AnswerDao extends AbstractDao<Answer> {
         return entityManager.createQuery(select).getResultList();
     }
 
-    @Override
-    public void update(Answer entity) throws DaoException {
-        jdbcTemplate.update(getUpdateByIdStatement(), entity.getAnswer(), entity.getIsCorrect(), Long.valueOf(entity.getId()));
-    }
-
-    public void updateQuestionId(Answer entity, Question question) throws DaoException {
-        super.jdbcTemplate.update(UPDATE_QUESTION_ID, question.getId(), entity.getId());
-    }
-
     public List<Answer> getAnswersByQuestion(Question question) throws DaoException {
         return super.doExecuteQueryWithParams(SELECT_FROM_ANSWER_BY_QUESTION_ID, new Integer[]{question.getId()});
-    }
-
-    public List<Answer> getCorrectAnswerByQuestion(Question question) throws DaoException {
-        return super.doExecuteQueryWithParams(SELECT_CORRECT_ANSWERS_BY_QUESTION_ID, new Integer[]{question.getId()});
     }
 
 }

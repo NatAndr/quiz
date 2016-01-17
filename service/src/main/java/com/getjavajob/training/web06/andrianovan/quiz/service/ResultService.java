@@ -18,10 +18,6 @@ import java.util.List;
 public class ResultService extends AbstractService<Result> {
 
     @Autowired
-    private AnswerService answerService;
-    @Autowired
-    private QuizSetService quizSetService;
-    @Autowired
     public ResultService(ResultDao dao) {
         super(dao);
     }
@@ -40,50 +36,45 @@ public class ResultService extends AbstractService<Result> {
 
     public int calculateQuizResult(Student student, QuizStart quizStart) throws ServiceException {
         int result = 0;
-//        QuizSet quizSet = quizSetService.get(quizStart.getQuizSet().getId());
         QuizSet quizSet = quizStart.getQuizSet();
 
         for (Question question : quizSet.getQuestions()) {
+            List<Result> results = getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
             switch (question.getQuestionType()) {
                 case SINGLE:
                 case MULTIPLE:
-                    result += getSingleOrMultipleQuestionResult(student, quizStart, answerService, question);
+                    result += getSingleOrMultipleQuestionResult(results, question);
                     break;
                 case INPUT:
-                    result += getInputQuestionResult(student, quizStart, answerService, question);
+                    result += getInputQuestionResult(results, question);
                     break;
             }
         }
         return result;
     }
 
-    protected int getInputQuestionResult(Student student, QuizStart quizStart,
-                                         AnswerService answerService, Question question) throws ServiceException {
-        String correctAnswer = answerService.getCorrectAnswerByQuestion(question).get(0).getAnswer();
-
-        List<Result> results = getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
+    protected int getInputQuestionResult(List<Result> results, Question question) throws ServiceException {
+        String correctAnswer = question.getCorrectAnswers().get(0).getAnswer();
         if (results.isEmpty()) {
             return 0;
         }
         String actualAnswer = results.get(0).getInputAnswer().trim();
-        if (correctAnswer.equalsIgnoreCase(actualAnswer)) {
+        if (correctAnswer.equalsIgnoreCase(actualAnswer.trim())) {
             return question.getWeight();
         }
         return 0;
     }
 
-    protected int getSingleOrMultipleQuestionResult(Student student, QuizStart quizStart,
-                                                    AnswerService answerService, Question question) throws ServiceException {
+    protected int getSingleOrMultipleQuestionResult(List<Result> results, Question question) throws ServiceException {
         List<String> actualAnswers = new ArrayList<>();
-        List<Result> studentResults = this.getAllAnswersByStudentAndQuestionAndQuizStart(student, question, quizStart);
-        if (studentResults.isEmpty()) {
+        if (results.isEmpty()) {
             return 0;
         }
-        for (Result result : studentResults) {
+        for (Result result : results) {
             actualAnswers.add(result.getAnswer().getAnswer());
         }
         List<String> correctAnswers = new ArrayList<>();
-        List<Answer> correctAnswerByQuestion = answerService.getCorrectAnswerByQuestion(question);
+        List<Answer> correctAnswerByQuestion = question.getCorrectAnswers();
         for (Answer answer : correctAnswerByQuestion) {
             correctAnswers.add(answer.getAnswer());
         }
