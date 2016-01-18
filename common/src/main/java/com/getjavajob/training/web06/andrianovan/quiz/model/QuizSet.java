@@ -8,7 +8,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "quiz_header")
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class QuizSet extends BaseEntity {
 
     @Column(name = "quiz_name", nullable = false)

@@ -1,5 +1,7 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import javax.persistence.*;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +11,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "question")
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Question extends BaseEntity {
     @Column(nullable = false)
     private String question;
@@ -29,6 +30,7 @@ public class Question extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
+    @XStreamOmitField
     private QuizSet quizSet;
 
     public Question() {

@@ -1,9 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.service.output;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 /**
  * Created by Nat on 13.11.2015.
@@ -30,6 +27,14 @@ public class Output {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void stringToFile(File resultFile, String str) {
+        try (PrintStream out = new PrintStream(new FileOutputStream(resultFile))) {
+            out.print(str);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

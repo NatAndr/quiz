@@ -1,12 +1,28 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model.dto;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
+
 /**
  * Created by user on 16.01.2016.
  */
+@XStreamAlias("answer")
 public class AnswerDTO {
+    @XStreamOmitField
     private int id;
+    @XStreamAlias("text")
     private String answer;
+    @XStreamAsAttribute
+    @XStreamConverter(value = BooleanConverter.class,
+            booleans = { true },
+            strings = { "yes", "no" })
     private boolean isCorrect;
+
+    public AnswerDTO() {
+    }
 
     public AnswerDTO(int id, String answer, boolean isCorrect) {
         this.id = id;

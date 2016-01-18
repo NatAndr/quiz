@@ -106,5 +106,4 @@ public class QuestionController {
         servletRequest.getSession().setAttribute("image", base64DataString);
         return base64DataString;
     }
-
 }

@@ -1,16 +1,32 @@
 package com.getjavajob.training.web06.andrianovan.quiz.model.dto;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuestionType;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import java.util.List;
 
 /**
  * Created by user on 16.01.2016.
  */
+@XStreamAlias("question")
 public class QuestionDTO {
+    @XStreamOmitField
     private int id;
+    @XStreamAlias("text")
     private String question;
+    @XStreamAsAttribute
     private QuestionType questionType;
+    @XStreamAsAttribute
     private int weight;
+    @XStreamOmitField
     private String picture;
+    @XStreamAlias("answers")
+    private List<AnswerDTO> answerDTOs;
+
+    public QuestionDTO() {
+    }
 
     public QuestionDTO(int id, String question, QuestionType questionType, int weight, String picture) {
         this.id = id;
@@ -58,5 +74,13 @@ public class QuestionDTO {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public List<AnswerDTO> getAnswerDTOs() {
+        return answerDTOs;
+    }
+
+    public void setAnswerDTOs(List<AnswerDTO> answerDTOs) {
+        this.answerDTOs = answerDTOs;
     }
 }
