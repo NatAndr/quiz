@@ -17,7 +17,7 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-    private static final Set<String> excludedURLs = new HashSet<>(Arrays.asList("/", "/", "/login", "/loginCheck", "/search", "/quizzesSearch", "/quizInfo"));
+    private static final Set<String> excludedURLs = new HashSet<>(Arrays.asList("/", "/login", "/loginCheck", "/search", "/quizzesSearch", "/quizInfo"));
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
@@ -39,7 +39,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 if (!requestedURI.toString().equalsIgnoreCase("login")) {
                     session.setAttribute("requestedURI", request.getRequestURI());
                 }
-                System.out.println(request.getRequestURL());
                 response.sendRedirect("/login");
                 return false;
             }

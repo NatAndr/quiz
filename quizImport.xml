@@ -5,67 +5,67 @@
       <question questionType="SINGLE" weight="1">
         <text>Suppose that you would like to create an instance of a new Map that has an iteration order that is the same as the iteration order of an existing instance of a Map. Which concrete implementation of the Map interface should be used for the new instance?</text>
         <answers>
-          <answer isCorrect="no">
+          <answer isCorrect="0">
             <text>TreeMap</text>
           </answer>
-          <answer isCorrect="no">
+          <answer isCorrect="0">
             <text>HashMap</text>
           </answer>
-		  <answer isCorrect="yes">
+		  <answer isCorrect="1">
             <text>LinkedHashMap</text>
           </answer>
-		  <answer isCorrect="no">
+		  <answer isCorrect="0">
             <text>The answer depends on the implementation of the existing instance.</text>
           </answer>
         </answers>
       </question>
       <question questionType="SINGLE" weight="1">
-        <text>Which class does not override the equals() and hashCode() methods, inheriting them directly from class Object?</text>
+        <text>Which class does 0t override the equals() and hashCode() methods, inheriting them directly from class Object?</text>
         <answers>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.lang.String</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.lang.Double</text>
 			</answer>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.lang.StringBuffer</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.lang.Character</text>
 			</answer>
 		</answers>
       </question>	  
       <question questionType="SINGLE" weight="1">
-        <text>Which collection class allows you to grow or shrink its size and provides indexed access to its elements, but whose methods are not synchronized?</text>
+        <text>Which collection class allows you to grow or shrink its size and provides indexed access to its elements, but whose methods are 0t synchronized?</text>
         <answers>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.HashSet</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.LinkedHashSet</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.List</text>
 			</answer>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.ArrayList</text>
 			</answer>
 		</answers>
       </question>
 	  <question questionType="SINGLE" weight="1">
-        <text>You need to store elements in a collection that guarantees that no duplicates are stored and all elements can be accessed in natural order. Which interface provides that capability?</text>
+        <text>You need to store elements in a collection that guarantees that 0 duplicates are stored and all elements can be accessed in natural order. Which interface provides that capability?</text>
         <answers>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.Map</text>
 			</answer>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.Set</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.List</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.Collection</text>
 			</answer>
 		</answers>
@@ -73,16 +73,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>Which interface does java.util.Hashtable implement?</text>
         <answers>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.Map</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.List</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.HashTable</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.Collection</text>
 			</answer>
 		</answers>
@@ -90,16 +90,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>Which interface provides the capability to store objects using a key-value pair?</text>
         <answers>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.Map</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.Set</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.List</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.Collection</text>
 			</answer>
 		</answers>
@@ -107,16 +107,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>Which collection class allows you to associate its elements with key values, and allows you to retrieve objects in FIFO (first-in, first-out) sequence?</text>
         <answers>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.ArrayList</text>
 			</answer>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.LinkedHashMap</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.HashMap</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.TreeMap</text>
 			</answer>
 		</answers>
@@ -124,16 +124,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>Which collection class allows you to access its elements by associating a key with an element's value, and provides synchronization?</text>
         <answers>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.SortedMap</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.TreeMap</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>java.util.TreeSet</text>
 			</answer>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>java.util.Hashtable</text>
 			</answer>
 		</answers>
@@ -141,16 +141,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>Which is valid declaration of a float?</text>
         <answers>
-			<answer isCorrect="yes">
+			<answer isCorrect="1">
 				<text>float f = 1F;</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>float f = 1.0;</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>float f = "1";</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>float f = 1.0d;</text>
 			</answer>
 		</answers>
@@ -158,16 +158,16 @@
 	  <question questionType="SINGLE" weight="1">
         <text>What line of code should replace the missing statement to make this program compile?</text>
         <answers>
-			<answer isCorrect="yes">
-				<text>No statement required.</text>
+			<answer isCorrect="1">
+				<text>0 statement required.</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>import java.io.*;</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>include java.io.*;</text>
 			</answer>
-			<answer isCorrect="no">
+			<answer isCorrect="0">
 				<text>import java.io.PrintWriter;</text>
 			</answer>
 		</answers>

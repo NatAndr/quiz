@@ -44,7 +44,7 @@
         <spring-orm.version>4.2.3.RELEASE</spring-orm.version>
         <hibernate-core.version>5.0.5.Final</hibernate-core.version>
         <xstream.version>1.4.8</xstream.version>
-        <dozer.version>5.5.1</dozer.version>
+        <log4j2.version>2.5</log4j2.version>
     </properties>
 
     <build>

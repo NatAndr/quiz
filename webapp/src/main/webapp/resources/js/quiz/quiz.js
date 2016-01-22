@@ -21,7 +21,7 @@ function showAlert(modalToHide, message, alertType) {
     $('#alert_placeholder').append('<div id="alertdiv" class="alert alert-' + alertType + '"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
     setTimeout(function() {
         $("#alertdiv").remove();
-    }, 5000);
+    }, 4000);
     modalToHide.on('hide.bs.modal', updateTab());
 }
 

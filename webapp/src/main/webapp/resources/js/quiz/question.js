@@ -4,7 +4,7 @@
 var questionId = 0;
 var questionName;
 var questionImage = "";
-var blankImageURL = '<img src="../../resources/images/blank.png">';
+var blankImageURL = '<img src="../../images/blank.png">';
 
 $('#modalRemove3').on('show.bs.modal', function (e) {
     e.preventDefault();
@@ -133,7 +133,7 @@ function getQuestionInfo(id) {
             if (obj.picture != null) {
                 $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
             } else {
-                $('#imgContainer').html('<img src="../../resources/images/blank.png"/>');
+                $('#imgContainer').html('<img src="../../images/blank.png"/>');
             }
         },
         error: function (e) {

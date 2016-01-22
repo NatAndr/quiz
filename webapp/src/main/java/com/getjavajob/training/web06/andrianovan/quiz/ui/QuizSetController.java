@@ -5,7 +5,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.dto.Converter;
 import com.getjavajob.training.web06.andrianovan.quiz.model.dto.QuizSetDTOList;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuizSetService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
-import com.getjavajob.training.web06.andrianovan.quiz.service.output.Output;
+import com.getjavajob.training.web06.andrianovan.quiz.ui.output.Output;
 import com.getjavajob.training.web06.andrianovan.quiz.ui.xmlserializer.Serializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,33 +60,33 @@ public class QuizSetController {
 
     @ResponseBody
     @RequestMapping(value = "/quizSetToXML", method = RequestMethod.POST)
-    public void quizSetToXML(@RequestParam("checkedQuizzes") String[] checkedQuizzes) {
+    public String quizSetToXML(@RequestParam("checkedQuizzes") String[] checkedQuizzes) {
         Converter converter = new Converter();
         QuizSetDTOList quizSetDTOList = new QuizSetDTOList();
+        StringBuilder sb = new StringBuilder("Exported to XML: ");
         for (int i = 0; i < checkedQuizzes.length; i++) {
-            quizSetDTOList.getQuizSetList().add(converter.quizSetToQuizSetDTO(quizSetService.get(Integer.parseInt(checkedQuizzes[i]))));
+            QuizSet quizSet = quizSetService.get(Integer.parseInt(checkedQuizzes[i]));
+            quizSetDTOList.getQuizSetList().add(converter.quizSetToQuizSetDTO(quizSet));
+            sb.append(quizSet.getName()).append(',').append(' ');
         }
         String xml = new Serializer().toXML(quizSetDTOList);
-        System.out.println(xml);
         new Output().stringToFile(new File(fileName), xml);
+        return sb.deleteCharAt(sb.length() - 2).toString();
     }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/quizSetFromXML", method = RequestMethod.POST)
-//    public void quizSetFromXML(@RequestParam("filename") String filename) throws Exception {
-//        new Serializer().fromXML(filename);
-//    }
 
     @ResponseBody
     @RequestMapping(value = "/quizSetFromXML", method = RequestMethod.POST)
-    public void quizSetFromXML(MultipartHttpServletRequest request) throws Exception {
+    public String quizSetFromXML(MultipartHttpServletRequest request) throws Exception {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         File xmlFile = multipartToFile(file);
+        StringBuilder sb = new StringBuilder("Imported from XML: ");
         List<QuizSet> quizSetList = new Serializer().fromXML(xmlFile);
         for (QuizSet quizSet : quizSetList) {
             quizSetService.insert(quizSet);
+            sb.append(quizSet.getName()).append(',').append(' ');
         }
+        return sb.deleteCharAt(sb.length() - 2).toString();
     }
 
     public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {

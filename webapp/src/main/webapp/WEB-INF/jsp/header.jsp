@@ -15,7 +15,7 @@
 <script src="<c:url value="../../resources/js/bootstrap.min.js" />"></script>
 <%--<script src="<c:url value="../../resources/js/bootstrap-filestyle.min.js" />"></script>--%>
 <script src="<c:url value="../../resources/js/bootstrap.file-input.js" />"></script>
-<script src="<c:url value="../../resources/js/quiz.js" />"></script>
+<script src="<c:url value="../../resources/js/quiz/quiz.js" />"></script>
 <link rel="icon" href="<c:url value="../../resources/images/favicon.ico" />" >
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>

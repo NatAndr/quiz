@@ -105,8 +105,14 @@
         </div>
         <div class="col-lg-8">
             <div class="row">
-                <h3><div id="countdown"></div></h3>
+                <h3>
+                    <div id="countdown"></div>
+                </h3>
                 <div id="quiz"></div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
                 <div id="nxt" style="display: none;"><a class="btn btn-primary nextBtn">Next</a></div>
             </div>
         </div>

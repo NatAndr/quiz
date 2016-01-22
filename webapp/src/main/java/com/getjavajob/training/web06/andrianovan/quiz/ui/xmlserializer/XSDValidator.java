@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class XSDValidator {
 
-    public String validate(/*String XMLName, */String XSDName, File xmlFile) throws Exception {
+    public String validate(String XSDName, File xmlFile) throws Exception {
         List<Source> schemas = new ArrayList<>();
         schemas.add(new StreamSource(ClassLoader.getSystemResourceAsStream(XSDName)));
 //        Source source = new StreamSource(ClassLoader.getSystemResourceAsStream(XMLName));

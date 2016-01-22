@@ -110,6 +110,8 @@
 </div>
 <!-- Modal Remove -->
 
+<c:set var="quizSetDelete" value="<c:url value=\"/quizSetDelete\" />" />
+
 <script type="text/javascript">
     var quizId = 0;
     var quizName;
@@ -123,10 +125,10 @@
     $('#modalRemove2').find('.saveBtn').on('click', function () {
         $.ajax({
             type: "POST",
-            url: '<c:url value="/quizSetDelete" />',
+            <%--url: '<c:url value="/quizSetDelete" />',--%>
+            url: ${quizSetDelete},
             data: {id: quizId},
             success: function () {
-//        showResultModal($('#modalRemove2'), quizName + ' was deleted');
                 showAlert($('#modalRemove2'), quizName + ' was deleted', 'success');
             },
             error: function (e) {
@@ -155,7 +157,6 @@
             url: '<c:url value="/quizSetUpdate" />',
             data: "id=" + quizId + "&name=" + quizName,
             success: function (response) {
-//        showResultModal($('#modalEdit2'), response);
                 showAlert($('#modalEdit2'), response, 'success');
             },
             error: function (e) {
@@ -190,7 +191,7 @@
             url: '<c:url value="/quizSetToXML" />',
             data: "&checkedQuizzes=" + checkedQuizzes,
             success: function (response) {
-//                showAlert($('#modalEdit2'), response, 'success');
+                showAlert($('#modalEdit2'), response, 'success');
                 alert('ok');
             },
             error: function (e) {
@@ -221,22 +222,11 @@
     $('input[name=fileXML]').change(function () {
         console.info("input[name=fileXML]" + $(this).val());
 
-        var fileXML = $(this).val().split('\\').pop(); //$.trim($(this).val());
+        var fileXML = $(this).val().split('\\').pop();
         if (!(isXml(fileXML))) {
             alert('Please upload XML file');
             return;
         }
-        <%--$.ajax({--%>
-        <%--url: '<c:url value="/quizSetFromXML"/>',--%>
-        <%--type: "POST",--%>
-        <%--data: {filename: fileXML},--%>
-        <%--success: function () {--%>
-        <%--alert('ok');--%>
-        <%--},--%>
-        <%--error: function (e) {--%>
-        <%--alert('Error: ' + e);--%>
-        <%--}--%>
-        <%--});--%>
         $.ajax({
             url: '<c:url value="/quizSetFromXML"/>',
             type: "POST",
@@ -245,8 +235,8 @@
             dataType: 'text',
             processData: false,
             contentType: false,
-            success: function (data) {
-                alert('ok');
+            success: function (response) {
+                showAlert($('#modalEdit2'), response, 'success');
             },
             error: function (e) {
                 alert('Error: ' + e);

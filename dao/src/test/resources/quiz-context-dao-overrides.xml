@@ -10,10 +10,6 @@
 
     <context:property-placeholder location="classpath:quiz-test.properties"/>
 
-    <!--<jdbc:embedded-database id="db" type="H2">-->
-        <!--<jdbc:script location="classpath:testDB.sql"/>-->
-    <!--</jdbc:embedded-database>-->
-
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${database.driver}"/>
         <property name="url" value="${database.url}"/>

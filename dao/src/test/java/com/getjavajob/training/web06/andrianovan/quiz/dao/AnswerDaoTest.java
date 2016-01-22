@@ -1,7 +1,6 @@
 package com.getjavajob.training.web06.andrianovan.quiz.dao;
 
 import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.AnswerDao;
-import com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao.QuestionDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.Answer;
 import org.junit.Test;
@@ -32,8 +31,6 @@ public class AnswerDaoTest {
     private static final String UPDATED_NEW_VALUE = "grey";
     @Autowired
     private AnswerDao answerDao;
-    @Autowired
-    private QuestionDao questionDao;
 
     @Test
     public void testGetByID() {

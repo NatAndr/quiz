@@ -17,8 +17,8 @@ public class AnswerDTO {
     private String answer;
     @XStreamAsAttribute
     @XStreamConverter(value = BooleanConverter.class,
-            booleans = { true },
-            strings = { "yes", "no" })
+            booleans = {true},
+            strings = {"1", "0"})
     private boolean isCorrect;
 
     public AnswerDTO() {
