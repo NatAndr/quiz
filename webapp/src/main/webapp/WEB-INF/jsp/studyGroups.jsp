@@ -5,19 +5,6 @@
   Time: 15:54
   To change this template use File | Settings | File Templates.
 --%>
-<html>
-<head>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <!DOCTYPE html>
-    <%@include file="header.jsp" %>
-    <style type="text/css">
-        .bs-example {
-            margin: 20px;
-        }
-    </style>
-</head>
-<body>
 <!--data table -->
 <div class="container">
     <div class="row">
@@ -25,7 +12,7 @@
             <thead>
             <tr>
                 <th class="col-md-1">Action</th>
-                <th>Stydy group</th>
+                <th>Study group</th>
             </tr>
             </thead>
             <c:forEach var="studyGroup" items="${studyGroups}">
@@ -100,72 +87,9 @@
 <!-- Modal Remove -->
 
 <script type="text/javascript">
-    var grId = 0;
-    var grName;
-
-    $('#modalRemove1').on('show.bs.modal', function (e) {
-        e.preventDefault();
-        grName = $(e.relatedTarget).data('name');
-        grId = $(e.relatedTarget).data('nameid');
-        $(this).find('.myval').text('Do you really want to delete ' + grName + '?');
-    });
-    $('#modalRemove1').find('.saveBtn').on('click', function () {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studyGroupDelete" />',
-            data: {id: grId},
-            success: function () {
-//                showResultModal($('#modalRemove1'), grName + ' was deleted');
-                showAlert($('#modalRemove1'), grName + ' was deleted', 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    $('#modalEdit1').on('show.bs.modal', function (e) {
-        grId = $(e.relatedTarget).data('nameid');
-        var act = $(e.relatedTarget).data('action');
-        if (act != 'edit') {
-            resetEdit($('#modalEdit1'));
-            grId = 0;
-        } else {
-            getStudyGroupInfo(grId);
-        }
-    });
-
-    <!--Add or update group -->
-    $('#modalEdit1').find('.saveBtn').on('click', function () {
-        var groupName = $('#modalEdit1').find('.name').val();
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studyGroupUpdate" />',
-            data: "id=" + grId + "&name=" + groupName,
-            success: function (response) {
-                showAlert($('#modalEdit1'), response, 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    function getStudyGroupInfo(id) {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studyGroupInfo"/>',
-            data: {id: id},
-            success: function (obj) {
-                $('#modalEdit1').find('.name').val(obj.name);
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    }
-
+    var studyGroupDelete = '<c:url value="/studyGroupDelete"/>';
+    var studyGroupUpdate = '<c:url value="/studyGroupUpdate"/>';
+    var studyGroupInfo = '<c:url value="/studyGroupInfo"/>';
 </script>
-</body>
-</html>
+<script src="<c:url value="../../resources/js/quiz/studyGroups.js" />"></script>
+

@@ -72,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `question` (
   `id`       INT(11)      AUTO_INCREMENT,
   `quiz_id`  INT(11)      DEFAULT NULL,
   `question` VARCHAR(500) DEFAULT NULL,
-  `type` int(11) DEFAULT '1',
-  `weight` int(11) DEFAULT '1',
-  `image` blob,
+  `type`     INT(11)      DEFAULT '1',
+  `weight`   INT(11)      DEFAULT '1',
+  `image`    BLOB,
   PRIMARY KEY (`id`)
 );
 
@@ -220,9 +220,10 @@ INSERT INTO `study_group` (`id`, `group_name`) VALUES
 
 -- Дамп структуры для таблица quiz.quiz_generated_questions
 DROP TABLE IF EXISTS `quiz_generated_questions`;
-CREATE TABLE IF NOT EXISTS`quiz_generated_questions` (
+CREATE TABLE IF NOT EXISTS `quiz_generated_questions` (
   `quiz_start_id` INT(11) NULL DEFAULT NULL,
-  `question_id` INT(11) NULL DEFAULT NULL);
+  `question_id`   INT(11) NULL DEFAULT NULL
+);
 
 -- Дамп данных таблицы quiz.quiz_generated_questions: ~6 rows (приблизительно)
 DELETE FROM `quiz_generated_questions`;

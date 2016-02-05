@@ -7,30 +7,17 @@
   Time: 15:54
   To change this template use File | Settings | File Templates.
 --%>
-<html>
-<head>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <!DOCTYPE html>
-    <%@include file="header.jsp" %>
-    <style type="text/css">
-        .bs-example {
-            margin: 20px;
-        }
-    </style>
-</head>
-<body>
-
 <!--data table -->
 <div class="container">
     <div class="row">
         <table class="table table-striped">
             <thead>
             <tr>
-            <th class="col-lg-1">Action</th>
-            <th class="col-lg-2">First name</th>
-            <th class="col-lg-2">Last name</th>
-            <th>Group</th>
+                <th class="col-lg-1">Action</th>
+                <th class="col-lg-2">First name</th>
+                <th class="col-lg-2">Last name</th>
+                <th class="col-lg-2">Login</th>
+                <th>Group</th>
             </tr>
             </thead>
             <c:forEach var="student" items="${students}">
@@ -47,6 +34,7 @@
                     </td>
                     <td>${student.firstName}</td>
                     <td>${student.lastName}</td>
+                    <td>${student.login}</td>
                     <td>${student.studyGroup}</td>
                 </tr>
             </c:forEach>
@@ -117,99 +105,11 @@
 <!-- Modal Remove -->
 
 <script type="text/javascript">
-    var studentId = 0;
-    var studentName;
-
-    $('#modalRemove0').on('show.bs.modal', function (e) {
-        e.preventDefault();
-        studentName = $(e.relatedTarget).data('name');
-        studentId = $(e.relatedTarget).data('nameid');
-        $(this).find('.myval').text('Do you really want to delete ' + studentName + '?');
-    });
-    $('#modalRemove0').find('.saveBtn').on('click', function () {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studentDelete" />',
-            data: {id: studentId},
-            success: function () {
-//                showResultModal($('#modalRemove0'), studentName + ' was deleted');
-                showAlert($('#modalRemove0'), studentName + ' was deleted', 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    $('#modalEdit0').on('show.bs.modal', function (e) {
-        studentId = $(e.relatedTarget).data('nameid');
-        var act = $(e.relatedTarget).data('action');
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studyGroupsList"/>',
-            success: function (obj) {
-                createSelectStudyGroup(obj, 'dynamicInput');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-        if (act == 'add') {
-            resetEdit($('#modalEdit0'));
-            studentId = 0;
-        } else {
-            getStudentInfo(studentId);
-        }
-    });
-
-    <!--Add or update student -->
-    $('#modalEdit0').find('.saveBtn').on('click', function () {
-        var firstName = $('.firstName').val();
-        var lastName = $('.lastName').val();
-        var studyGroupId = $(".options option:selected").val();
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studentUpdate" />',
-            data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&studyGroupId=" + studyGroupId,
-            success: function (response) {
-//                showResultModal($('#modalEdit0'), response);
-                showAlert($('#modalEdit0'), response, 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    function getStudentInfo(sId) {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/studentInfo"/>',
-            data: {id: sId},
-            success: function (obj) {
-                $('.firstName').val(obj.firstName);
-                $('.lastName').val(obj.lastName);
-                $('.options').val(obj.studyGroup.id);
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    }
-
-    function createSelectStudyGroup(values, divName) {
-        var select = $('<select name="options" class="form-control options"></select>');
-        $("#" + divName).html("");
-        $.each(values, function (i, obj) {
-            var option = $('<option></option>');
-            option.attr('value', obj.id);
-            option.text(obj.name);
-            select.append(option);
-        });
-        $("#" + divName).append(select);
-    }
-
+    var studentDelete = '<c:url value="/studentDelete"/>';
+    var studyGroupsList = '<c:url value="/studyGroupsList"/>';
+    var studentUpdate = '<c:url value="/studentUpdate"/>';
+    var studentInfo = '<c:url value="/studentInfo"/>';
 </script>
-</body>
-</html>
+<script src="<c:url value="../../resources/js/quiz/studyGroupList.js" />"></script>
+<script src="<c:url value="../../resources/js/quiz/students.js" />"></script>
+

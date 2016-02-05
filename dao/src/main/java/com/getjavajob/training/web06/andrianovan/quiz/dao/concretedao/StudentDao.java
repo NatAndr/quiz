@@ -4,8 +4,10 @@ import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDa
 import com.getjavajob.training.web06.andrianovan.quiz.model.Student;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -27,5 +29,19 @@ public class StudentDao extends AbstractDao<Student> {
         CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
         CriteriaQuery<Student> select = criteriaQuery.select(criteriaQuery.from(Student.class));
         return entityManager.createQuery(select).getResultList();
+    }
+
+    public Student getStudentByLogin(String login) {
+        Student student = null;
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
+        Root<Student> studentRoot = criteriaQuery.from(Student.class);
+        CriteriaQuery<Student> select = criteriaQuery.where(criteriaBuilder.equal(studentRoot.get("login"), login));
+        try {
+            student = entityManager.createQuery(select).getSingleResult();
+        } catch (NoResultException e) {
+
+        }
+        return student;
     }
 }

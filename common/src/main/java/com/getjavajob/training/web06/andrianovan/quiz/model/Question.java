@@ -14,20 +14,15 @@ import java.util.List;
 public class Question extends BaseEntity {
     @Column(nullable = false)
     private String question;
-
     @Enumerated
     @Column(name = "type")
     private QuestionType questionType;
-
     private int weight;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
-
     @Column(name = "image")
     private String picture;
-
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     @XStreamOmitField
@@ -129,7 +124,7 @@ public class Question extends BaseEntity {
         return question.hashCode();
     }
 
-    public List<Answer> getCorrectAnswers(){
+    public List<Answer> getCorrectAnswers() {
         List<Answer> correctAnswers = this.getAnswers();
         Iterator<Answer> iterator = correctAnswers.iterator();
         while (iterator.hasNext()) {

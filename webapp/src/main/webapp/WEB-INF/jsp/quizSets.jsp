@@ -81,7 +81,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-default saveBtn" data-dismiss="modal">Save</a>
+                        <a class="btn btn-primary saveBtn" data-dismiss="modal">Save</a>
                     </div>
                 </div>
             </div>
@@ -110,140 +110,13 @@
 </div>
 <!-- Modal Remove -->
 
-<c:set var="quizSetDelete" value="<c:url value=\"/quizSetDelete\" />" />
-
 <script type="text/javascript">
-    var quizId = 0;
-    var quizName;
-
-    $('#modalRemove2').on('show.bs.modal', function (e) {
-        e.preventDefault();
-        quizName = $(e.relatedTarget).data('name');
-        quizId = $(e.relatedTarget).data('nameid');
-        $(this).find('.myval').text('Do you really want to delete ' + quizName + '?');
-    });
-    $('#modalRemove2').find('.saveBtn').on('click', function () {
-        $.ajax({
-            type: "POST",
-            <%--url: '<c:url value="/quizSetDelete" />',--%>
-            url: ${quizSetDelete},
-            data: {id: quizId},
-            success: function () {
-                showAlert($('#modalRemove2'), quizName + ' was deleted', 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    $('#modalEdit2').on('show.bs.modal', function (e) {
-        quizId = $(e.relatedTarget).data('nameid');
-        var act = $(e.relatedTarget).data('action');
-        if (act != 'edit') {
-            resetEdit($('#modalEdit2'));
-            quizId = 0;
-        } else {
-            getQuizSetInfo(quizId);
-        }
-    });
-
-    <!--Add or update -->
-    $('#modalEdit2').find('.saveBtn').on('click', function () {
-        quizName = $('#modalEdit2').find('.name').val();
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/quizSetUpdate" />',
-            data: "id=" + quizId + "&name=" + quizName,
-            success: function (response) {
-                showAlert($('#modalEdit2'), response, 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    function getQuizSetInfo(id) {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/quizSetInfo"/>',
-            data: {id: id},
-            success: function (obj) {
-                $('#modalEdit2').find('.name').val(obj.name);
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    }
-
-    $('#toXML').on('click', function () {
-        var checkedQuizzes = [];
-
-        $("input:checkbox[name=toXML]:checked").each(function () {
-            checkedQuizzes.push($(this).val());
-        });
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/quizSetToXML" />',
-            data: "&checkedQuizzes=" + checkedQuizzes,
-            success: function (response) {
-                showAlert($('#modalEdit2'), response, 'success');
-                alert('ok');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    var countChecked = function () {
-        var n = $("input:checkbox[name=toXML]:checked").length;
-        if (n > 0) {
-            $('#toXML').prop('disabled', false);
-        } else {
-            $('#toXML').prop('disabled', true);
-        }
-    };
-    countChecked();
-
-    $("input:checkbox[name=toXML]").on('click', countChecked);
-
-    var isXml = function (name) {
-        return name.match(/xml$/i)
-    };
-
-    $('.browseXML').click(function () {
-        $('input[name=fileXML]').click();
-    });
-    $('input[name=fileXML]').change(function () {
-        console.info("input[name=fileXML]" + $(this).val());
-
-        var fileXML = $(this).val().split('\\').pop();
-        if (!(isXml(fileXML))) {
-            alert('Please upload XML file');
-            return;
-        }
-        $.ajax({
-            url: '<c:url value="/quizSetFromXML"/>',
-            type: "POST",
-            data: new FormData(document.getElementById('fileFormXML')),
-            enctype: 'multipart/form-data',
-            dataType: 'text',
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                showAlert($('#modalEdit2'), response, 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
+    var quizSetDelete = '<c:url value="/quizSetDelete"/>';
+    var quizSetUpdate = '<c:url value="/quizSetUpdate"/>';
+    var quizSetInfo = '<c:url value="/quizSetInfo"/>';
+    var quizSetToXML = '<c:url value="/quizSetToXML"/>';
+    var quizSetFromXML = '<c:url value="/quizSetFromXML"/>';
 </script>
+<script src="<c:url value="../../resources/js/quiz/quizSets.js" />"></script>
 </body>
 </html>

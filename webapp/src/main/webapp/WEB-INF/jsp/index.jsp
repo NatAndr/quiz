@@ -10,9 +10,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Шаблон Bootstrap 101</title>
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>Шаблон Bootstrap 101</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <h1>Привет, мир!</h1>

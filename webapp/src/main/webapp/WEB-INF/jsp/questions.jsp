@@ -24,7 +24,8 @@
 <!--data table -->
 <div class="container">
     <div class="row">
-        <div id="alert_placeholder"></div><br>
+        <div id="alert_placeholder"></div>
+        <br>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -46,7 +47,8 @@
                                data-quizzes="${quizzes}">
                                 <span class="glyphicon glyphicon-edit"></span></a>
                             &nbsp;&nbsp;
-                            <a href="#" data-nameid="${question.id}" data-name="${question.question}" data-quiz="${quizSet.id}"
+                            <a href="#" data-nameid="${question.id}" data-name="${question.question}"
+                               data-quiz="${quizSet.id}"
                                data-toggle="modal" data-target="#modalRemove3" class="triggerRemove">
                                 <span class="glyphicon glyphicon-remove"></span></a>
 
@@ -108,20 +110,25 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-2">
                                 <label for="imgContainer" class="control-label">Image:</label>
 
-                                <div id="imgContainer"></div>
-                            </div>
-                            <div class="col-lg-8">
                                 <form id="fileForm">
-                                    <input id="inputfile" type="file" name="file" style="display: none;">
+                                    <input id="inputfile" type="file" name="filePicture" style="display: none;">
                                     <br>
-                                    <a class="btn btn-primary browseBtn"><span class="glyphicon glyphicon-folder-open"></span></a>
-                                        <a class="btn btn-primary uploadBtn"><span class="glyphicon glyphicon-ok"></span></a>
-                                        <a class="btn btn-primary clearBtn"><span class="glyphicon glyphicon-remove"></span></a>
-                                        <br><div id="fileName"></div>
+                                    <a class="btn btn-primary btn-xs browseBtn"><span
+                                            class="glyphicon glyphicon-folder-open"></span></a>
+                                    <a class="btn btn-primary btn-xs clearBtn"><span
+                                            class="glyphicon glyphicon-remove"></span></a>
+                                    <br>
+
+                                    <div id="fileName"></div>
                                 </form>
+                            </div>
+                            <div class="col-lg-10">
+                                <br>
+
+                                <div id="imgContainer" style="height: 140px;"></div>
                             </div>
                         </div>
                     </div>
@@ -157,197 +164,13 @@
 </div>
 <!-- Modal Remove -->
 <script type="text/javascript">
-    var questionId = 0;
-    var questionName;
-    var questionImage = "";
-    var blankImageURL = '<img src="../../resources/images/blank.png">';
-    var quizId;
-
-    $('#modalRemove3').on('show.bs.modal', function (e) {
-        e.preventDefault();
-        questionName = $(e.relatedTarget).data('name');
-        questionId = $(e.relatedTarget).data('nameid');
-        quizId = $(e.relatedTarget).data('quiz');
-        $(this).find('.myval').text('Do you really want to delete ' + questionName + '?');
-    });
-    $('#modalRemove3').find('.saveBtn').on('click', function () {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/questionDelete" />',
-            data: {id: questionId, quizId: quizId},
-            success: function () {
-                showAlert($('#modalRemove3'), questionName + ' was deleted', 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    $('#modalEdit3').on('show.bs.modal', function (e) {
-        questionId = $(e.relatedTarget).data('nameid');
-        var act = $(e.relatedTarget).data('action');
-        var quizId = $(e.relatedTarget).data('quiz');
-        var questionType = $(e.relatedTarget).data('qtype');
-        var file = $('[name="file"]');
-        file.val('');
-        var imgContainer = $('#imgContainer');
-
-        var isJpg = function (name) {
-            return name.match(/jpg$/i)
-        };
-        var isPng = function (name) {
-            return name.match(/png$/i)
-        };
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/quizSetList"/>',
-            success: function (obj) {
-                createSelectQuizSet(obj, 'dynamicInputQuizSet');
-                $('.optionsQuizSet').val(quizId);
-                $('.optionsType').val(questionType);
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-        if (act == 'add') {
-            resetEdit($('#modalEdit3'));
-            questionId = 0;
-            imgContainer.html(blankImageURL);
-        } else {
-            getQuestionInfo(questionId);
-        }
-
-        $('.uploadBtn').on('click', function () {
-            var filename = $.trim(file.val());
-            if (!(isJpg(filename) || isPng(filename))) {
-                alert('Please upload a JPG/PNG file');
-                return;
-            }
-            $.ajax({
-                url: '<c:url value="/upload"/>',
-                type: "POST",
-                data: new FormData(document.getElementById('fileForm')),
-                enctype: 'multipart/form-data',
-                dataType: 'text',
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    imgContainer.html('');
-                    questionImage = data;
-                    var img = '<img class="img-responsive" src="data:image/png;base64,' + data + '" />';
-                    imgContainer.html(img);
-                },
-                error: function (e) {
-                    alert('Error: ' + e);
-                }
-            });
-        });
-
-        $('.clearBtn').on('click', function () {
-            imgContainer.html(blankImageURL);
-            file.val('');
-        });
-
-        $('.browseBtn').click(function () {
-            $('input[type=file]').click();
-        });
-        $('input[type=file]').change(function () {
-            console.info("input[type=file]=" + $(this).val());
-            $('#fileName').html($(this).val());
-        });
-    });
-
-    <!--Add or update -->
-    $('#modalEdit3').find('.saveBtn').on('click', function () {
-        var question = $('.question').val();
-        var weight = $('.weight').val();
-        var quizId = $(".optionsQuizSet option:selected").val();
-        var questionType = $(".optionsType option:selected").val();
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/questionUpdate" />',
-            data: "id=" + questionId + "&question=" + question + "&weight=" + weight + "&quizId=" + quizId +
-            "&questionType=" + questionType + "&questionImage=" + questionImage,
-            success: function (response) {
-                showAlert($('#modalEdit3'), response, 'success');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    });
-
-    function getQuestionInfo(id) {
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/questionInfo"/>',
-            data: {id: id},
-            success: function (obj) {
-                $('#question').val(obj.question);
-                $('#weight').val(obj.weight);
-                if (obj.picture != null) {
-                    $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
-                } else {
-                    $('#imgContainer').html('<img src="../../resources/images/blank.png"/>');
-                }
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    }
-
-    function createSelectQuizSet(values, divName) {
-        var select = $('<select name="optionsQuizSet" class="form-control optionsQuizSet"></select>');
-            $("#" + divName).html("");
-            $.each(values, function (i, obj) {
-                var option = $('<option></option>');
-                option.attr('value', obj.id);
-                option.text(obj.name);
-                select.append(option);
-            });
-        $("#" + divName).append(select);
-    }
-
-    function updateTab() {
-        var tabText = $('.nav-tabs .active').text();
-        var tab;
-        switch (tabText) {
-            case 'Students':
-                tab = 'students';
-                break;
-            case 'Groups':
-                tab = 'studyGroups';
-                break;
-            case 'Quizzes':
-                tab = 'quizSets';
-                break;
-            case 'Questions':
-                tab = 'questions';
-                break;
-            case 'Answers':
-                tab = 'answers';
-                break;
-        }
-
-        $.ajax({
-            type: "POST",
-            cache: false,
-            url: '<c:url value="/updateManagement" />',
-            data: {tab : tab},
-            success: function (response) {
-                $('.tab-content').find('#' + tab).html(response);
-                jump('top');
-            },
-            error: function (e) {
-                alert('Error: ' + e);
-            }
-        });
-    }
-
+    var questionDelete = '<c:url value="/questionDelete"/>';
+    var quizSetList = '<c:url value="/quizSetList"/>';
+    var upload = '<c:url value="/upload"/>';
+    var questionUpdate = '<c:url value="/questionUpdate"/>';
+    var questionInfo = '<c:url value="/questionInfo"/>';
+    var updateManagement = '<c:url value="/updateManagement"/>';
 </script>
+<script src="<c:url value="../../resources/js/quiz/questions.js" />"></script>
 </body>
 </html>

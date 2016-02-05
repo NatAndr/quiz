@@ -7,6 +7,8 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.dto.QuestionDTO;
 import com.getjavajob.training.web06.andrianovan.quiz.service.AnswerService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.QuestionService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,8 @@ import java.util.List;
  */
 @Controller
 public class AnswerController {
-
+    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private AnswerService answerService;
     @Autowired
@@ -31,53 +34,82 @@ public class AnswerController {
     @ResponseBody
     @RequestMapping(value = "/questionList", method = RequestMethod.POST)
     public List<QuestionDTO> getQuestionList() {
+        debugLogger.debug("Get questions list");
         List<QuestionDTO> dtoList = new ArrayList<>();
         for (Question question : questionService.getAll()) {
             dtoList.add(new QuestionDTO(question.getId(), question.getQuestion(), question.getQuestionType(),
                     question.getWeight(), question.getPicture()));
         }
+        debugLogger.debug("End of get questions list");
         return dtoList;
     }
 
     @ResponseBody
     @RequestMapping(value = "/answerInfo", method = RequestMethod.POST)
     public AnswerDTO getQuestionInfo(@RequestParam("id") int id) {
+        debugLogger.debug("Get answer info id = " + id);
         Answer answer = answerService.get(id);
+        debugLogger.debug("End of get answer info");
         return new AnswerDTO(id, answer.getAnswer(), answer.getIsCorrect());
     }
 
     @ResponseBody
     @RequestMapping(value = "/answerDelete", method = RequestMethod.POST)
     public void answerDelete(@RequestParam("id") int id,
-                             @RequestParam(value = "questionId") int questionId) throws ServiceException {
+                             @RequestParam(value = "questionId") int questionId) {
+        debugLogger.debug("Going to delete answer id = " + id);
         Question question = questionService.get(questionId);
         Answer answer = answerService.get(id);
         question.getAnswers().remove(answer);
-        questionService.update(question);
-        answerService.delete(answer);
+        try {
+            questionService.update(question);
+            debugLogger.debug("Updated question = " + question);
+        } catch (ServiceException e) {
+            errorLogger.error("Cannot update question to delete answer" + question);
+        }
+        try {
+            answerService.delete(answer);
+            debugLogger.error("Deleted answer" + answer);
+        } catch (ServiceException e) {
+            errorLogger.error("Cannot delete answer" + answer);
+        }
+        debugLogger.debug("End of delete answer");
     }
 
     @RequestMapping(value = "/answerUpdate", method = RequestMethod.POST)
     public
     @ResponseBody
     String answerUpdate(@RequestParam(value = "id") int id,
-                          @RequestParam(value = "questionId") int questionId,
-                          @RequestParam(value = "answer") String answerString,
-                          @RequestParam(value = "isCorrect") String isCorrect) throws ServiceException {
+                        @RequestParam(value = "questionId") int questionId,
+                        @RequestParam(value = "answer") String answerString,
+                        @RequestParam(value = "isCorrect") String isCorrect) {
+        debugLogger.debug("Going to add or update answer id = " + id);
         Answer answer;
         Question question = questionService.get(questionId);
         if (id == 0) {
             answer = new Answer(answerString, Boolean.valueOf(isCorrect));
             answer.setQuestion(question);
             question.getAnswers().add(answer);
+            debugLogger.debug("Created answer questionId = {}, answer = {}, isCorrect = {}", questionId, answerString, isCorrect);
         } else {
             answer = answerService.get(id);
             answer.setAnswer(answerString);
             answer.setIsCorrect(Boolean.valueOf(isCorrect));
             answer.setQuestion(question);
-            answerService.update(answer);
+            try {
+                answerService.update(answer);
+                debugLogger.debug("Updated answer " + answer);
+            } catch (ServiceException e) {
+                errorLogger.error("Cannot update answer " + answer);
+            }
         }
-        questionService.update(question);
+        try {
+            questionService.update(question);
+            debugLogger.debug("Updated question " + question);
+        } catch (ServiceException e) {
+            errorLogger.error("Cannot update question " + question);
+        }
+        debugLogger.debug("End of add or update answer");
         return "Saved " + answer.getAnswer() + " " + answer.getIsCorrect();
     }
 }

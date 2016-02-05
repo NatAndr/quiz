@@ -5,6 +5,6 @@
   Time: 23:56
   To change this template use File | Settings | File Templates.
 --%>
-<c:if test="${errorLoginMsg!=null}">
-    <div class="alert alert-danger" role="alert">${errorLoginMsg}</div>
+<c:if test="${not empty loginMsg}">
+    <div class="alert alert-${alertType}" role="alert">${loginMsg}</div>
 </c:if>

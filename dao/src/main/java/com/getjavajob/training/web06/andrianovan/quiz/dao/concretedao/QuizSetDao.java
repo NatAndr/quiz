@@ -3,7 +3,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.dao.concretedao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.abstractdao.AbstractDao;
 import com.getjavajob.training.web06.andrianovan.quiz.dao.exception.DaoException;
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,9 +14,6 @@ import java.util.List;
  */
 @Repository
 public class QuizSetDao extends AbstractDao<QuizSet> {
-    @Autowired
-    private QuestionDao questionDao;
-
     public QuizSetDao() {
     }
 

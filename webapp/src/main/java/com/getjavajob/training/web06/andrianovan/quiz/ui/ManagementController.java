@@ -2,6 +2,8 @@ package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
 import com.getjavajob.training.web06.andrianovan.quiz.model.QuizSet;
 import com.getjavajob.training.web06.andrianovan.quiz.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ import java.util.List;
  */
 @Controller
 public class ManagementController {
-
+    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
     @Autowired
     private QuizSetService quizSetService;
     @Autowired
@@ -32,6 +34,7 @@ public class ManagementController {
 
     @RequestMapping(value = "/admin")
     public ModelAndView showAdminPanel() {
+        debugLogger.debug("Show admin panel");
         List<QuizSet> quizSetList = quizSetService.getAll();
         ModelAndView modelAndView = new ModelAndView("management");
         modelAndView.addObject("quizzes", quizSetList);
@@ -39,12 +42,14 @@ public class ManagementController {
         modelAndView.addObject("students", studentService.getAll());
         modelAndView.addObject("questions", questionService.getAll());
         modelAndView.addObject("answers", answerService.getAll());
+        debugLogger.debug("End of show admin panel");
         return modelAndView;
     }
 
     @ResponseBody
     @RequestMapping(value = "/updateManagement", method = RequestMethod.POST)
     public ModelAndView updateTabs(@RequestParam(value = "tab") String tab) {
+        debugLogger.debug("Update admin panel, tab: {}", tab);
         ModelAndView modelAndView = new ModelAndView();
         switch (tab) {
             case "students":
@@ -70,8 +75,9 @@ public class ManagementController {
                 modelAndView.addObject("quizzes", quizSetService.getAll());
                 break;
             default:
-                System.out.println("no tab");
+                debugLogger.debug("No such tab in admin panel");
         }
+        debugLogger.debug("End of update admin panel");
         return modelAndView;
     }
 }

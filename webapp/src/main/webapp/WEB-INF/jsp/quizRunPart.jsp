@@ -10,11 +10,15 @@
 <h3>Question ${counter + 1}/${questionsNumber}</h3>
 
 <div id="question">
-    ${question.question}
+    <div class="col-lg-12">
+        <div class="row">
+            ${question.question}
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="row">
             <c:if test="${not empty question.picture}">
-                <img class="img-responsive" src="data:image/png;base64,${question.picture}"/>
+                <img style="max-height: 100px;" src="data:image/png;base64,${question.picture}"/>
             </c:if>
         </div>
     </div>
@@ -36,7 +40,7 @@
             </c:forEach>
         </div>
     </div>
-    <br>
+    <br><br>
 
 </div>
 

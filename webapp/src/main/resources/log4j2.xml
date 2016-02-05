@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
 
-  <Appenders>
-    <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </Console>
-    <File name="File" fileName="C:/dev/log/shop.log">
-      <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
-    </File>
-    <File name="PerformanceFile" fileName="D:/dev/log/performance-quiz.log">
-      <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
-    </File>
-    <RollingFile name="RollingFile" fileName="rolling.log" filePattern="rolling.log.%i">
-      <PatternLayout><Pattern>%d [%t] %-5level %logger{36} - %msg%n</Pattern></PatternLayout>
-      <Policies>
-        <SizeBasedTriggeringPolicy size="10 MB"/>
-      </Policies>
-      <DefaultRolloverStrategy max="5"/>
-    </RollingFile>
-  </Appenders>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="File" fileName="D:/dev/log/quiz.log">
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <RollingFile name="RollingFile" fileName="rolling.log" filePattern="rolling.log.%i">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+    </Appenders>
 
-  <Loggers>
-    <Logger name="RollingLogger" level="debug" additivity="false">
-      <AppenderRef ref="RollingFile"/>
-    </Logger>
-    <Logger name="DebugLogger" level="debug" additivity="false">
-      <AppenderRef ref="Console"/>
-      <AppenderRef ref="RollingLogger"/>
-    </Logger>
-    <Logger name="PerformanceLogger" level="debug" additivity="false">
-      <AppenderRef ref="PerformanceFile"/>
-    </Logger>
-    <!--<Logger name="com.getjavajob" level="debug" additivity="false">-->
-      <!--<AppenderRef ref="Console"/>-->
-      <!--<AppenderRef ref="File"/>-->
-    <!--</Logger>-->
-    <Root level="ErrorLogger">
-      <AppenderRef ref="Console"/>
-      <AppenderRef ref="File"/>
-    </Root>
-  </Loggers>
+    <Loggers>
+        <Logger name="RollingLogger" level="debug" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="DebugLogger" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="ErrorLogger" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
 
 </Configuration>

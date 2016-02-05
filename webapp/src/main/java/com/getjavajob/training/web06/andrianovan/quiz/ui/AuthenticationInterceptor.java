@@ -1,45 +1,43 @@
 package com.getjavajob.training.web06.andrianovan.quiz.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
-import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
+import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.COOKIE_USERNAME;
+import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.getCookieValue;
 
 /**
  * Created by user on 25.12.2015.
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
-
-    private static final Set<String> excludedURLs = new HashSet<>(Arrays.asList("/", "/login", "/loginCheck", "/search", "/quizzesSearch", "/quizInfo"));
+    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        if (excludedURLs.contains(request.getRequestURI())) {
-            return true;
-        }
         HttpSession session = request.getSession();
         Object userNameSession = session.getAttribute("userName");
         String userNameCookie;
-        String passwordCookie;
         if (userNameSession == null) {
+            debugLogger.debug("userName Session == null");
             userNameCookie = getCookieValue(request, COOKIE_USERNAME);
-            passwordCookie = getCookieValue(request, COOKIE_PASSWORD);
-            if (userNameCookie != null && passwordCookie != null) {
+            if (userNameCookie != null) {
+                debugLogger.debug("Take userName Session from cookie");
                 session.setAttribute("userName", userNameCookie);
-                session.setAttribute("password", passwordCookie);
             } else {
-                Object requestedURI = request.getRequestURL();
-                if (!requestedURI.toString().equalsIgnoreCase("login")) {
-                    session.setAttribute("requestedURI", request.getRequestURI());
+                debugLogger.debug("userName Cookie == null");
+                String requestURI = request.getRequestURI();
+                debugLogger.debug("requested URI = " + requestURI);
+                if (!requestURI.equals("/login")) {
+                    session.setAttribute("requestedURI", requestURI);
                 }
                 response.sendRedirect("/login");
+                debugLogger.debug("redirect to login page");
                 return false;
             }
         }

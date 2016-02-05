@@ -29,13 +29,12 @@ public class QuizStartService extends AbstractService<QuizStart> {
     }
 
     public List<Question> generateQuestions(QuizStart quizStart) throws ServiceException {
-        int questionsNumber = this.questionsNumber;//getQuestionsNumberProperty();
+        int questionsNumber = this.questionsNumber;
         List<Question> generatedQuestions = new ArrayList<>(questionsNumber);
         List<Question> quizSetQuestions = quizStart.getQuizSet().getQuestions();
         if (questionsNumber > quizSetQuestions.size()) {
             questionsNumber = quizSetQuestions.size();
         }
-        generatedQuestions.add(quizSetQuestions.get(0));
         while (generatedQuestions.size() < questionsNumber) {
             Question question = quizSetQuestions.get(getRandomNumber(0, quizSetQuestions.size()));
             if (!generatedQuestions.contains(question)) {

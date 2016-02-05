@@ -12,12 +12,6 @@
     <?xml version="1.0" encoding="UTF-8" ?>
     <!DOCTYPE html>
     <%@include file="header.jsp" %>
-    <style type="text/css">
-        .bs-example {
-            margin: 20px;
-        }
-    </style>
-    <title></title>
 </head>
 <body>
 <div class="container">
@@ -31,10 +25,10 @@
                 <th class="col-md-1">Correct</th>
             </tr>
             </thead>
-            <c:set var="i" value="0" scope="page" />
+            <c:set var="i" value="0" scope="page"/>
             <c:forEach var="question" items="${questions}">
                 <c:set var="i" value="${i + 1}" scope="page"/>
-                <c:set var="j" value="0" scope="page" />
+                <c:set var="j" value="0" scope="page"/>
                 <c:forEach var="answer" items="${question.answers}">
                     <c:set var="j" value="${j + 1}" scope="page"/>
                     <tr>
@@ -44,7 +38,8 @@
                                data-question="${question.id}" data-questions="${questions}">
                                 <span class="glyphicon glyphicon-edit"></span></a>
                             &nbsp;&nbsp;
-                            <a href="#" data-nameid="${answer.id}" data-name="${answer.answer}" data-question="${question.id}"
+                            <a href="#" data-nameid="${answer.id}" data-name="${answer.answer}"
+                               data-question="${question.id}"
                                data-toggle="modal" data-target="#modalRemove4" class="triggerRemove">
                                 <span class="glyphicon glyphicon-remove"></span></a>
 
@@ -53,7 +48,8 @@
                         <td>${i}.${j}. ${answer.answer}</td>
                         <td>
                             <c:choose>
-                                <c:when test="${answer.isCorrect eq true}"><input type="checkbox" checked disabled></c:when>
+                                <c:when test="${answer.isCorrect eq true}"><input type="checkbox" checked
+                                                                                  disabled></c:when>
                                 <c:otherwise><input type="checkbox" disabled></c:otherwise>
                             </c:choose>
                         </td>
@@ -79,6 +75,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="dynamicInputQuestion" class="control-label">Question:</label>
+
                         <div id="dynamicInputQuestion" class="form-group"></div>
                     </div>
                     <div class="form-group">
@@ -89,7 +86,9 @@
 
                     <div class="form-group">
                         <label for="setCorrect" class="control-label">Is correct:</label>
-                        <div id="setCorrect"><input type="checkbox" class="isCorrect" id="isCorrect" checked="">&nbsp;yes</div>
+
+                        <div id="setCorrect"><input type="checkbox" class="isCorrect" id="isCorrect" checked="">&nbsp;yes
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -127,7 +126,7 @@
     var questionList = '<c:url value="/questionList"/>';
     var answerDelete = '<c:url value="/answerDelete"/>';
     var answerUpdate = '<c:url value="/answerUpdate"/>';
-    var answerInfo =   '<c:url value="/answerInfo"/>';
+    var answerInfo = '<c:url value="/answerInfo"/>';
 </script>
 <script src="<c:url value="../../resources/js/quiz/answers.js" />"></script>
 

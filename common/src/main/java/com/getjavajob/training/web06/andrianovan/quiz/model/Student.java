@@ -8,38 +8,34 @@ import javax.persistence.*;
 @Entity
 @Table(name = "student")
 public class Student extends BaseEntity {
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="group_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
     private StudyGroup studyGroup;
-
     @Column(name = "first_name", nullable = false)
     private String firstName;
-
     @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Transient
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
-
-    @Transient
+    @Column(name = "password", nullable = false)
     private String password;
 
     public Student() {
     }
 
-    public Student(String firstName, String lastName) {
+    public Student(StudyGroup studyGroup, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Student(StudyGroup studyGroup, String firstName, String lastName) {
-        this(firstName, lastName);
         this.studyGroup = studyGroup;
     }
 
     public Student(StudyGroup studyGroup, String firstName, String lastName, String login, String password) {
         this(studyGroup, firstName, lastName);
+        this.login = login;
+        this.password = password;
+    }
+
+    public Student(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -90,6 +86,7 @@ public class Student extends BaseEntity {
                 "studyGroup=" + studyGroup +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
                 '}';
     }
 
@@ -100,15 +97,15 @@ public class Student extends BaseEntity {
 
         Student student = (Student) o;
 
-        if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null) return false;
-        return !(lastName != null ? !lastName.equals(student.lastName) : student.lastName != null);
+        if (login != null ? !login.equals(student.login) : student.login != null) return false;
+        return !(password != null ? !password.equals(student.password) : student.password != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        int result = login != null ? login.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 }

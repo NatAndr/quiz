@@ -8,13 +8,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "answer")
 public class Answer extends BaseEntity {
-
     @Column(nullable = false)
     private String answer;
-
     @Column(name = "is_correct", columnDefinition = "INTEGER(1)")
     private boolean isCorrect;
-
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;

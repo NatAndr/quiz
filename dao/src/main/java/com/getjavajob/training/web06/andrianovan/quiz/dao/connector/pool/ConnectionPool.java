@@ -103,7 +103,7 @@ public class ConnectionPool {
 
     private void initConnections() throws DaoException {
         for (int i = 0; i < poolSize; i++) {
-                pool.offer(createConnection());
+            pool.offer(createConnection());
         }
     }
 

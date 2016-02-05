@@ -11,88 +11,6 @@
 <head>
     <title>Quiz</title>
     <%@include file="header.jsp" %>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            initQuestions();
-            $('#nxt').show();
-            $('#nxt').on('click', '.nextBtn', nextQuestion);
-            countdown("countdown", '${time}', 0);
-        });
-
-        function initQuestions() {
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: '<c:url value="/showQuestion" />',
-                data: "",
-                success: function (response) {
-                    $('#quiz').html(response);
-                },
-                error: function (e) {
-                    alert('Error: ' + e);
-                }
-            });
-        }
-
-        function nextQuestion() {
-            var answers = [];
-            var inputAnswer = '';
-            var inputText = $('input[type=text]');
-
-            if (inputText.val() != null) {
-                inputAnswer = inputText.val();
-                answers.push(inputText.attr("name"));
-            }
-            $(":checked").each(function () {
-                answers.push($(this).val());
-            });
-
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: '<c:url value="/quizQuestion" />',
-                data: "inputAnswer=" + inputAnswer + "&answers=" + answers,
-                success: function (response) {
-                    <%--if ('${finish}' == true) {--%>
-                    if (response.indexOf('<title>Result') > -1) {
-                        console.log("result");
-                        window.location.replace('<c:url value="/result" />');
-                    } else {
-                        $('#quiz').html(response);
-                    }
-                },
-                error: function (e) {
-                    alert('Error: ' + e);
-                }
-            });
-        }
-
-        function countdown(elementName, minutes, seconds) {
-            var element, endTime, hours, mins, msLeft, time;
-
-            function twoDigits(n) {
-                return (n <= 9 ? "0" + n : n);
-            }
-
-            function updateTimer() {
-                msLeft = endTime - (+new Date);
-                if (msLeft < 1000) {
-                    window.location.replace('<c:url value="/result" />');
-                } else {
-                    time = new Date(msLeft);
-                    hours = time.getUTCHours();
-                    mins = time.getUTCMinutes();
-                    element.innerHTML = (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
-                    setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
-                }
-            }
-
-            element = document.getElementById(elementName);
-            endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
-            updateTimer();
-        }
-
-    </script>
 </head>
 <body>
 
@@ -118,5 +36,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var showQuestion = '<c:url value="/showQuestion"/>';
+    var result = '<c:url value="/result"/>';
+    var quizQuestion = '<c:url value="/quizQuestion"/>';
+    var quizTime = '${time}';
+</script>
+<script src="<c:url value="../../resources/js/quiz/quizContainer.js" />"></script>
 </body>
 </html>

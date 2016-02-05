@@ -70,9 +70,5 @@
 </div>
 <!-- Modal Result -->
 
-<script type="text/javascript">
-
-</script>
-
 </body>
 </html>

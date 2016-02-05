@@ -18,4 +18,8 @@ public class StudentService extends AbstractService<Student> {
 
     public StudentService() {
     }
+
+    public Student getStudentByLogin(String login) {
+        return ((StudentDao) super.getDao()).getStudentByLogin(login);
+    }
 }

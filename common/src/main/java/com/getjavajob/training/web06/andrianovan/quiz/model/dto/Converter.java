@@ -46,4 +46,12 @@ public class Converter {
         quizSetDTO.setQuestionDTOs(this.questionListToQuestionDTOList(quizSet.getQuestions()));
         return quizSetDTO;
     }
+
+//    public List<QuizSetDTO> quizSetListToQuizSetDTOList(List<QuizSet> quizSetList) {
+//        List<QuizSetDTO> dtoList = new ArrayList<>();
+//        for (QuizSet quizSet : quizSetList) {
+//            dtoList.add(new QuizSetDTO(quizSet.getId(), quizSet.getName()));
+//        }
+//        return dtoList;
+//    }
 }

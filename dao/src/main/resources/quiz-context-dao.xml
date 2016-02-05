@@ -5,27 +5,18 @@
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-
     	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz" expected-type="javax.sql.DataSource"/>
 
-    <!--<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
-        <!--<constructor-arg ref="dataSource"/>-->
-    <!--</bean>-->
-
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:persistence.xml" />
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.getjavajob.training.web06.andrianovan.quiz.dao" />
+        <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.getjavajob.training.web06.andrianovan.quiz.dao"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="showSql" value="true" />
-                <!--<property name="format_sql" value="true" />-->
-                <!--<property name="generateDdl" value="false" />-->
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-
+                <property name="showSql" value="true"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
             </bean>
         </property>
     </bean>

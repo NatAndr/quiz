@@ -12,18 +12,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "quiz_start")
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class QuizStart extends BaseEntity implements Serializable{
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="quiz_id")
+public class QuizStart extends BaseEntity implements Serializable {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quiz_id")
     private QuizSet quizSet;
-
-    @Column(name="quiz_date", insertable=false, updatable=false, columnDefinition="DATETIME default current_timestamp")
+    @Column(name = "quiz_date", insertable = false, updatable = false, columnDefinition = "DATETIME default current_timestamp")
     @org.hibernate.annotations.Generated(value = GenerationTime.INSERT)
     @Temporal(TemporalType.DATE)
     private Date quizDate;
-
     @ManyToMany
     @JoinTable(name = "quiz_generated_questions",
             joinColumns = @JoinColumn(name = "quiz_start_id", referencedColumnName = "id"),

@@ -24,8 +24,8 @@ import java.util.Objects;
  */
 @Controller
 public class QuizzesController {
-
-    private static final Logger debugLogger= LoggerFactory.getLogger("DebugLogger");
+    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     private static final int STUDENT_ID = 1;
     private static final String CANNOT_SAVE_RESULT = "Cannot save result ";
     @Autowired
@@ -38,8 +38,6 @@ public class QuizzesController {
     private AnswerService answerService;
     @Autowired
     private ResultService resultService;
-
-
     @Value("${quiz.time}")
     private int time;
     @Value("${quiz.questionsNumber}")
@@ -47,6 +45,7 @@ public class QuizzesController {
 
     @RequestMapping(value = "/search")
     public ModelAndView showQuizzesSearch() {
+        debugLogger.debug("Show quizzes search");
         return new ModelAndView("quizzesSearch");
     }
 
@@ -55,12 +54,12 @@ public class QuizzesController {
         debugLogger.debug("Quizzes search for " + searchParams);
         ModelAndView modelAndView = new ModelAndView("quizzesSearch");
         if (searchParams != null) {
-            List<QuizSet> quizzes;
+            List<QuizSet> quizzes = null;
             try {
                 quizzes = quizSetService.searchQuizSetBySubstring(searchParams);
+                debugLogger.debug("Found quizzes");
             } catch (ServiceException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+                errorLogger.error("Cannot find quiz by substring {}", searchParams);
             }
             modelAndView.addObject("foundQuiz", quizzes);
         }
@@ -70,7 +69,7 @@ public class QuizzesController {
 
     @RequestMapping(value = "/quizInfo", method = RequestMethod.GET)
     public ModelAndView showQuizInfo(@RequestParam("id") int id) {
-        debugLogger.debug("Show quiz info for "+ id);
+        debugLogger.debug("Show quiz info for " + id);
         ModelAndView modelAndView = new ModelAndView("quizInfo");
         QuizSet quizSet = quizSetService.get(id);
         modelAndView.addObject("quiz", quizSet);
@@ -82,17 +81,23 @@ public class QuizzesController {
     @RequestMapping(value = "/initializeQuiz", method = RequestMethod.POST)
     public ModelAndView startQuiz(@RequestParam("id") int id,
                                   HttpServletRequest req) {
-        debugLogger.debug("Initialize quiz for quiz set " + id);
+        debugLogger.debug("Initialize quiz for quiz set id = " + id);
         clearSessionQuizAttributes(req);
         ModelAndView modelAndView = new ModelAndView("quizContainer");
         QuizSet quizSet = quizSetService.get(id);
         QuizStart quizStart;
+        quizStart = new QuizStart(quizSet);
         try {
-            quizStart = new QuizStart(quizSet);
             quizStartService.generateQuestions(quizStart);
-            quizStartService.insert(quizStart);
+            debugLogger.debug("Generated questions for quiz start " + quizStart);
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            errorLogger.error("Cannot generate questions for quizStart: {}", quizStart);
+        }
+        try {
+            quizStartService.insert(quizStart);
+            debugLogger.debug("Created quiz start " + quizStart);
+        } catch (ServiceException e) {
+            errorLogger.error("Cannot insert quizStart: {}", quizStart);
         }
         HttpSession session = req.getSession();
         session.setAttribute("counter", 0);
@@ -104,7 +109,7 @@ public class QuizzesController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/showQuestion")
+    @RequestMapping(value = "/showQuestion")
     public String showQuestion(ModelMap model, HttpServletRequest req) {
         debugLogger.debug("Show question");
         HttpSession session = req.getSession();
@@ -117,20 +122,24 @@ public class QuizzesController {
 
     @RequestMapping(value = "/quizQuestion", method = RequestMethod.POST)
     public String processQuiz(@RequestParam("inputAnswer") String inputAnswer,
-                              @RequestParam("answers") String[] answers, ModelMap model,
-                                  HttpServletRequest req) {
-        debugLogger.debug("Process answer: inputAnswer = %s, answers = %s", inputAnswer, answers);
-        Student student = studentService.get(STUDENT_ID);
+                              @RequestParam("answers") String[] answers,
+                              ModelMap model,
+                              HttpServletRequest req) {
+        debugLogger.debug("Process answer: inputAnswer = {}, answers = {}", inputAnswer, answers);
         HttpSession session = req.getSession();
+//        Student student = studentService.get(STUDENT_ID);
+        String login = (String) session.getAttribute("login");
+        Student student = studentService.getStudentByLogin(login);
         QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
         int counter = (int) session.getAttribute("counter") + 1;
         saveResult(inputAnswer, answers, student, quizStart);
-
         if (counter == session.getAttribute("questionsNumber")) {
             try {
-                session.setAttribute("result", String.valueOf(resultService.calculateQuizResult(student, quizStart)));
+                String result = String.valueOf(resultService.calculateQuizResult(student, quizStart));
+                session.setAttribute("result", result);
+                debugLogger.debug("Calculated quiz result: ", result);
             } catch (ServiceException e) {
-                throw new RuntimeException("Cannot get result " + student + " " + quizStart + " " + e.getLocalizedMessage());
+                errorLogger.error("Cannot calculate quiz result for student: {}, quizStart: {}", student, quizStart);
             }
             return "quizResult";
         }
@@ -141,7 +150,8 @@ public class QuizzesController {
     }
 
     private void saveResult(String inputAnswer, String[] results, Student student, QuizStart quizStart) {
-        debugLogger.debug("Save result for %s %s %s %s ", inputAnswer, results, student, quizStart);
+        debugLogger.debug("Going to save result for inputAnswer = {}, results = {}, student = {}, quizStart = {} ",
+                inputAnswer, results, student, quizStart);
         if (Objects.equals(inputAnswer, "")) {
             inputAnswer = null;
         }
@@ -150,9 +160,9 @@ public class QuizzesController {
             Result result = new Result(student, answer, inputAnswer, quizStart);
             try {
                 resultService.insert(result);
+                debugLogger.debug("Saved result " + result);
             } catch (ServiceException e) {
-                throw new RuntimeException(CANNOT_SAVE_RESULT + student + answer + inputAnswer + quizStart
-                        + e.getLocalizedMessage());
+                errorLogger.error("Cannot save result: {}", result);
             }
         }
         debugLogger.debug("End of save result");
@@ -165,7 +175,7 @@ public class QuizzesController {
     }
 
     @RequestMapping(value = "/repeat")
-    public String doUpdate(HttpServletRequest req) {
+    public String doUpdate() {
         debugLogger.debug("Redirect to search");
         return "redirect:/search";
     }

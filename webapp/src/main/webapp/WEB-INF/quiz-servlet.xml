@@ -21,27 +21,24 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--<mvc:annotation-driven/>-->
-
-    <bean id="jacksonObjectMapper" class="com.getjavajob.training.web06.andrianovan.quiz.ui.MyJsonMapper" />
+    <bean id="jacksonObjectMapper" class="com.getjavajob.training.web06.andrianovan.quiz.ui.MyJsonMapper"/>
 
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="objectMapper" ref="jacksonObjectMapper" />
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
     <mvc:view-controller path="/" view-name="/quizzesSearch"/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <!--<mvc:exclude-mapping path="/"/>-->
-            <!--<mvc:exclude-mapping path="/loginCheck"/>-->
+            <mvc:mapping path="/admin"/>
+            <mvc:mapping path="/initializeQuiz"/>
             <bean class="com.getjavajob.training.web06.andrianovan.quiz.ui.AuthenticationInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

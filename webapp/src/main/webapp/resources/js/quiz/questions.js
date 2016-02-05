@@ -4,19 +4,22 @@
 var questionId = 0;
 var questionName;
 var questionImage = "";
-var blankImageURL = '<img src="../../images/blank.png">';
+var blankImageURL = '<img src="../../resources/images/blank.png">';
+var quizId;
+var imgTag = '<img style="max-height: 135px;" src="data:image/png;base64,';
 
 $('#modalRemove3').on('show.bs.modal', function (e) {
     e.preventDefault();
     questionName = $(e.relatedTarget).data('name');
     questionId = $(e.relatedTarget).data('nameid');
+    quizId = $(e.relatedTarget).data('quiz');
     $(this).find('.myval').text('Do you really want to delete ' + questionName + '?');
 });
 $('#modalRemove3').find('.saveBtn').on('click', function () {
     $.ajax({
         type: "POST",
-        url: '<c:url value="/questionDelete" />',
-        data: {id: questionId},
+        url: questionDelete,
+        data: {id: questionId, quizId: quizId},
         success: function () {
             showAlert($('#modalRemove3'), questionName + ' was deleted', 'success');
         },
@@ -32,8 +35,9 @@ $('#modalEdit3').on('show.bs.modal', function (e) {
     var quizId = $(e.relatedTarget).data('quiz');
     var questionType = $(e.relatedTarget).data('qtype');
     var file = $('[name="file"]');
-    file.val('');
+    file.empty();
     var imgContainer = $('#imgContainer');
+    $('#fileName').empty();
 
     var isJpg = function (name) {
         return name.match(/jpg$/i)
@@ -43,7 +47,7 @@ $('#modalEdit3').on('show.bs.modal', function (e) {
     };
     $.ajax({
         type: "POST",
-        url: '<c:url value="/quizSetList"/>',
+        url: quizSetList,
         success: function (obj) {
             createSelectQuizSet(obj, 'dynamicInputQuizSet');
             $('.optionsQuizSet').val(quizId);
@@ -61,14 +65,22 @@ $('#modalEdit3').on('show.bs.modal', function (e) {
         getQuestionInfo(questionId);
     }
 
-    $('.uploadBtn').on('click', function () {
-        var filename = $.trim(file.val());
-        if (!(isJpg(filename) || isPng(filename))) {
+    $('.clearBtn').on('click', function () {
+        imgContainer.html(blankImageURL);
+        file.empty();
+    });
+
+    $('.browseBtn').click(function () {
+        $('input[name=filePicture]').click();
+    });
+    $('input[name=filePicture]').change(function () {
+        var filePicture = $(this).val().split('\\').pop();
+        if (!(isJpg(filePicture) || isPng(filePicture))) {
             alert('Please upload a JPG/PNG file');
             return;
         }
         $.ajax({
-            url: '<c:url value="/upload"/>',
+            url: upload,
             type: "POST",
             data: new FormData(document.getElementById('fileForm')),
             enctype: 'multipart/form-data',
@@ -78,7 +90,7 @@ $('#modalEdit3').on('show.bs.modal', function (e) {
             success: function (data) {
                 imgContainer.html('');
                 questionImage = data;
-                var img = '<img class="img-responsive" src="data:image/png;base64,' + data + '" />';
+                var img = imgTag + data + '" />';
                 imgContainer.html(img);
             },
             error: function (e) {
@@ -86,31 +98,18 @@ $('#modalEdit3').on('show.bs.modal', function (e) {
             }
         });
     });
-
-    $('.clearBtn').on('click', function () {
-        imgContainer.html(blankImageURL);
-        file.val('');
-    });
-
-    $('.browseBtn').click(function () {
-        $('input[type=file]').click();
-    });
-    $('input[type=file]').change(function () {
-        console.info("input[type=file]=" + $(this).val());
-        $('#fileName').html($(this).val());
-    });
 });
 
 <!--Add or update -->
 $('#modalEdit3').find('.saveBtn').on('click', function () {
     var question = $('.question').val();
     var weight = $('.weight').val();
-    var quizId = $(".optionsQuizSet option:selected").val();
-    var questionType = $(".optionsType option:selected").val();
+    var quizId = $('.optionsQuizSet option:selected').val();
+    var questionType = $('.optionsType option:selected').val();
 
     $.ajax({
         type: "POST",
-        url: '<c:url value="/questionUpdate" />',
+        url: questionUpdate,
         data: "id=" + questionId + "&question=" + question + "&weight=" + weight + "&quizId=" + quizId +
         "&questionType=" + questionType + "&questionImage=" + questionImage,
         success: function (response) {
@@ -125,15 +124,15 @@ $('#modalEdit3').find('.saveBtn').on('click', function () {
 function getQuestionInfo(id) {
     $.ajax({
         type: "POST",
-        url: '<c:url value="/questionInfo"/>',
+        url: questionInfo,
         data: {id: id},
         success: function (obj) {
             $('#question').val(obj.question);
             $('#weight').val(obj.weight);
             if (obj.picture != null) {
-                $('#imgContainer').html('<img class="img-responsive" src="data:image/png;base64,' + obj.picture + '" />');
+                $('#imgContainer').html(imgTag + obj.picture + '" />');
             } else {
-                $('#imgContainer').html('<img src="../../images/blank.png"/>');
+                $('#imgContainer').html(blankImageURL);
             }
         },
         error: function (e) {
@@ -142,17 +141,17 @@ function getQuestionInfo(id) {
     });
 }
 
-//function createSelectQuizSet(values, divName) {
-//    var select = $('<select name="optionsQuizSet" class="form-control optionsQuizSet"></select>');
-//        $("#" + divName).html("");
-//        $.each(values, function (i, obj) {
-//            var option = $('<option></option>');
-//            option.attr('value', obj.id);
-//            option.text(obj.name);
-//            select.append(option);
-//        });
-//    $("#" + divName).append(select);
-//}
+function createSelectQuizSet(values, divName) {
+    var select = $('<select name="optionsQuizSet" class="form-control optionsQuizSet"></select>');
+    $("#" + divName).empty();
+    $.each(values, function (i, obj) {
+        var option = $('<option></option>');
+        option.attr('value', obj.id);
+        option.text(obj.name);
+        select.append(option);
+    });
+    $("#" + divName).append(select);
+}
 
 function updateTab() {
     var tabText = $('.nav-tabs .active').text();
@@ -178,8 +177,8 @@ function updateTab() {
     $.ajax({
         type: "POST",
         cache: false,
-        url: '<c:url value="/updateManagement" />',
-        data: {tab : tab},
+        url: updateManagement,
+        data: {tab: tab},
         success: function (response) {
             $('.tab-content').find('#' + tab).html(response);
             jump('top');
