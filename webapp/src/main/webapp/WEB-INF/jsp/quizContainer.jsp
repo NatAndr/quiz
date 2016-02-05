@@ -29,9 +29,14 @@
                 <div id="quiz"></div>
             </div>
         </div>
+
         <div class="col-lg-8">
             <div class="row">
-                <div id="nxt" style="display: none;"><a class="btn btn-primary nextBtn">Next</a></div>
+                <div id="nxt" style="display: none;">
+                    <br>
+                    <a class="btn btn-primary nextBtn">Next</a>&nbsp;&nbsp;
+                    <a class="btn btn-primary endBtn">End up</a>
+                </div>
             </div>
         </div>
     </div>

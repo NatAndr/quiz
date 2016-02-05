@@ -5,6 +5,7 @@ $(document).ready(function () {
     initQuestions();
     $('#nxt').show();
     $('#nxt').on('click', '.nextBtn', nextQuestion);
+    $('#nxt').on('click', '.endBtn', showResult);
     countdown("countdown", quizTime, 0);
 });
 
@@ -77,4 +78,8 @@ function countdown(elementName, minutes, seconds) {
     element = document.getElementById(elementName);
     endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
     updateTimer();
+}
+
+function showResult() {
+    window.location.replace(result);
 }

@@ -51,12 +51,13 @@ public class LoginController {
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
     public String login(@RequestParam("login") String login,
                         @RequestParam("password") String password,
-                        @RequestParam(value = "rememberMe", required = false) String rememberMe,
+                        @RequestParam(value = "rememberMe", required = false) Object rememberMe,
                         HttpServletRequest req, HttpServletResponse resp) {
         debugLogger.debug("Login check");
         HttpSession session = req.getSession();
         Student student = studentService.getStudentByLogin(login);
         Student actualStudent = new Student(login, DigestUtils.md5Hex(password));
+        debugLogger.debug("rememberMe = {}", rememberMe);
         if (student != null && student.equals(actualStudent)) {
             if (rememberMe != null) {
                 addCookie(resp, COOKIE_USERNAME, login, COOKIE_AGE);

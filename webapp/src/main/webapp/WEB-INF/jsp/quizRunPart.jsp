@@ -18,7 +18,7 @@
     <div class="col-lg-6">
         <div class="row">
             <c:if test="${not empty question.picture}">
-                <img style="max-height: 100px;" src="data:image/png;base64,${question.picture}"/>
+                <img style="max-height: 130px;" src="data:image/png;base64,${question.picture}"/>
             </c:if>
         </div>
     </div>

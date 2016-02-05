@@ -127,8 +127,7 @@ public class QuizzesController {
                               HttpServletRequest req) {
         debugLogger.debug("Process answer: inputAnswer = {}, answers = {}", inputAnswer, answers);
         HttpSession session = req.getSession();
-//        Student student = studentService.get(STUDENT_ID);
-        String login = (String) session.getAttribute("login");
+        String login = (String) session.getAttribute("userName");
         Student student = studentService.getStudentByLogin(login);
         QuizStart quizStart = (QuizStart) session.getAttribute("quizStart");
         int counter = (int) session.getAttribute("counter") + 1;

@@ -19,7 +19,9 @@
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="page-header">
                 <h2>Result</h2>
-
+                <c:if test="${empty result}">
+                    <c:set var="result">0</c:set>
+                </c:if>
                 <p class="lead">Your score: ${result}</p>
             </div>
             <c:if test="${result==questionsNumber}">
