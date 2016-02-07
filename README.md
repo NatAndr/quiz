@@ -1,22 +1,24 @@
 # Quiz #
 Quiz application allows to pass time limited quizzes with different question types and get results. Quizzes can be created or imported from xml.
 
-**Functionality:**  
-+ registration  
-+ authentication  
-+ search quizzes  
-+ edit quizzes  
-+ edit questions  
-+ upload question image  
-+ edit answers  
-+ import/export quizzes to xml  
+**Functionality:**
+
+* registration
+* authentication
+* search quizzes
+* edit quizzes
+* edit questions
+* upload question image
+* edit answers
+* import/export quizzes to xml
+
 
 **Tools:**  
 JDK 7, Spring 4, JPA 2 / Hibernate 5, XStream, jQuery 2, Twitter Bootstrap 3, JUnit 4, Mockito, Maven 3, Git / Bitbucket,
 Tomcat 8, MySQL 5, Log4j2, IntelliJIDEA 14.
 
 **Notes:**  
-SQL ddl is located in the `quizDbDdl.sql`
+SQL ddl is located in the `dao/src/test/resources/quizDbDdl.sql`
 
 **Screenshots:**  
 ### Quizzes management
