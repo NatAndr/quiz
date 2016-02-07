@@ -21,6 +21,7 @@
 
     <jdbc:initialize-database>
         <jdbc:script location="classpath:quizDbDdl.sql"/>
+        <jdbc:script location="classpath:quizDbData.sql"/>
     </jdbc:initialize-database>
 
 

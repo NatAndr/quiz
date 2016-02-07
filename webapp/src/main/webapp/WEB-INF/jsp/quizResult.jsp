@@ -25,7 +25,7 @@
                     <c:set var="result">0</c:set>
                 </c:if>
                 <p class="lead">Your score: ${result}</p>
-            </div>
+
             <c:if test="${result==questionsNumber}">
                 <div class="alert alert-success" role="alert">Well done! You successfully passes this quiz</div>
             </c:if>

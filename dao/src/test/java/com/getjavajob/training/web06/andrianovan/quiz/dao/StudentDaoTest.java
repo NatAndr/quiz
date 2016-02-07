@@ -53,6 +53,8 @@ public class StudentDaoTest {
         student.setLastName("Артемов");
         student.setFirstName("Артем");
         student.setStudyGroup(this.studyGroupDao.get(1));
+        student.setLogin("test");
+        student.setPassword("test");
         this.dao.insert(student);
         List<Student> studentList = this.dao.getAll();
         assertEquals(ROWS_NUMBER + 1, studentList.size());

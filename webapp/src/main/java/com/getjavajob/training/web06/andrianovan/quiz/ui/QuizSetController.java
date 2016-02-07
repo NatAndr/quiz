@@ -119,12 +119,13 @@ public class QuizSetController {
             errorLogger.error("Cannot convert MultipartFile: {} to File", file);
         }
         StringBuffer sb = new StringBuffer("Imported from XML: ");
-        List<QuizSet> quizSetList = null;
+        List<QuizSet> quizSetList;
         try {
             quizSetList = new Serializer().fromXML(xmlFile);
             logger.debug("Quiz sets imported from xml");
         } catch (Exception e) {
             errorLogger.error("Cannot import quiz set from xml");
+            throw new RuntimeException("Cannot import quiz set from xml" + e.getLocalizedMessage());
         }
         if (quizSetList != null) {
             for (QuizSet quizSet : quizSetList) {
@@ -133,6 +134,7 @@ public class QuizSetController {
                     logger.debug("Quiz sets from xml created");
                 } catch (ServiceException e) {
                     errorLogger.error("Cannot create quiz set {} from xml", quizSet);
+                    throw new RuntimeException("Cannot create quiz set " + e.getLocalizedMessage());
                 }
                 sb.append(quizSet.getName()).append(',').append(' ');
             }

@@ -34,14 +34,10 @@ public class Serializer {
     }
 
     public List<QuizSet> fromXML(File file) throws Exception {
-//        File file = new File(fileName);
-//        if (!file.exists()) {
-//            throw new IllegalArgumentException("File " + fileName + " not found!");
-//        }
         String validationResult = new XSDValidator().validate(FILE_XSD, file);
         if (!"Document is valid".equals(validationResult)) {
             System.err.println(validationResult);
-//            return null;
+            return null;
         }
         QuizSetDTOList quizSetDTOList = (QuizSetDTOList) xstream.fromXML(file);
         System.out.println(quizSetDTOList);
