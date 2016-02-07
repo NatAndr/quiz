@@ -13,29 +13,21 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.COO
 import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.getCookieValue;
 
 /**
- * Created by user on 25.12.2015.
+ * Created by user on 07.02.2016.
  */
-public class AuthenticationInterceptor implements HandlerInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
+public class AuthorizationInterceptor implements HandlerInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(AuthorizationInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         HttpSession session = request.getSession();
         Object userNameSession = session.getAttribute("userName");
         logger.debug("userName Session: {}", userNameSession);
-        String userNameCookie;
         if (userNameSession == null) {
-            userNameCookie = getCookieValue(request, COOKIE_USERNAME);
-            if (userNameCookie == null) {
-                logger.debug("userName Cookie == null");
-                String requestURI = request.getRequestURI();
-                logger.debug("requested URI = " + requestURI);
-                if (!requestURI.equals("/login")) {
-                    session.setAttribute("requestedURI", requestURI);
-                }
-                response.sendRedirect("/login");
-                logger.debug("redirect to login page");
-                return false;
+            String userNameCookie = getCookieValue(request, COOKIE_USERNAME);
+            if (userNameCookie != null) {
+                logger.debug("Take userName Session from cookie");
+                session.setAttribute("userName", userNameCookie);
             }
         }
         return true;

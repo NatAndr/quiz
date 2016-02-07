@@ -18,15 +18,24 @@
 
     <div class="page-header">
         <h1>Quiz</h1>
-
         <p class="lead">${quiz.name}</p>
-
-        <p>${questionsNumber} questions</p>
+        <p>Questions number: ${questionsNumber}</p>
+        <p>Time: ${time} min</p>
     </div>
     <form action="${pageContext.request.contextPath}/initializeQuiz" method="post">
         <label>
             <input type="hidden" name="id" value="${quiz.id}">
-            <button type="submit" class="btn btn-primary">Start</button>
+            <c:if test="${not empty userName}">
+                <button type="submit" class="btn btn-primary">Start</button>
+            </c:if>
+            <c:if test="${empty userName}">
+                <div class="alert alert-danger" role="alert">
+                    Please <a href="<c:url value="/login"/>">sign in</a>
+                    or
+                    <a href="<c:url value="/registration"/>">register</a>
+                    to pass this quiz
+                </div>
+            </c:if>
         </label>
     </form>
 </div>

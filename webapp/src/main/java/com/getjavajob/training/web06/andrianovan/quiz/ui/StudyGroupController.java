@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class StudyGroupController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(StudyGroupController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private StudyGroupService studyGroupService;
@@ -25,7 +25,7 @@ public class StudyGroupController {
     @ResponseBody
     @RequestMapping(value = "/studyGroupInfo", method = RequestMethod.POST)
     public StudyGroup getStudyGroup(@RequestParam("id") int id) {
-        debugLogger.debug("Get study group info id = " + id);
+        logger.debug("Get study group info id = " + id);
         return studyGroupService.get(id);
     }
 
@@ -34,12 +34,12 @@ public class StudyGroupController {
     @ResponseBody
     String studyGroupUpdate(@RequestParam(value = "id") int id,
                             @RequestParam(value = "name") String name) {
-        debugLogger.debug("Going to add or update study group id = " + id);
+        logger.debug("Going to add or update study group id = " + id);
         StudyGroup studyGroup = new StudyGroup(name);
         if (id == 0) {
             try {
                 studyGroupService.insert(studyGroup);
-                debugLogger.debug("Added study group " + studyGroup);
+                logger.debug("Added study group " + studyGroup);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot add study group ", studyGroup);
             }
@@ -47,26 +47,26 @@ public class StudyGroupController {
             studyGroup.setId(id);
             try {
                 studyGroupService.update(studyGroup);
-                debugLogger.debug("Updated study group " + studyGroup);
+                logger.debug("Updated study group " + studyGroup);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot update study group ", studyGroup);
             }
         }
-        debugLogger.debug("End of add or update study group");
+        logger.debug("End of add or update study group");
         return "Saved " + name;
     }
 
     @ResponseBody
     @RequestMapping(value = "/studyGroupDelete", method = RequestMethod.POST)
     public void studyGroupDelete(@RequestParam("id") int id) {
-        debugLogger.debug("Going to delete study group id = " + id);
+        logger.debug("Going to delete study group id = " + id);
         StudyGroup studyGroup = studyGroupService.get(id);
         try {
             studyGroupService.delete(studyGroup);
-            debugLogger.debug("Deleted study group " + studyGroup);
+            logger.debug("Deleted study group " + studyGroup);
         } catch (ServiceException e) {
             errorLogger.error("Cannot delete study group ", studyGroup);
         }
-        debugLogger.debug("End of delete study group");
+        logger.debug("End of delete study group");
     }
 }

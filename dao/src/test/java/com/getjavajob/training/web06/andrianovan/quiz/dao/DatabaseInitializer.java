@@ -9,7 +9,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
  */
 public class DatabaseInitializer {
 
-    private static final String CREATE_DB_QUERY = "testDB.sql";
+    private static final String CREATE_DB_QUERY = "quizDbDdl.sql";
 //
 //    public void initDatabase() throws DaoException {
 //        InputStream inputStream = QuizSetDaoTest.class.getClassLoader().getResourceAsStream(CREATE_DB_QUERY);

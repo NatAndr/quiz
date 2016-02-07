@@ -184,6 +184,8 @@ CREATE TABLE IF NOT EXISTS `student` (
   `group_id`   INT(11)     DEFAULT NULL,
   `first_name` VARCHAR(45) DEFAULT NULL,
   `last_name`  VARCHAR(45) DEFAULT NULL,
+  `login` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 

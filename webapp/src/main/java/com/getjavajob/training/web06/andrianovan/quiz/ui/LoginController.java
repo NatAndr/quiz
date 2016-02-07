@@ -27,7 +27,7 @@ import static com.getjavajob.training.web06.andrianovan.quiz.ui.CookieHelper.*;
  */
 @Controller
 public class LoginController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private StudentService studentService;
@@ -36,43 +36,46 @@ public class LoginController {
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView showLogin() {
-        debugLogger.debug("Show login form");
+        logger.debug("Show login form");
         return new ModelAndView("login");
     }
 
-    @RequestMapping(value = "/")
-    public String showStartPageWhenLoggedIn(HttpServletRequest req) {
-        if (isAdmin(getCookieValue(req, COOKIE_USERNAME))) {
-            return "redirect:/admin";
-        }
-        return "redirect:/search";
-    }
+//    @RequestMapping(value = "/")
+//    public String showStartPageWhenLoggedIn(HttpServletRequest req) {
+//        if (isAdmin(getCookieValue(req, COOKIE_USERNAME))) {
+//            return "redirect:/admin";
+//        }
+//        return "redirect:/search";
+//    }
 
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
     public String login(@RequestParam("login") String login,
                         @RequestParam("password") String password,
                         @RequestParam(value = "rememberMe", required = false) Object rememberMe,
                         HttpServletRequest req, HttpServletResponse resp) {
-        debugLogger.debug("Login check");
+        logger.debug("Login check");
+        String referrer = req.getHeader("referer");
+        logger.debug("referrer: {}", referrer);
         HttpSession session = req.getSession();
         Student student = studentService.getStudentByLogin(login);
         Student actualStudent = new Student(login, DigestUtils.md5Hex(password));
-        debugLogger.debug("rememberMe = {}", rememberMe);
         if (student != null && student.equals(actualStudent)) {
+            logger.debug("User logged in: {}", login);
             if (rememberMe != null) {
                 addCookie(resp, COOKIE_USERNAME, login, COOKIE_AGE);
+                logger.debug("Cookie created for {}", login);
             } else {
                 removeCookie(resp, COOKIE_USERNAME);
             }
             session.setAttribute("userName", login);
             Object url = session.getAttribute("requestedURI");
             String redirectUrl = url == null ? "redirect:/search" : "redirect:" + session.getAttribute("requestedURI").toString();
-            debugLogger.debug(redirectUrl);
+            logger.debug(redirectUrl);
             return redirectUrl;
         } else {
             session.setAttribute("loginMsg", "Wrong username or password");
             session.setAttribute("alertType", "danger");
-            debugLogger.debug("Wrong username or password");
+            logger.debug("Wrong username or password");
             return "redirect:/login";
         }
     }
@@ -83,18 +86,18 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest req, HttpServletResponse resp) {
-        debugLogger.debug("Logout for " + getCookieValue(req, COOKIE_USERNAME));
+        logger.debug("Logout for " + getCookieValue(req, COOKIE_USERNAME));
         removeCookie(resp, COOKIE_USERNAME);
         removeCookie(resp, COOKIE_PASSWORD);
         HttpSession session = req.getSession();
         session.invalidate();
-        debugLogger.debug("End of logout");
+        logger.debug("End of logout");
         return "redirect:/search";
     }
 
     @RequestMapping(value = "/registration")
     public ModelAndView showRegistration() {
-        debugLogger.debug("Show registration form");
+        logger.debug("Show registration form");
         ModelAndView modelAndView = new ModelAndView("registration");
         modelAndView.addObject("studyGroupList", studyGroupService.getAll());
         return modelAndView;
@@ -108,7 +111,7 @@ public class LoginController {
                              @RequestParam("password") String password,
                              @RequestParam("studyGroupId") int studyGroupId,
                              HttpServletRequest req, HttpServletResponse resp) {
-        debugLogger.debug("doRegister");
+        logger.debug("doRegister");
         HttpSession session = req.getSession();
         if (studentService.getStudentByLogin(login) != null) {
             String errorRegistrationMsg = "User with login '" + login + "' already exists";
@@ -120,14 +123,14 @@ public class LoginController {
         Student student = new Student(studyGroup, firstName, lastName, login, DigestUtils.md5Hex(password));
         try {
             studentService.insert(student);
-            debugLogger.debug("Created user: {}", student);
+            logger.debug("Created user: {}", student);
         } catch (ServiceException e) {
             errorLogger.error("Cannot insert user: {}", student);
         }
         session.setAttribute("alertType", "success");
         String result = "Account '" + login + "' was created";
         session.setAttribute("loginMsg", result);
-        debugLogger.debug(result);
+        logger.debug(result);
         return "ok";
     }
 }

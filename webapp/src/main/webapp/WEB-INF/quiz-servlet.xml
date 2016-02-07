@@ -37,6 +37,11 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.getjavajob.training.web06.andrianovan.quiz.ui.AuthorizationInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/admin"/>
             <mvc:mapping path="/initializeQuiz"/>
             <bean class="com.getjavajob.training.web06.andrianovan.quiz.ui.AuthenticationInterceptor"/>

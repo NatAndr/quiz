@@ -23,7 +23,7 @@
         <Logger name="RollingLogger" level="debug" additivity="false">
             <AppenderRef ref="RollingFile"/>
         </Logger>
-        <Logger name="DebugLogger" level="debug" additivity="false">
+        <Logger name="com.getjavajob.training.web06.andrianovan.quiz.ui" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>

@@ -80,7 +80,6 @@
                     </div>
                     <div class="form-group">
                         <label for="answer" class="control-label">Answer:</label>
-                        <%--<input type="text" class="form-control question" id="question">--%>
                         <textarea class="form-control answer" id="answer" rows="3"></textarea>
                     </div>
 

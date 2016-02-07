@@ -20,7 +20,7 @@
     <context:component-scan base-package="com.getjavajob.training.web06.andrianovan.quiz.dao"/>
 
     <jdbc:initialize-database>
-        <jdbc:script location="classpath:testDB.sql"/>
+        <jdbc:script location="classpath:quizDbDdl.sql"/>
     </jdbc:initialize-database>
 
 

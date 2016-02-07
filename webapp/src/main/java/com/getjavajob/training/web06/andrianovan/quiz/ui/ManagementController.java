@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Controller
 public class ManagementController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(ManagementController.class);
     @Autowired
     private QuizSetService quizSetService;
     @Autowired
@@ -34,7 +34,7 @@ public class ManagementController {
 
     @RequestMapping(value = "/admin")
     public ModelAndView showAdminPanel() {
-        debugLogger.debug("Show admin panel");
+        logger.debug("Show admin panel");
         List<QuizSet> quizSetList = quizSetService.getAll();
         ModelAndView modelAndView = new ModelAndView("management");
         modelAndView.addObject("quizzes", quizSetList);
@@ -42,14 +42,14 @@ public class ManagementController {
         modelAndView.addObject("students", studentService.getAll());
         modelAndView.addObject("questions", questionService.getAll());
         modelAndView.addObject("answers", answerService.getAll());
-        debugLogger.debug("End of show admin panel");
+        logger.debug("End of show admin panel");
         return modelAndView;
     }
 
     @ResponseBody
     @RequestMapping(value = "/updateManagement", method = RequestMethod.POST)
     public ModelAndView updateTabs(@RequestParam(value = "tab") String tab) {
-        debugLogger.debug("Update admin panel, tab: {}", tab);
+        logger.debug("Update admin panel, tab: {}", tab);
         ModelAndView modelAndView = new ModelAndView();
         switch (tab) {
             case "students":
@@ -75,9 +75,9 @@ public class ManagementController {
                 modelAndView.addObject("quizzes", quizSetService.getAll());
                 break;
             default:
-                debugLogger.debug("No such tab in admin panel");
+                logger.debug("No such tab in admin panel");
         }
-        debugLogger.debug("End of update admin panel");
+        logger.debug("End of update admin panel");
         return modelAndView;
     }
 }

@@ -35,7 +35,7 @@
                 <div id="nxt" style="display: none;">
                     <br>
                     <a class="btn btn-primary nextBtn">Next</a>&nbsp;&nbsp;
-                    <a class="btn btn-primary endBtn">End up</a>
+                    <a class="btn btn-default endBtn">End up</a>
                 </div>
             </div>
         </div>

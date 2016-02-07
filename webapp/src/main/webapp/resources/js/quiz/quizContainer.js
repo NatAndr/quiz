@@ -58,6 +58,10 @@ function nextQuestion() {
 function countdown(elementName, minutes, seconds) {
     var element, endTime, hours, mins, msLeft, time;
 
+    if (!minutes) {
+        return;
+    }
+
     function twoDigits(n) {
         return (n <= 9 ? "0" + n : n);
     }
@@ -81,5 +85,6 @@ function countdown(elementName, minutes, seconds) {
 }
 
 function showResult() {
+    console.log('showResult');
     window.location.replace(result);
 }

@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Controller
 public class StudentController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private StudentService studentService;
@@ -31,28 +31,28 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "/studyGroupsList", method = RequestMethod.POST)
     public List<StudyGroup> getStudyGroupsList() {
-        debugLogger.debug("Get study groups list");
+        logger.debug("Get study groups list");
         return studyGroupService.getAll();
     }
 
     @ResponseBody
     @RequestMapping(value = "/studentDelete", method = RequestMethod.POST)
     public void studentDelete(@RequestParam("id") int id) {
-        debugLogger.debug("Going to delete student id = " + id);
+        logger.debug("Going to delete student id = " + id);
         Student student = studentService.get(id);
         try {
             studentService.delete(student);
-            debugLogger.debug("Delete student ", student);
+            logger.debug("Delete student ", student);
         } catch (ServiceException e) {
             errorLogger.error("Cannot delete student ", student);
         }
-        debugLogger.debug("End of delete student");
+        logger.debug("End of delete student");
     }
 
     @ResponseBody
     @RequestMapping(value = "/studentInfo", method = RequestMethod.POST)
     public Student getStudent(@RequestParam("id") int id) {
-        debugLogger.debug("Get student info, id = " + id);
+        logger.debug("Get student info, id = " + id);
         return studentService.get(id);
     }
 
@@ -63,13 +63,13 @@ public class StudentController {
                          @RequestParam(value = "firstName", required = true) String firstName,
                          @RequestParam(value = "lastName", required = true) String lastName,
                          @RequestParam(value = "studyGroupId") int studyGroupId) {
-        debugLogger.debug("Going to update student id = " + id);
+        logger.debug("Going to update student id = " + id);
         StudyGroup studyGroup = studyGroupService.get(studyGroupId);
         Student student = new Student(studyGroup, firstName, lastName);
         if (id == 0) {
             try {
                 studentService.insert(student);
-                debugLogger.debug("Created student " + student);
+                logger.debug("Created student " + student);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot create student ", student);
             }
@@ -77,12 +77,12 @@ public class StudentController {
             student.setId(id);
             try {
                 studentService.update(student);
-                debugLogger.debug("Updated student " + student);
+                logger.debug("Updated student " + student);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot uodate student ", student);
             }
         }
-        debugLogger.debug("End of update student");
+        logger.debug("End of update student");
         return "Saved " + firstName + " " + lastName + " " + studyGroup.getName();
     }
 }

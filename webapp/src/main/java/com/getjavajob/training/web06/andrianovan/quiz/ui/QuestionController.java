@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Controller
 public class QuestionController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private QuestionService questionService;
@@ -42,23 +42,23 @@ public class QuestionController {
     @RequestMapping(value = "/questionDelete", method = RequestMethod.POST)
     public void questionDelete(@RequestParam("id") int id,
                                @RequestParam(value = "quizId") int quizId) {
-        debugLogger.debug("Going to delete question id = " + id);
+        logger.debug("Going to delete question id = " + id);
         QuizSet quizSet = quizSetService.get(quizId);
         Question question = questionService.get(id);
         quizSet.getQuestions().remove(question);
         try {
             quizSetService.update(quizSet);
-            debugLogger.debug("Update quiz set " + quizSet);
+            logger.debug("Update quiz set " + quizSet);
         } catch (ServiceException e) {
             errorLogger.error("Cannot update quiz set ", quizSet);
         }
         try {
             questionService.delete(question);
-            debugLogger.debug("Deleted question " + question);
+            logger.debug("Deleted question " + question);
         } catch (ServiceException e) {
             errorLogger.error("Cannot delete question ", question);
         }
-        debugLogger.debug("End of delete question");
+        logger.debug("End of delete question");
     }
 
     @RequestMapping(value = "/questionUpdate", method = RequestMethod.POST)
@@ -71,7 +71,7 @@ public class QuestionController {
                           @RequestParam(value = "questionType") String questionType,
                           @RequestParam(value = "questionImage") String questionImage,
                           HttpServletRequest servletRequest) {
-        debugLogger.debug("Going to add or update id = " + id);
+        logger.debug("Going to add or update id = " + id);
         Question question = null;
         QuizSet quizSet = quizSetService.get(quizId);
         String newImg = null;
@@ -97,28 +97,28 @@ public class QuestionController {
             }
             try {
                 questionService.update(question);
-                debugLogger.debug("Updated question " + question);
+                logger.debug("Updated question " + question);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot update question ", question);
             }
-            debugLogger.debug("Question updated id = " + id);
+            logger.debug("Question updated id = " + id);
         }
         try {
             quizSetService.update(quizSet);
-            debugLogger.debug("Updated quiz set " + quizSet);
+            logger.debug("Updated quiz set " + quizSet);
         } catch (ServiceException e) {
             errorLogger.error("Cannot update quiz set ", quizSet);
         }
-        debugLogger.debug("End of question update");
+        logger.debug("End of question update");
         return "Saved " + question.getQuestion() + " " + question.getWeight() + " " + question.getQuestionType() + " " + newImg;
     }
 
     @ResponseBody
     @RequestMapping(value = "/questionInfo", method = RequestMethod.POST)
     public QuestionDTO getQuestionInfo(@RequestParam("id") int id) {
-        debugLogger.debug("Get question info id = " + id);
+        logger.debug("Get question info id = " + id);
         Question question = questionService.get(id);
-        debugLogger.debug("End of question info");
+        logger.debug("End of question info");
         return new QuestionDTO(question.getId(), question.getQuestion(), question.getQuestionType(),
                 question.getWeight(), question.getPicture());
     }
@@ -126,19 +126,19 @@ public class QuestionController {
     @ResponseBody
     @RequestMapping(value = "/quizSetList", method = RequestMethod.POST)
     public List<QuizSetDTO> getQuizSetList() {
-        debugLogger.debug("Get quiz set list");
+        logger.debug("Get quiz set list");
 //        List<QuizSetDTO> dtoList = new ArrayList<>();
 //        for (QuizSet quizSet : quizSetService.getAll()) {
 //            dtoList.add(new QuizSetDTO(quizSet.getId(), quizSet.getName()));
 //        }
-        debugLogger.debug("End of get quiz set list");
+        logger.debug("End of get quiz set list");
         return new Converter().quizSetListToQuizSetDTOList(quizSetService.getAll());
     }
 
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String uploadImage(MultipartHttpServletRequest request, HttpServletRequest servletRequest) {
-        debugLogger.debug("Upload image");
+        logger.debug("Upload image");
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         byte[] bytes = new byte[0];
@@ -149,7 +149,7 @@ public class QuestionController {
         }
         String base64DataString = new String(Base64.encodeBase64(bytes));
         servletRequest.getSession().setAttribute("image", base64DataString);
-        debugLogger.debug("End of upload image");
+        logger.debug("End of upload image");
         return base64DataString;
     }
 }

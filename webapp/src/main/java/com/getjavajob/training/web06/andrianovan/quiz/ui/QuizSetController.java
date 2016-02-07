@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Controller
 public class QuizSetController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(QuizSetController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private QuizSetService quizSetService;
@@ -40,7 +40,7 @@ public class QuizSetController {
     @ResponseBody
     @RequestMapping(value = "/quizSetInfo", method = RequestMethod.POST)
     public QuizSetDTO quizSetInfo(@RequestParam("id") int id) {
-        debugLogger.debug("Show quizSet info for id = " + id);
+        logger.debug("Show quizSet info for id = " + id);
         QuizSet quizSet = quizSetService.get(id);
         return new QuizSetDTO(quizSet.getId(), quizSet.getName());
     }
@@ -50,12 +50,12 @@ public class QuizSetController {
     @ResponseBody
     String quizSetUpdate(@RequestParam(value = "id") int id,
                          @RequestParam(value = "name") String name) {
-        debugLogger.debug("Going to add or update quiz set");
+        logger.debug("Going to add or update quiz set");
         QuizSet quizSet = new QuizSet(name);
         if (id == 0) {
             try {
                 quizSetService.insert(quizSet);
-                debugLogger.debug("Added quiz set: {}", name);
+                logger.debug("Added quiz set: {}", name);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot add quiz set: {}", name);
             }
@@ -63,33 +63,33 @@ public class QuizSetController {
             quizSet.setId(id);
             try {
                 quizSetService.update(quizSet);
-                debugLogger.debug("Updated quiz set: {}", quizSet);
+                logger.debug("Updated quiz set: {}", quizSet);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot update quiz set: {}", quizSet);
             }
         }
-        debugLogger.debug("End of add or update quiz set");
+        logger.debug("End of add or update quiz set");
         return "Saved " + name;
     }
 
     @ResponseBody
     @RequestMapping(value = "/quizSetDelete", method = RequestMethod.POST)
     public void quizSetDelete(@RequestParam("id") int id) {
-        debugLogger.debug("Going to delete or update quiz set");
+        logger.debug("Going to delete or update quiz set");
         QuizSet quizSet = quizSetService.get(id);
         try {
             quizSetService.delete(quizSet);
-            debugLogger.debug("Deleted quiz set: {}", quizSet);
+            logger.debug("Deleted quiz set: {}", quizSet);
         } catch (ServiceException e) {
             errorLogger.error("Cannot delete quiz set: {}", quizSet);
         }
-        debugLogger.debug("End of delete quiz set");
+        logger.debug("End of delete quiz set");
     }
 
     @ResponseBody
     @RequestMapping(value = "/quizSetToXML", method = RequestMethod.POST)
     public String quizSetToXML(@RequestParam("checkedQuizzes") String[] checkedQuizzes) {
-        debugLogger.debug("Going to export quiz sets to xml");
+        logger.debug("Going to export quiz sets to xml");
         Converter converter = new Converter();
         QuizSetDTOList quizSetDTOList = new QuizSetDTOList();
         StringBuffer sb = new StringBuffer("Exported to XML: ");
@@ -99,17 +99,17 @@ public class QuizSetController {
             sb.append(quizSet.getName()).append(',').append(' ');
         }
         String xml = new Serializer().toXML(quizSetDTOList);
-        debugLogger.debug("Quiz sets exported to xml");
+        logger.debug("Quiz sets exported to xml");
         new Output().stringToFile(new File(fileName), xml);
-        debugLogger.debug("Written xml file");
-        debugLogger.debug("End of export quiz sets to xml");
+        logger.debug("Written xml file");
+        logger.debug("End of export quiz sets to xml");
         return sb.deleteCharAt(sb.length() - 2).toString();
     }
 
     @ResponseBody
     @RequestMapping(value = "/quizSetFromXML", method = RequestMethod.POST)
     public String quizSetFromXML(MultipartHttpServletRequest request) {
-        debugLogger.debug("Going to import quiz sets from xml");
+        logger.debug("Going to import quiz sets from xml");
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         File xmlFile = null;
@@ -122,7 +122,7 @@ public class QuizSetController {
         List<QuizSet> quizSetList = null;
         try {
             quizSetList = new Serializer().fromXML(xmlFile);
-            debugLogger.debug("Quiz sets imported from xml");
+            logger.debug("Quiz sets imported from xml");
         } catch (Exception e) {
             errorLogger.error("Cannot import quiz set from xml");
         }
@@ -130,14 +130,14 @@ public class QuizSetController {
             for (QuizSet quizSet : quizSetList) {
                 try {
                     quizSetService.insert(quizSet);
-                    debugLogger.debug("Quiz sets from xml created");
+                    logger.debug("Quiz sets from xml created");
                 } catch (ServiceException e) {
                     errorLogger.error("Cannot create quiz set {} from xml", quizSet);
                 }
                 sb.append(quizSet.getName()).append(',').append(' ');
             }
         }
-        debugLogger.debug("End of import quiz sets from xml");
+        logger.debug("End of import quiz sets from xml");
         return sb.deleteCharAt(sb.length() - 2).toString();
     }
 

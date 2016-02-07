@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 public class AnswerController {
-    private static final Logger debugLogger = LoggerFactory.getLogger("DebugLogger");
+    private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
     private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private AnswerService answerService;
@@ -34,22 +34,22 @@ public class AnswerController {
     @ResponseBody
     @RequestMapping(value = "/questionList", method = RequestMethod.POST)
     public List<QuestionDTO> getQuestionList() {
-        debugLogger.debug("Get questions list");
+        logger.debug("Get questions list");
         List<QuestionDTO> dtoList = new ArrayList<>();
         for (Question question : questionService.getAll()) {
             dtoList.add(new QuestionDTO(question.getId(), question.getQuestion(), question.getQuestionType(),
                     question.getWeight(), question.getPicture()));
         }
-        debugLogger.debug("End of get questions list");
+        logger.debug("End of get questions list");
         return dtoList;
     }
 
     @ResponseBody
     @RequestMapping(value = "/answerInfo", method = RequestMethod.POST)
     public AnswerDTO getQuestionInfo(@RequestParam("id") int id) {
-        debugLogger.debug("Get answer info id = " + id);
+        logger.debug("Get answer info id = " + id);
         Answer answer = answerService.get(id);
-        debugLogger.debug("End of get answer info");
+        logger.debug("End of get answer info");
         return new AnswerDTO(id, answer.getAnswer(), answer.getIsCorrect());
     }
 
@@ -57,23 +57,23 @@ public class AnswerController {
     @RequestMapping(value = "/answerDelete", method = RequestMethod.POST)
     public void answerDelete(@RequestParam("id") int id,
                              @RequestParam(value = "questionId") int questionId) {
-        debugLogger.debug("Going to delete answer id = " + id);
+        logger.debug("Going to delete answer id = " + id);
         Question question = questionService.get(questionId);
         Answer answer = answerService.get(id);
         question.getAnswers().remove(answer);
         try {
             questionService.update(question);
-            debugLogger.debug("Updated question = " + question);
+            logger.debug("Updated question = " + question);
         } catch (ServiceException e) {
             errorLogger.error("Cannot update question to delete answer" + question);
         }
         try {
             answerService.delete(answer);
-            debugLogger.error("Deleted answer" + answer);
+            logger.error("Deleted answer" + answer);
         } catch (ServiceException e) {
             errorLogger.error("Cannot delete answer" + answer);
         }
-        debugLogger.debug("End of delete answer");
+        logger.debug("End of delete answer");
     }
 
     @RequestMapping(value = "/answerUpdate", method = RequestMethod.POST)
@@ -83,14 +83,14 @@ public class AnswerController {
                         @RequestParam(value = "questionId") int questionId,
                         @RequestParam(value = "answer") String answerString,
                         @RequestParam(value = "isCorrect") String isCorrect) {
-        debugLogger.debug("Going to add or update answer id = " + id);
+        logger.debug("Going to add or update answer id = " + id);
         Answer answer;
         Question question = questionService.get(questionId);
         if (id == 0) {
             answer = new Answer(answerString, Boolean.valueOf(isCorrect));
             answer.setQuestion(question);
             question.getAnswers().add(answer);
-            debugLogger.debug("Created answer questionId = {}, answer = {}, isCorrect = {}", questionId, answerString, isCorrect);
+            logger.debug("Created answer questionId = {}, answer = {}, isCorrect = {}", questionId, answerString, isCorrect);
         } else {
             answer = answerService.get(id);
             answer.setAnswer(answerString);
@@ -98,18 +98,18 @@ public class AnswerController {
             answer.setQuestion(question);
             try {
                 answerService.update(answer);
-                debugLogger.debug("Updated answer " + answer);
+                logger.debug("Updated answer " + answer);
             } catch (ServiceException e) {
                 errorLogger.error("Cannot update answer " + answer);
             }
         }
         try {
             questionService.update(question);
-            debugLogger.debug("Updated question " + question);
+            logger.debug("Updated question " + question);
         } catch (ServiceException e) {
             errorLogger.error("Cannot update question " + question);
         }
-        debugLogger.debug("End of add or update answer");
+        logger.debug("End of add or update answer");
         return "Saved " + answer.getAnswer() + " " + answer.getIsCorrect();
     }
 }
