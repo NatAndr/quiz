@@ -84,11 +84,10 @@ public class QuizzesController {
     public ModelAndView startQuiz(@RequestParam("id") int id,
                                   HttpServletRequest req) {
         logger.debug("Initialize quiz for quiz set id = " + id);
-        clearSessionQuizAttributes(req);
+        removeSessionQuizAttributes(req);
         ModelAndView modelAndView = new ModelAndView("quizContainer");
         QuizSet quizSet = quizSetService.get(id);
-        QuizStart quizStart;
-        quizStart = new QuizStart(quizSet);
+        QuizStart quizStart = new QuizStart(quizSet);
         try {
             quizStartService.generateQuestions(quizStart);
             logger.debug("Generated questions for quiz start " + quizStart);
@@ -180,15 +179,15 @@ public class QuizzesController {
         return "redirect:/search";
     }
 
-    private void clearSessionQuizAttributes(HttpServletRequest req) {
-        logger.debug("Clear session quiz attributes");
+    private void removeSessionQuizAttributes(HttpServletRequest req) {
+        logger.debug("Going to remove session quiz attributes");
         HttpSession session = req.getSession();
-        session.setAttribute("result", null);
-        session.setAttribute("counter", null);
-        session.setAttribute("quizStart", null);
-        session.setAttribute("generatedQuestions", null);
-        session.setAttribute("questionsNumber", null);
-        session.setAttribute("quizSet", null);
-        logger.debug("End of clear session quiz attributes");
+        session.removeAttribute("result");
+        session.removeAttribute("counter");
+        session.removeAttribute("quizStart");
+        session.removeAttribute("generatedQuestions");
+        session.removeAttribute("questionsNumber");
+        session.removeAttribute("quizSet");
+        logger.debug("End of remove session quiz attributes");
     }
 }

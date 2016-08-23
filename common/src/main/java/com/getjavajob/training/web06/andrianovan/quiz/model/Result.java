@@ -33,21 +33,12 @@ public class Result extends BaseEntity {
         this.student = student;
         this.answer = answer;
         this.quizStart = quizStart;
-//        this.question = question;
     }
 
     public Result(Student student, Answer answer, String inputAnswer, QuizStart quizStart) {
         this(student, answer, quizStart);
         this.inputAnswer = inputAnswer;
     }
-
-//    public Question getQuestion() {
-//        return question;
-//    }
-//
-//    public void setQuestion(Question question) {
-//        this.question = question;
-//    }
 
     public Student getStudent() {
         return student;
