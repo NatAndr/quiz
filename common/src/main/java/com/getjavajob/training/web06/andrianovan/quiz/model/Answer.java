@@ -12,7 +12,7 @@ public class Answer extends BaseEntity {
     private String answer;
     @Column(name = "is_correct", columnDefinition = "INTEGER(1)")
     private boolean isCorrect;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 

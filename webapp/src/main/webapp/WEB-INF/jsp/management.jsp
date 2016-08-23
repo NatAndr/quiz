@@ -30,6 +30,7 @@
         <li><a data-toggle="tab" href="#quizSets">Quizzes</a></li>
         <li><a data-toggle="tab" href="#questions" id="#questions">Questions</a></li>
         <li><a data-toggle="tab" href="#answers">Answers</a></li>
+        <li><a data-toggle="tab" href="#statistics">Statistics</a></li>
     </ul>
 
     <div class="tab-content">
@@ -51,6 +52,10 @@
 
         <div id="answers" class="tab-pane fade">
             <%@include file="answers.jsp" %>
+        </div>
+        
+        <div id="statistics" class="tab-pane fade">
+            <%@include file="statistics.jsp" %>
         </div>
     </div>
 </div>

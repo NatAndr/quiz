@@ -10,7 +10,7 @@
 <!--data table -->
 <div class="container">
     <div class="row">
-        <table class="table table-striped">
+        <table id="table_students" class="table table-striped display">
             <thead>
             <tr>
                 <th class="col-lg-1">Action</th>
@@ -20,6 +20,7 @@
                 <th>Group</th>
             </tr>
             </thead>
+            <tbody>
             <c:forEach var="student" items="${students}">
                 <tr>
                     <td>
@@ -38,6 +39,7 @@
                     <td>${student.studyGroup}</td>
                 </tr>
             </c:forEach>
+            </tbody>
         </table>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit0" data-action="add">
             Add new
@@ -110,6 +112,6 @@
     var studentUpdate = '<c:url value="/studentUpdate"/>';
     var studentInfo = '<c:url value="/studentInfo"/>';
 </script>
-<script src="<c:url value="../../resources/js/quiz/studyGroupList.js" />"></script>
-<script src="<c:url value="../../resources/js/quiz/students.js" />"></script>
+
+
 

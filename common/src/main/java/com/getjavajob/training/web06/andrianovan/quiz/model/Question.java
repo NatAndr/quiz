@@ -23,7 +23,7 @@ public class Question extends BaseEntity {
     private List<Answer> answers;
     @Column(name = "image")
     private String picture;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     @XStreamOmitField
     private QuizSet quizSet;

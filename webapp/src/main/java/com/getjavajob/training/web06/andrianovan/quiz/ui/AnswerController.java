@@ -25,7 +25,6 @@ import java.util.List;
 @Controller
 public class AnswerController {
     private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
-    private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
     @Autowired
     private AnswerService answerService;
     @Autowired
@@ -65,13 +64,13 @@ public class AnswerController {
             questionService.update(question);
             logger.debug("Updated question = " + question);
         } catch (ServiceException e) {
-            errorLogger.error("Cannot update question to delete answer" + question);
+            logger.error("Cannot update question to delete answer" + question);
         }
         try {
             answerService.delete(answer);
             logger.error("Deleted answer" + answer);
         } catch (ServiceException e) {
-            errorLogger.error("Cannot delete answer" + answer);
+            logger.error("Cannot delete answer" + answer);
         }
         logger.debug("End of delete answer");
     }
@@ -100,14 +99,14 @@ public class AnswerController {
                 answerService.update(answer);
                 logger.debug("Updated answer " + answer);
             } catch (ServiceException e) {
-                errorLogger.error("Cannot update answer " + answer);
+                logger.error("Cannot update answer " + answer);
             }
         }
         try {
             questionService.update(question);
             logger.debug("Updated question " + question);
         } catch (ServiceException e) {
-            errorLogger.error("Cannot update question " + question);
+            logger.error("Cannot update question " + question);
         }
         logger.debug("End of add or update answer");
         return "Saved " + answer.getAnswer() + " " + answer.getIsCorrect();

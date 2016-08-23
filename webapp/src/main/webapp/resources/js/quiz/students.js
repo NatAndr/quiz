@@ -4,6 +4,10 @@
 var studentId = 0;
 var studentName;
 
+$(document).ready( function () {
+    $('#table_students').DataTable();
+} );
+
 $('#modalRemove0').on('show.bs.modal', function (e) {
     e.preventDefault();
     studentName = $(e.relatedTarget).data('name');

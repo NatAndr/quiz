@@ -3,7 +3,6 @@ package com.getjavajob.training.web06.andrianovan.quiz.model;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "quiz_start")
-public class QuizStart extends BaseEntity implements Serializable {
+public class QuizStart extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     private QuizSet quizSet;
