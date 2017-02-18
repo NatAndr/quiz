@@ -1,7 +1,7 @@
 -- Дамп данных таблицы quiz.answer: ~49 rows (приблизительно)
-DELETE FROM `answer`;
-/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` (`id`, `question_id`, `answer`, `is_correct`) VALUES
+DELETE FROM answer;
+/*!40000 ALTER TABLE answer DISABLE KEYS */;
+INSERT INTO answer (id, question_id, answer, is_correct) VALUES
   (1, 1, '1. int -> 0', 1),
   (2, 1, '2. String -> "null"', 0),
   (3, 1, '3. Dog -> null', 1),
@@ -48,12 +48,12 @@ INSERT INTO `answer` (`id`, `question_id`, `answer`, `is_correct`) VALUES
   (48, 10, 'static void methoda(double d1);', 0),
   (49, 10, 'protected void methoda(double d1);', 0),
   (50, 14, 'James Gosling', 1);
-/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
+/*!40000 ALTER TABLE answer ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.question: ~12 rows (приблизительно)
-DELETE FROM `question`;
-/*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` (`id`, `quiz_id`, `question`, type, `weight`) VALUES
+DELETE FROM question;
+/*!40000 ALTER TABLE question DISABLE KEYS */;
+INSERT INTO question (id, quiz_id, question, type, weight) VALUES
   (1, 1, 'Which four options describe the correct default values for array elements of the types indicated?', 1, 1),
   (2, 1, 'Which one of these lists contains only Java programming language keywords?', 0, 1),
   (3, 1, 'Which will legally declare, construct, and initialize an array?', 0, 1),
@@ -67,37 +67,37 @@ INSERT INTO `question` (`id`, `quiz_id`, `question`, type, `weight`) VALUES
   (11, 2, 'Test question', 0, 1),
   (13, 2, 'Новый вопрос', 1, 1),
   (14, 1, 'Who initiated the Java language project?', 2, 1);
-/*!40000 ALTER TABLE `question` ENABLE KEYS */;
+/*!40000 ALTER TABLE question ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.question_type: ~3 rows (приблизительно)
-DELETE FROM `question_type`;
-/*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-INSERT INTO `question_type` (`id`, `type`) VALUES
+DELETE FROM question_type;
+/*!40000 ALTER TABLE question_type DISABLE KEYS */;
+INSERT INTO question_type (id, type) VALUES
   (1, 'SINGLE'),
   (2, 'MULTI'),
   (3, 'INPUT');
-/*!40000 ALTER TABLE `question_type` ENABLE KEYS */;
+/*!40000 ALTER TABLE question_type ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.quiz_header: ~2 rows (приблизительно)
-DELETE FROM `quiz_header`;
-/*!40000 ALTER TABLE `quiz_header` DISABLE KEYS */;
-INSERT INTO `quiz_header` (`id`, `quiz_name`) VALUES
+DELETE FROM quiz_header;
+/*!40000 ALTER TABLE quiz_header DISABLE KEYS */;
+INSERT INTO quiz_header (id, quiz_name) VALUES
   (1, 'Java Programming. Language Fundamentals'),
   (2, 'Vegetables');
-/*!40000 ALTER TABLE `quiz_header` ENABLE KEYS */;
+/*!40000 ALTER TABLE quiz_header ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.quiz_start: ~0 rows (приблизительно)
-DELETE FROM `quiz_start`;
-/*!40000 ALTER TABLE `quiz_start` DISABLE KEYS */;
-INSERT INTO `quiz_start` (`id`, `quiz_id`, `quiz_date`) VALUES
+DELETE FROM quiz_start;
+/*!40000 ALTER TABLE quiz_start DISABLE KEYS */;
+INSERT INTO quiz_start (id, quiz_id, quiz_date) VALUES
   (2, 1, '2015-11-09 22:55:42'),
   (3, 1, '2015-11-10 11:38:17');
-/*!40000 ALTER TABLE `quiz_start` ENABLE KEYS */;
+/*!40000 ALTER TABLE quiz_start ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.result: ~0 rows (приблизительно)
-DELETE FROM `result`;
-/*!40000 ALTER TABLE `result` DISABLE KEYS */;
-INSERT INTO `result` (`id`, `student_id`, `answer_id`, `input_answer`, `quiz_start_id`) VALUES
+DELETE FROM result;
+/*!40000 ALTER TABLE result DISABLE KEYS */;
+INSERT INTO result (id, student_id, answer_id, input_answer, quiz_start_id) VALUES
   (4, 2, 2, '', 2),
   (5, 1, 1, NULL, 2),
   (6, 1, 5, NULL, 2),
@@ -106,23 +106,23 @@ INSERT INTO `result` (`id`, `student_id`, `answer_id`, `input_answer`, `quiz_sta
   (9, 1, 50, 'Mike Sheridan', 3),
   (10, 1, 19, NULL, 3),
   (11, 1, 37, NULL, 3);
-/*!40000 ALTER TABLE `result` ENABLE KEYS */;
+/*!40000 ALTER TABLE result ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.student: ~5 rows (приблизительно)
-DELETE FROM `student`;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` (`id`, `group_id`, `first_name`, `last_name`, `login`, `password`) VALUES
+DELETE FROM student;
+/*!40000 ALTER TABLE student DISABLE KEYS */;
+INSERT INTO student (id, group_id, first_name, last_name, login, password) VALUES
   (1, 1, 'Ivan', 'Ivanov', 'l1', '1'),
   (2, 1, 'Petr', 'Petrov', 'l2', '1'),
   (3, 2, 'Oleg', 'Sokolov', 'l3', '1'),
   (4, 2, 'Artem', 'Artemov', 'l4', '1'),
   (5, 1, 'Sergey', 'Sergeev', 'l5', '1');
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+/*!40000 ALTER TABLE student ENABLE KEYS */;
 
 -- Дамп данных таблицы quiz.study_group: ~5 rows (приблизительно)
-DELETE FROM `study_group`;
-/*!40000 ALTER TABLE `study_group` DISABLE KEYS */;
-INSERT INTO `study_group` (`id`, `group_name`) VALUES
+DELETE FROM study_group;
+/*!40000 ALTER TABLE study_group DISABLE KEYS */;
+INSERT INTO study_group (id, group_name) VALUES
   (1, 'java-algo01'),
   (2, 'java-algo02'),
   (3, 'java-algo03'),
@@ -131,9 +131,9 @@ INSERT INTO `study_group` (`id`, `group_name`) VALUES
   (8, 'New group2');
 
 -- Дамп данных таблицы quiz.quiz_generated_questions: ~6 rows (приблизительно)
-DELETE FROM `quiz_generated_questions`;
-/*!40000 ALTER TABLE `quiz_generated_questions` DISABLE KEYS */;
-INSERT INTO `quiz_generated_questions` (`quiz_start_id`, `question_id`) VALUES
+DELETE FROM quiz_generated_questions;
+/*!40000 ALTER TABLE quiz_generated_questions DISABLE KEYS */;
+INSERT INTO quiz_generated_questions (quiz_start_id, question_id) VALUES
   (2, 1),
   (2, 4),
   (2, 6),

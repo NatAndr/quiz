@@ -7,7 +7,7 @@
     	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
     	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz" expected-type="javax.sql.DataSource"/>
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/quiz" expected-type="javax.sql.DataSource"/>-->
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:persistence.xml"/>
@@ -32,5 +32,15 @@
     </bean>
 
     <tx:annotation-driven proxy-target-class="true"/>
+
+    <bean class="java.net.URI" id="dbUrl">
+        <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>
+        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+    </bean>
 
 </beans>
