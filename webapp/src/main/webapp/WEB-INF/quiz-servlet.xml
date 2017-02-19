@@ -31,7 +31,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <mvc:view-controller path="/" view-name="/quizzesSearch"/>
+    <mvc:view-controller path="/" view-name="quizzesSearch"/>
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
