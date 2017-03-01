@@ -68,6 +68,7 @@ function getStudentInfo(sId) {
         success: function (obj) {
             $('.firstName').val(obj.firstName);
             $('.lastName').val(obj.lastName);
+            $('.login').val(obj.login);
             $('.options').val(obj.studyGroup.id);
         },
         error: function (e) {

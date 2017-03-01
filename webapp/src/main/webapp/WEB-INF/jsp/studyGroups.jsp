@@ -91,5 +91,5 @@
     var studyGroupUpdate = '<c:url value="/studyGroupUpdate"/>';
     var studyGroupInfo = '<c:url value="/studyGroupInfo"/>';
 </script>
-<script src="<c:url value="../../resources/js/quiz/studyGroups.js" />"></script>
+<%--<script src="<c:url value="../../resources/js/quiz/studyGroups.js" />"></script>--%>
 

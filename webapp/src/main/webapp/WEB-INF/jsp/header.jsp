@@ -20,6 +20,7 @@
 
 <script src="<c:url value="../../resources/js/quiz/studyGroupList.js" />"></script>
 <script src="<c:url value="../../resources/js/quiz/students.js" />"></script>
+<script src="<c:url value="../../resources/js/quiz/studyGroups.js" />"></script>
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>

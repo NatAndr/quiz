@@ -78,10 +78,10 @@ public class QuestionController {
         if (!questionImage.isEmpty()) {
             newImg = " image";
         }
-        byte[] image = (byte[]) servletRequest.getSession().getAttribute("image");
+        byte[] image = ((String) servletRequest.getSession().getAttribute("image")).getBytes();
         if (id == 0) {
             question = new Question(questionString, QuestionType.valueOf(questionType), weight);
-            if (image != null) {
+            if (image.length > 0) {
                 question.setPicture(image);
             }
             question.setQuizSet(quizSet);
@@ -92,7 +92,7 @@ public class QuestionController {
             question.setWeight(weight);
             question.setQuizSet(quizSet);
             question.setQuestionType(QuestionType.valueOf(questionType));
-            if (image != null) {
+            if (image.length > 0) {
                 question.setPicture(image);
             }
             try {
