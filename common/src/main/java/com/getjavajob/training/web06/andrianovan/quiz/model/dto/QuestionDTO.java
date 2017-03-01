@@ -21,14 +21,14 @@ public class QuestionDTO {
     @XStreamAsAttribute
     private int weight;
     @XStreamOmitField
-    private String picture;
+    private byte[] picture;
     @XStreamAlias("answers")
     private List<AnswerDTO> answerDTOs;
 
     public QuestionDTO() {
     }
 
-    public QuestionDTO(int id, String question, QuestionType questionType, int weight, String picture) {
+    public QuestionDTO(int id, String question, QuestionType questionType, int weight, byte[] picture) {
         this.id = id;
         this.question = question;
         this.questionType = questionType;
@@ -68,11 +68,11 @@ public class QuestionDTO {
         this.weight = weight;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

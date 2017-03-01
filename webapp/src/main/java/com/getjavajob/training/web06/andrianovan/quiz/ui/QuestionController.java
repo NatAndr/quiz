@@ -78,7 +78,7 @@ public class QuestionController {
         if (!questionImage.isEmpty()) {
             newImg = " image";
         }
-        String image = (String) servletRequest.getSession().getAttribute("image");
+        byte[] image = (byte[]) servletRequest.getSession().getAttribute("image");
         if (id == 0) {
             question = new Question(questionString, QuestionType.valueOf(questionType), weight);
             if (image != null) {

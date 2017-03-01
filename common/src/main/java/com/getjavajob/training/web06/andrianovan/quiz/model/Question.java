@@ -22,7 +22,7 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
     @Column(name = "image")
-    private String picture;
+    private byte[] picture;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     @XStreamOmitField
@@ -87,11 +87,11 @@ public class Question extends BaseEntity {
         this.answers = answers;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

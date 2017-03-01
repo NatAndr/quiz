@@ -67,6 +67,10 @@
                             <label for="lastName" class="control-label">Last name:</label>
                             <input type="text" class="form-control lastName" id="lastName" required="required">
                         </div>
+                        <div class="form-group">
+                            <label for="login" class="control-label">Last name:</label>
+                            <input type="text" class="form-control login" id="login" required="required">
+                        </div>
 
                         <div class="form-group">
                             <label for="dynamicInput" class="control-label">Study group:</label>

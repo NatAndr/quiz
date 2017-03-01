@@ -62,10 +62,12 @@ public class StudentController {
     String studentUpdate(@RequestParam(value = "id") int id,
                          @RequestParam(value = "firstName", required = true) String firstName,
                          @RequestParam(value = "lastName", required = true) String lastName,
+                         @RequestParam(value = "login", required = true) String login,
                          @RequestParam(value = "studyGroupId") int studyGroupId) {
         logger.debug("Going to update student id = " + id);
         StudyGroup studyGroup = studyGroupService.get(studyGroupId);
         Student student = new Student(studyGroup, firstName, lastName);
+        student.setLogin(login);
         if (id == 0) {
             try {
                 studentService.insert(student);
@@ -79,7 +81,7 @@ public class StudentController {
                 studentService.update(student);
                 logger.debug("Updated student " + student);
             } catch (ServiceException e) {
-                errorLogger.error("Cannot uodate student ", student);
+                errorLogger.error("Cannot update student ", student);
             }
         }
         logger.debug("End of update student");
