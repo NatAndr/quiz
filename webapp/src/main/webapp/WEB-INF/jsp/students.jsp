@@ -71,6 +71,10 @@
                             <label for="login" class="control-label">Login:</label>
                             <input type="text" class="form-control login" id="login" required="required">
                         </div>
+                        <div class="form-group">
+                            <label for="login" class="control-label">Password:</label>
+                            <input type="password" class="form-control password" id="password" required="required">
+                        </div>
 
                         <div class="form-group">
                             <label for="dynamicInput" class="control-label">Study group:</label>

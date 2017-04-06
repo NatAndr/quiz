@@ -40,13 +40,13 @@ public class LoginController {
         return new ModelAndView("login");
     }
 
-//    @RequestMapping(value = "/")
-//    public String showStartPageWhenLoggedIn(HttpServletRequest req) {
-//        if (isAdmin(getCookieValue(req, COOKIE_USERNAME))) {
-//            return "redirect:/admin";
-//        }
-//        return "redirect:/search";
-//    }
+    @RequestMapping(value = "/")
+    public String showStartPageWhenLoggedIn(HttpServletRequest req) {
+        if (isAdmin(getCookieValue(req, COOKIE_USERNAME))) {
+            return "redirect:/admin";
+        }
+        return "redirect:/search";
+    }
 
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
     public String login(@RequestParam("login") String login,

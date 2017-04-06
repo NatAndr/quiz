@@ -5,6 +5,7 @@ import com.getjavajob.training.web06.andrianovan.quiz.model.StudyGroup;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudentService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.StudyGroupService;
 import com.getjavajob.training.web06.andrianovan.quiz.service.exception.ServiceException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +64,11 @@ public class StudentController {
                          @RequestParam(value = "firstName", required = true) String firstName,
                          @RequestParam(value = "lastName", required = true) String lastName,
                          @RequestParam(value = "login", required = true) String login,
+                         @RequestParam(value = "password", required = true) String password,
                          @RequestParam(value = "studyGroupId") int studyGroupId) {
         logger.debug("Going to update student id = " + id);
         StudyGroup studyGroup = studyGroupService.get(studyGroupId);
-        Student student = new Student(studyGroup, firstName, lastName);
-        student.setLogin(login);
+        Student student = new Student(studyGroup, firstName, lastName, login, DigestUtils.md5Hex(password));
         if (id == 0) {
             try {
                 studentService.insert(student);

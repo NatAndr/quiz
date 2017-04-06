@@ -45,12 +45,13 @@ $('#modalEdit0').find('.saveBtn').on('click', function () {
     var firstName = $('.firstName').val();
     var lastName = $('.lastName').val();
     var login = $('.login').val();
+    var password = $('.password').val();
     var studyGroupId = $(".options option:selected").val();
 
     $.ajax({
         type: "POST",
         url: studentUpdate,
-        data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&login=" + login + "&studyGroupId=" + studyGroupId,
+        data: "id=" + studentId + "&firstName=" + firstName + "&lastName=" + lastName + "&login=" + login + "&password=" + password + "&studyGroupId=" + studyGroupId,
         success: function (response) {
             showAlert($('#modalEdit0'), response, 'success');
         },
